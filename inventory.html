@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Game Guys — Inventory &amp; Stock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#6d28d9;--purple-2:#7c3aed;--purple-deep:#4c1d95;--indigo:#3b1d8f;
+    --purple-soft:#f3efff;--purple-line:#e7ddfb;
+    --blue:#2563eb;--blue-soft:#e8f0ff;
+    --bg:#eef0f5;--surface:#fff;--line:#e7e9ef;--line2:#eef0f4;
+    --fg:#1a1f39;--fg2:#5d6379;--fg3:#9a9fb2;
+    --green:#22c55e;--green-txt:#16a34a;--green-soft:#dcfce7;
+    --amber:#f59e0b;--amber-soft:#fdf3e0;--red:#ef4444;--red-soft:#fdeceb;
+    --teal:#0d9488;--teal-soft:#d9f5f1;
+    --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --display:"Montserrat","Inter",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.disp{font-family:var(--display);letter-spacing:-.01em;margin:0}
+  svg{display:block}
+  .app{display:grid;grid-template-columns:216px 1fr;height:100vh;overflow:hidden}
+  .side{background:linear-gradient(165deg,var(--indigo),var(--purple-deep) 55%,var(--purple));color:#fff;display:flex;flex-direction:column;padding:20px 14px}
+  .logo{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0 16px}
+  .logo .mark{width:50px;height:50px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+  .logo .mark span{font-family:var(--display);font-weight:900;font-size:25px;color:var(--purple-deep)}
+  .logo .mark i{position:absolute;top:6px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
+  .logo .nm{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.02em}
+  .logo .sb{font-size:9px;font-weight:700;letter-spacing:.26em;color:#c9bdf2}
+  .tabhint{font-size:9px;font-weight:800;letter-spacing:.16em;color:#b3a6e6;padding:4px 12px 6px;text-transform:uppercase}
+  .nav{display:flex;flex-direction:column;gap:4px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:11px;color:#d8d0f5;text-decoration:none;font-size:13.5px;font-weight:600}
+  .nav a svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;opacity:.9}
+  .nav a.active{background:rgba(255,255,255,.15);color:#fff}
+  .nav a.active svg{color:#8ab4ff;opacity:1}
+  .side .spacer{flex:1}
+  .uwrap{border-top:1px solid rgba(255,255,255,.14);padding-top:12px}
+  .user{display:flex;align-items:center;gap:10px;padding:6px}
+  .user .av{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:12px}
+  .user .who{font-weight:700;font-size:13px}.user .role{font-size:11px;color:#bcb2e6}
+  .user .cv{margin-left:auto;opacity:.7}
+  .main{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  .content{flex:1;overflow:auto;padding:22px 26px 40px}
+  .head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+  h1{font-size:27px;font-weight:800;display:flex;align-items:center;gap:12px}
+  .pill{color:#fff;font-size:10px;font-weight:800;letter-spacing:.05em;padding:5px 10px;border-radius:8px;font-family:var(--font)}
+  .p-recv{background:var(--teal)}
+  .subtitle{font-size:13px;color:var(--fg2);margin-top:6px}
+  .syncchip{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--green-txt);background:var(--green-soft);padding:8px 12px;border-radius:10px}
+  .syncchip svg{width:15px;height:15px;stroke:var(--green-txt);fill:none;stroke-width:2}
+  .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:6px 0 20px}
+  .subtabs button{border:none;background:none;font-family:var(--display);font-weight:800;font-size:13.5px;color:var(--fg3);padding:11px 14px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px}
+  .subtabs button.on{color:var(--teal);border-bottom-color:var(--teal)}
+  .view{display:none}.view.show{display:block}
+  .kpis{display:grid;gap:13px;margin-bottom:18px}
+  .k4{grid-template-columns:repeat(4,1fr)}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:15px 16px;box-shadow:0 1px 2px rgba(26,31,57,.04)}
+  .kpi .l{font-size:10.5px;color:var(--fg2);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .kpi .v{font-family:var(--display);font-size:24px;font-weight:800;margin-top:8px}
+  .kpi .d{font-size:11px;margin-top:5px;font-weight:600}
+  .muted{color:var(--fg3)}
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 1px 2px rgba(26,31,57,.04);margin-bottom:16px}
+  .card h3{font-size:14px;font-weight:800;margin-bottom:4px}
+  .card .cap{font-size:11.5px;color:var(--fg3);margin-bottom:14px}
+  .card.tight{margin-bottom:0}
+  .card.p0{padding:0}
+  .card.p0 .ph{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 6px}
+  table{width:100%;border-collapse:collapse}
+  thead th{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--fg3);text-align:left;padding:9px 12px;background:#faf9fe}
+  tbody td{padding:11px 12px;border-top:1px solid var(--line2);font-size:13px;vertical-align:middle}
+  .num{text-align:right;font-family:var(--display);font-weight:700}
+  .badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px}
+  .b-green{background:var(--green-soft);color:var(--green-txt)}.b-amber{background:var(--amber-soft);color:var(--amber)}
+  .b-blue{background:var(--blue-soft);color:var(--blue)}.b-red{background:var(--red-soft);color:var(--red)}.b-purple{background:var(--purple-soft);color:var(--purple)}.b-teal{background:var(--teal-soft);color:var(--teal)}
+  .aichip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--purple);background:var(--purple-soft);padding:6px 11px;border-radius:9px}
+  .lrow{display:flex;align-items:center;gap:13px;padding:12px 0;border-bottom:1px solid var(--line2)}
+  .lrow:last-child{border-bottom:none}
+  .lrow .thumb{width:38px;height:38px;border-radius:9px;background:var(--purple-soft);color:var(--purple);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:12px;flex:0 0 auto}
+  .lrow .nm{font-weight:600;font-size:13px}.lrow .sub{font-size:11px;color:var(--fg3);margin-top:1px}
+  .lrow .r{margin-left:auto;text-align:right}
+  .track{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:6px;width:120px}
+  .track i{display:block;height:100%;border-radius:999px;background:var(--blue)}
+  .track i.low{background:var(--amber)}.track i.out{background:var(--red)}
+  .cam{border:2px dashed var(--purple-line);border-radius:14px;padding:26px 20px;text-align:center;background:var(--purple-soft)}
+  .cam .t{font-family:var(--display);font-weight:800;font-size:16px;color:var(--purple)}
+  .cam .s{font-size:12px;color:var(--fg2);margin-top:6px;line-height:1.5}
+  .cam .btn{display:inline-flex;align-items:center;gap:8px;background:var(--purple);color:#fff;font-weight:700;font-size:12.5px;padding:9px 16px;border-radius:10px;margin-top:14px}
+  .cam .btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
+  .drop{border:2px dashed var(--purple-line);border-radius:14px;padding:22px;text-align:center;background:#fff}
+  .drop .t{font-family:var(--display);font-weight:800;font-size:14px;color:var(--fg)}
+  .drop .s{font-size:11.5px;color:var(--fg2);margin-top:5px}
+  .flag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><div class="mark"><span>G</span><i></i></div><div class="nm">GAME GUYS</div><div class="sb">OPERATIONS</div></div>
+    <div class="tabhint">Navigation</div>
+    <nav class="nav">
+      <a><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg> Ownership</a>
+      <a class="active"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg> Inventory &amp; Stock</a>
+      <a><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg> Machines</a>
+      <a><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Miscellaneous</a>
+      <a><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/></svg> CRM</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="uwrap"><div class="user"><div class="av">RC</div><div><div class="who">Receiver</div><div class="role">Warehouse</div></div>
+      <svg class="cv" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div>
+  </aside>
+
+  <div class="main">
+    <div class="content">
+      <div class="head">
+        <div><h1>Inventory &amp; Stock <span class="pill p-recv">RECEIVER VIEW</span></h1>
+        <div class="subtitle">Everything on hand and coming in — synced with Nayax &amp; Shopify — plus purchase orders and invoices.</div></div>
+        <div class="syncchip"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/></svg> Synced · 8:32 AM</div>
+      </div>
+
+      <div class="subtabs">
+        <button class="on" data-v="stock">Stock Overview</button>
+        <button data-v="po">Purchase Orders &amp; Invoices</button>
+      </div>
+
+      <!-- ===== 2.a STOCK OVERVIEW ===== -->
+      <section class="view show" id="v-stock">
+        <div class="kpis k4">
+          <div class="kpi"><div class="l">On-hand value</div><div class="v">$63,410</div><div class="d muted">1,842 units</div></div>
+          <div class="kpi"><div class="l">Incoming (14d)</div><div class="v">2,160</div><div class="d muted">across 5 POs</div></div>
+          <div class="kpi"><div class="l">Low / out of stock</div><div class="v" style="color:var(--amber)">37</div><div class="d muted">SKUs need reorder</div></div>
+          <div class="kpi"><div class="l">Dead / slow stock</div><div class="v" style="color:var(--red)">148</div><div class="d muted">units aging &gt; 90d</div></div>
+        </div>
+
+        <div class="grid2">
+          <div class="card tight p0">
+            <div class="ph"><h3 style="margin:0">Current stock</h3><span class="muted" style="font-size:11px">Live levels · Nayax + warehouse</span></div>
+            <table>
+              <thead><tr><th>Product</th><th>Location</th><th class="num">On hand</th><th>Level</th></tr></thead>
+              <tbody>
+                <tr><td>Surging Sparks (EN)</td><td>Warehouse</td><td class="num">420</td><td><div class="track"><i style="width:85%"></i></div></td></tr>
+                <tr><td>OP-08 Two Legends (JP)</td><td>Warehouse</td><td class="num">180</td><td><div class="track"><i style="width:55%"></i></div></td></tr>
+                <tr><td>Mystery Box — Anime S2</td><td>Warehouse</td><td class="num">64</td><td><div class="track"><i class="low" style="width:22%"></i></div></td></tr>
+                <tr><td>Pocky Chocolate (JP)</td><td>Warehouse</td><td class="num">0</td><td><div class="track"><i class="out" style="width:4%"></i></div></td></tr>
+                <tr><td>Red Bull 250ml</td><td>Warehouse</td><td class="num">96</td><td><div class="track"><i style="width:48%"></i></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card tight">
+            <h3>AI stock camera</h3><div class="cap">Point at a shelf or box to recognise products and auto-count.</div>
+            <div class="cam">
+              <div class="t">Scan stock</div>
+              <div class="s">Recognises product identity or barcodes and counts units — no manual entry on receiving or stocktake.</div>
+              <div class="btn"><svg viewBox="0 0 24 24"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Open camera</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card tight p0">
+          <div class="ph"><h3 style="margin:0">Incoming stock</h3><span class="muted" style="font-size:11px">Synced from Nayax + Shopify — for receivers</span></div>
+          <div style="padding:0 18px 8px">
+            <div class="lrow"><div class="thumb">SV</div><div><div class="nm">Surging Sparks (EN) — Booster box</div><div class="sub">PO-1042 · TCG Direct</div></div><div class="r"><span class="badge b-blue">In transit</span><div class="sub">ETA 26 May · 240 units</div></div></div>
+            <div class="lrow"><div class="thumb">OP</div><div><div class="nm">OP-08 Two Legends (JP)</div><div class="sub">PO-1039 · Ignins JP</div></div><div class="r"><span class="badge b-amber">Customs</span><div class="sub">ETA 28 May · 600 units</div></div></div>
+            <div class="lrow"><div class="thumb">MB</div><div><div class="nm">Mystery Box — Anime S3</div><div class="sub">PO-1044 · Shopify dropship</div></div><div class="r"><span class="badge b-green">Arrived</span><div class="sub">Ready to receive · 300 units</div></div></div>
+            <div class="lrow"><div class="thumb">RB</div><div><div class="nm">Red Bull 250ml — case</div><div class="sub">PO-1045 · Metcash</div></div><div class="r"><span class="badge b-blue">In transit</span><div class="sub">ETA 25 May · 480 units</div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 2.b PO & INVOICES ===== -->
+      <section class="view" id="v-po">
+        <div class="kpis k4">
+          <div class="kpi"><div class="l">Open POs</div><div class="v">7</div><div class="d muted">3 awaiting delivery</div></div>
+          <div class="kpi"><div class="l">Committed spend</div><div class="v">$24,180</div><div class="d muted">not yet received</div></div>
+          <div class="kpi"><div class="l">Invoices to pay</div><div class="v" style="color:var(--amber)">4</div><div class="d muted">$11,300 due</div></div>
+          <div class="kpi"><div class="l">Avg. cost / pack</div><div class="v">$3.42</div><div class="d muted">across TCG</div></div>
+        </div>
+
+        <div class="card tight">
+          <h3>AI PDF reader</h3><div class="cap">Drop a supplier quote or invoice — it auto-fills PO lines, quantities and unit costs.</div>
+          <div class="drop">
+            <div class="t">✦ Drag &amp; drop a PO or invoice PDF</div>
+            <div class="s">Extracts line items, pack/box counts, and prices automatically. Review, then save.</div>
+          </div>
+        </div>
+
+        <div class="card tight p0">
+          <div class="ph"><h3 style="margin:0">Purchase orders &amp; invoices</h3><span class="aichip">✦ AI-read 3 of 4</span></div>
+          <table>
+            <thead><tr><th>PO</th><th>Supplier</th><th>Type</th><th>Status</th><th class="num">Unit basis</th><th class="num">Cost</th><th class="num">Total</th></tr></thead>
+            <tbody>
+              <tr><td>PO-1042</td><td>TCG Direct</td><td>Booster box</td><td><span class="badge b-blue">Ordered</span></td><td class="num">$4.20 / pack</td><td class="num">36 packs/box</td><td class="num">$3,780</td></tr>
+              <tr><td>PO-1039</td><td>Ignins JP</td><td>Booster box</td><td><span class="badge b-amber">Partial</span></td><td class="num">$3.10 / pack</td><td class="num">30 packs/box</td><td class="num">$5,208</td></tr>
+              <tr><td>PO-1044</td><td>Shopify dropship</td><td>Blind box</td><td><span class="badge b-green">Received</span></td><td class="num">$6.80 / box</td><td class="num">1 unit/box</td><td class="num">$2,040</td></tr>
+              <tr><td>PO-1031</td><td>Metcash</td><td>Snacks case</td><td><span class="badge b-green">Received</span></td><td class="num">$2.30 / unit</td><td class="num">24 units/case</td><td class="num">$1,104</td></tr>
+              <tr><td>PO-1045</td><td>Metcash</td><td>Drinks case</td><td><span class="badge b-blue">Ordered</span></td><td class="num">$1.90 / unit</td><td class="num">24 units/case</td><td class="num">$912</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.subtabs button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.subtabs button').forEach(x=>x.classList.toggle('on',x===b));
+    document.querySelectorAll('.view').forEach(v=>v.classList.toggle('show', v.id==='v-'+b.dataset.v));
+    document.querySelector('.content').scrollTop=0;
+  }));
+</script>
+</body>
+</html>

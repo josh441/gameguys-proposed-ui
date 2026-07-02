@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Game Guys — CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#6d28d9;--purple-2:#7c3aed;--purple-deep:#4c1d95;--indigo:#3b1d8f;
+    --purple-soft:#f3efff;--purple-line:#e7ddfb;
+    --blue:#2563eb;--blue-soft:#e8f0ff;
+    --bg:#eef0f5;--surface:#fff;--line:#e7e9ef;--line2:#eef0f4;
+    --fg:#1a1f39;--fg2:#5d6379;--fg3:#9a9fb2;
+    --green:#22c55e;--green-txt:#16a34a;--green-soft:#dcfce7;
+    --amber:#f59e0b;--amber-soft:#fdf3e0;--red:#ef4444;--red-soft:#fdeceb;
+    --teal:#0d9488;--teal-soft:#d9f5f1;
+    --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --display:"Montserrat","Inter",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;margin:0}
+  svg{display:block}
+  .app{display:grid;grid-template-columns:216px 1fr;height:100vh;overflow:hidden}
+  .side{background:linear-gradient(165deg,var(--indigo),var(--purple-deep) 55%,var(--purple));color:#fff;display:flex;flex-direction:column;padding:20px 14px}
+  .logo{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0 16px}
+  .logo .mark{width:50px;height:50px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+  .logo .mark span{font-family:var(--display);font-weight:900;font-size:25px;color:var(--purple-deep)}
+  .logo .mark i{position:absolute;top:6px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
+  .logo .nm{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.02em}
+  .logo .sb{font-size:9px;font-weight:700;letter-spacing:.26em;color:#c9bdf2}
+  .tabhint{font-size:9px;font-weight:800;letter-spacing:.16em;color:#b3a6e6;padding:4px 12px 6px;text-transform:uppercase}
+  .nav{display:flex;flex-direction:column;gap:4px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:11px;color:#d8d0f5;text-decoration:none;font-size:13.5px;font-weight:600}
+  .nav a svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;opacity:.9}
+  .nav a.active{background:rgba(255,255,255,.15);color:#fff}
+  .nav a.active svg{color:#8ab4ff;opacity:1}
+  .side .spacer{flex:1}
+  .uwrap{border-top:1px solid rgba(255,255,255,.14);padding-top:12px}
+  .user{display:flex;align-items:center;gap:10px;padding:6px}
+  .user .av{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:12px}
+  .user .who{font-weight:700;font-size:13px}.user .role{font-size:11px;color:#bcb2e6}
+  .user .cv{margin-left:auto;opacity:.7}
+  .main{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  .content{flex:1;overflow:auto;padding:22px 26px 40px}
+  .head{margin-bottom:14px}
+  h1{font-size:27px;font-weight:800}
+  .subtitle{font-size:13px;color:var(--fg2);margin-top:6px}
+  .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:6px 0 20px}
+  .subtabs button{border:none;background:none;font-family:var(--display);font-weight:800;font-size:13.5px;color:var(--fg3);padding:11px 14px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px}
+  .subtabs button.on{color:var(--purple);border-bottom-color:var(--purple)}
+  .view{display:none}.view.show{display:block}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 1px 2px rgba(26,31,57,.04);margin-bottom:16px}
+  .card.p0{padding:0}
+  .card h3{font-size:14px;font-weight:800;margin-bottom:4px}
+  .card .cap{font-size:11.5px;color:var(--fg3);margin-bottom:12px}
+  .ph{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 6px}
+  table{width:100%;border-collapse:collapse}
+  thead th{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--fg3);text-align:left;padding:9px 12px;background:#faf9fe}
+  tbody td{padding:12px;border-top:1px solid var(--line2);font-size:13px;vertical-align:middle}
+  .sub2{font-size:11px;color:var(--fg3);margin-top:2px}
+  .badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px}
+  .b-green{background:var(--green-soft);color:var(--green-txt)}.b-amber{background:var(--amber-soft);color:var(--amber)}
+  .b-blue{background:var(--blue-soft);color:var(--blue)}.b-red{background:var(--red-soft);color:var(--red)}.b-purple{background:var(--purple-soft);color:var(--purple)}
+  .note{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--blue);background:var(--blue-soft);padding:9px 12px;border-radius:10px;margin-bottom:14px;font-weight:600}
+  .note svg{width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:2;flex:0 0 auto}
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .col-t{background:#faf9fe;border:1px solid var(--line);border-radius:13px;padding:12px}
+  .col-t .ch{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--fg2);margin-bottom:10px;display:flex;justify-content:space-between}
+  .task{background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px;margin-bottom:9px;box-shadow:0 1px 2px rgba(26,31,57,.04)}
+  .task .tt{font-weight:600;font-size:12.5px;margin-bottom:8px;line-height:1.35}
+  .task .meta{display:flex;align-items:center;justify-content:space-between}
+  .who2{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--fg2);font-weight:600}
+  .av-sm{width:22px;height:22px;border-radius:999px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .notif{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--green-txt);margin-top:8px}
+  .notif svg{width:12px;height:12px;stroke:var(--green-txt);fill:none;stroke-width:2}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><div class="mark"><span>G</span><i></i></div><div class="nm">GAME GUYS</div><div class="sb">OPERATIONS</div></div>
+    <div class="tabhint">Navigation</div>
+    <nav class="nav">
+      <a><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg> Ownership</a>
+      <a><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg> Inventory &amp; Stock</a>
+      <a><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg> Machines</a>
+      <a><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Miscellaneous</a>
+      <a class="active"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/></svg> CRM</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="uwrap"><div class="user"><div class="av">GG</div><div><div class="who">Game Guys</div><div class="role">Owner · Admin</div></div>
+      <svg class="cv" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div>
+  </aside>
+
+  <div class="main">
+    <div class="content">
+      <div class="head">
+        <h1>CRM</h1>
+        <div class="subtitle">Supplier relationships and team tasks in one place.</div>
+      </div>
+
+      <div class="subtabs">
+        <button class="on" data-v="sup">Suppliers</button>
+        <button data-v="task">Task Management</button>
+      </div>
+
+      <!-- ===== 5.a SUPPLIERS ===== -->
+      <section class="view show" id="v-sup">
+        <div class="note"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 8v5M12 16h.01"/></svg> Contact details only — name, phone, email. No passwords or login credentials are stored, for security.</div>
+        <div class="card p0">
+          <div class="ph"><h3 style="margin:0">Suppliers</h3><span style="font-size:11px;color:var(--fg3)">4 active</span></div>
+          <table>
+            <thead><tr><th>Supplier</th><th>Contact</th><th>Products ordered</th><th>Terms</th><th>Rating</th></tr></thead>
+            <tbody>
+              <tr><td><b>Ignins JP</b><div class="sub2">Tokyo, Japan</div></td><td>orders@ignins.jp<div class="sub2">+81 3 5555 0192</div></td><td>JP booster boxes (One Piece, Pokémon JP)</td><td><span class="badge b-blue">NET30</span></td><td><span class="badge b-green">★ 4.8</span></td></tr>
+              <tr><td><b>TCG Direct</b><div class="sub2">Sydney, AU</div></td><td>sales@tcgdirect.au<div class="sub2">+61 2 8000 1234</div></td><td>EN boosters, ETBs</td><td><span class="badge b-amber">COD</span></td><td><span class="badge b-green">★ 4.6</span></td></tr>
+              <tr><td><b>Metcash</b><div class="sub2">Sydney, AU</div></td><td>Toshi Kishi<div class="sub2">+61 2 9000 4455</div></td><td>Snacks &amp; drinks</td><td><span class="badge b-blue">NET14</span></td><td><span class="badge b-amber">★ 3.9</span></td></tr>
+              <tr><td><b>Shopify dropship</b><div class="sub2">Online</div></td><td>support@shop.co</td><td>Blind boxes</td><td><span class="badge b-blue">Prepaid</span></td><td><span class="badge b-green">★ 4.4</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== 5.b TASK MANAGEMENT ===== -->
+      <section class="view" id="v-task">
+        <div class="note"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg> Assign a task to anyone on the team — the assignee gets a notification instantly. Owners see the whole board.</div>
+        <div class="card">
+          <h3>Team tasks</h3><div class="cap">Drag between columns as work progresses.</div>
+          <div class="board">
+            <div class="col-t"><div class="ch">To do <span>2</span></div>
+              <div class="task"><div class="tt">Chase OP-09 preorder allocation with Ignins</div><div class="meta"><span class="badge b-amber">High</span><span class="who2">Josh <span class="av-sm">JM</span></span></div><div class="notif"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Assignee notified</div></div>
+              <div class="task"><div class="tt">Reprice slow Pocky stock</div><div class="meta"><span class="badge b-blue">Med</span><span class="who2">RJ <span class="av-sm">RJ</span></span></div><div class="notif"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Assignee notified</div></div>
+            </div>
+            <div class="col-t"><div class="ch">In progress <span>2</span></div>
+              <div class="task"><div class="tt">Reconcile GGV-001 route variance</div><div class="meta"><span class="badge b-red">Urgent</span><span class="who2">Josh <span class="av-sm">JM</span></span></div></div>
+              <div class="task"><div class="tt">Set up new machine GGV-025</div><div class="meta"><span class="badge b-blue">Med</span><span class="who2">Sam <span class="av-sm">SM</span></span></div></div>
+            </div>
+            <div class="col-t"><div class="ch">Done <span>2</span></div>
+              <div class="task"><div class="tt">Onboard new filler — Sam</div><div class="meta"><span class="badge b-green">Done</span><span class="who2">RJ <span class="av-sm">RJ</span></span></div></div>
+              <div class="task"><div class="tt">Upload May supplier invoices</div><div class="meta"><span class="badge b-green">Done</span><span class="who2">Linda <span class="av-sm">LD</span></span></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.subtabs button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.subtabs button').forEach(x=>x.classList.toggle('on',x===b));
+    document.querySelectorAll('.view').forEach(v=>v.classList.toggle('show', v.id==='v-'+b.dataset.v));
+    document.querySelector('.content').scrollTop=0;
+  }));
+</script>
+</body>
+</html>

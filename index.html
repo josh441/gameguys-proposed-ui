@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Game Guys Operations — Proposed UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#6d28d9;--purple-2:#7c3aed;--purple-deep:#4c1d95;--indigo:#3b1d8f;
+    --purple-soft:#f3efff;--purple-line:#e7ddfb;
+    --blue:#2563eb;--blue-soft:#e8f0ff;
+    --surface:#fff;--line:#e7e9ef;--fg:#1a1f39;--fg2:#5d6379;--fg3:#9a9fb2;
+    --teal:#0d9488;--green:#16a34a;--amber:#f59e0b;
+    --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --display:"Montserrat","Inter",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font-family:var(--font);color:#fff;-webkit-font-smoothing:antialiased;
+    background:radial-gradient(1200px 700px at 15% -10%,#5b2ec0 0,transparent 55%),
+               radial-gradient(1000px 600px at 110% 10%,#1e3a8a 0,transparent 50%),
+               linear-gradient(165deg,#2a1264,#1b1140 60%,#160e33)}
+  .wrap{max-width:1080px;margin:0 auto;padding:56px 28px 70px}
+  .brand{display:flex;align-items:center;gap:14px;margin-bottom:40px}
+  .mark{width:54px;height:54px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .mark span{font-family:var(--display);font-weight:900;font-size:27px;color:var(--purple-deep)}
+  .mark i{position:absolute;top:7px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
+  .brand .nm{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:.02em;line-height:1.1}
+  .brand .sb{font-size:10px;font-weight:700;letter-spacing:.28em;color:#c9bdf2}
+  h1{font-family:var(--display);font-weight:900;font-size:40px;letter-spacing:-.02em;margin:0 0 12px;max-width:760px;line-height:1.08}
+  .lede{font-size:16px;color:#d8d2f0;max-width:640px;line-height:1.6;margin-bottom:36px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+  a.card{display:block;text-decoration:none;color:inherit;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:22px;backdrop-filter:blur(6px);transition:transform .15s ease,background .15s ease,border-color .15s ease}
+  a.card:hover{transform:translateY(-3px);background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.28)}
+  .row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .ic svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:2}
+  .i-own{background:linear-gradient(140deg,#7c3aed,#4c1d95)}
+  .i-inv{background:linear-gradient(140deg,#0d9488,#0f766e)}
+  .i-mac{background:linear-gradient(140deg,#2f6bff,#1e3a8a)}
+  .i-misc{background:linear-gradient(140deg,#f59e0b,#c2410c)}
+  .i-crm{background:linear-gradient(140deg,#e11d48,#9f1239)}
+  .i-all{background:rgba(255,255,255,.16)}
+  .tt{font-family:var(--display);font-weight:800;font-size:17px}
+  .who{font-size:11px;font-weight:700;letter-spacing:.05em;padding:3px 8px;border-radius:7px;color:#fff;display:inline-block;margin-top:4px}
+  .w-owner{background:var(--purple-2)}.w-recv{background:var(--teal)}.w-filler{background:var(--blue)}.w-all{background:rgba(255,255,255,.2)}
+  .desc{font-size:13px;color:#cfc8ea;line-height:1.55}
+  .go{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#c3b6ff;margin-top:14px}
+  .go svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4}
+  .foot{margin-top:44px;font-size:12px;color:#9a90c8;border-top:1px solid rgba(255,255,255,.1);padding-top:20px;line-height:1.6}
+  .foot b{color:#d8d2f0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="mark"><span>G</span><i></i></div>
+    <div><div class="nm">GAME GUYS</div><div class="sb">OPERATIONS</div></div>
+  </div>
+
+  <h1>Proposed UI — 5-tab navigation</h1>
+  <p class="lede">A brand-matched preview of the reorganised dashboard. Each tab below is a live mockup with sample data. Pick a screen to explore.</p>
+
+  <div class="grid">
+    <a class="card" href="ownership.html">
+      <div class="row"><div class="ic i-own"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div>
+        <div><div class="tt">Ownership</div><span class="who w-owner">OWNER</span></div></div>
+      <div class="desc">Accounting &amp; sales, machine/product performance, and forecast. Financials · Stats · Forecast sub-views.</div>
+      <span class="go">Open screen <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card" href="inventory.html">
+      <div class="row"><div class="ic i-inv"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg></div>
+        <div><div class="tt">Inventory &amp; Stock</div><span class="who w-recv">RECEIVER</span></div></div>
+      <div class="desc">On-hand &amp; incoming stock synced from Nayax + Shopify, AI stock camera, POs &amp; invoices with AI PDF reader.</div>
+      <span class="go">Open screen <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card" href="machines.html">
+      <div class="row"><div class="ic i-mac"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></div>
+        <div><div class="tt">Machines</div><span class="who w-filler">FILLER</span></div></div>
+      <div class="desc">The filler "My Machines" view — assigned machines, fill quantities with costs, print for bad reception, sync to Nayax.</div>
+      <span class="go">Open screen <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card" href="miscellaneous.html">
+      <div class="row"><div class="ic i-misc"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+        <div><div class="tt">Miscellaneous</div><span class="who w-all">ALL</span></div></div>
+      <div class="desc">Release calendar — upcoming product drops by month, language, and preorder status.</div>
+      <span class="go">Open screen <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card" href="crm.html">
+      <div class="row"><div class="ic i-crm"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/></svg></div>
+        <div><div class="tt">CRM</div><span class="who w-all">OWNER / TEAM</span></div></div>
+      <div class="desc">Supplier contacts (no credentials stored) and a team task board with assignee notifications.</div>
+      <span class="go">Open screen <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card" href="all-in-one.html">
+      <div class="row"><div class="ic i-all"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+        <div><div class="tt">All-in-one switcher</div><span class="who w-all">DEMO</span></div></div>
+      <div class="desc">All five tabs in a single window — click the sidebar to flip between screens. Best for a quick walk-through.</div>
+      <span class="go">Open switcher <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+
+  <div class="foot">
+    <b>Game Guys Operations</b> — proposed navigation prototype. Static mockups with sample data (no live database).<br>
+    5 top-level tabs: Ownership · Inventory &amp; Stock · Machines · Miscellaneous · CRM.
+  </div>
+</div>
+</body>
+</html>

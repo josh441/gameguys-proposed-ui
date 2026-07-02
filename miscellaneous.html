@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Game Guys — Miscellaneous</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#6d28d9;--purple-2:#7c3aed;--purple-deep:#4c1d95;--indigo:#3b1d8f;
+    --purple-soft:#f3efff;--purple-line:#e7ddfb;
+    --blue:#2563eb;--blue-soft:#e8f0ff;
+    --bg:#eef0f5;--surface:#fff;--line:#e7e9ef;--line2:#eef0f4;
+    --fg:#1a1f39;--fg2:#5d6379;--fg3:#9a9fb2;
+    --green:#22c55e;--green-txt:#16a34a;--green-soft:#dcfce7;
+    --amber:#f59e0b;--amber-soft:#fdf3e0;--red:#ef4444;--red-soft:#fdeceb;
+    --teal:#0d9488;--teal-soft:#d9f5f1;
+    --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --display:"Montserrat","Inter",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;margin:0}
+  svg{display:block}
+  .app{display:grid;grid-template-columns:216px 1fr;height:100vh;overflow:hidden}
+  .side{background:linear-gradient(165deg,var(--indigo),var(--purple-deep) 55%,var(--purple));color:#fff;display:flex;flex-direction:column;padding:20px 14px}
+  .logo{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0 16px}
+  .logo .mark{width:50px;height:50px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+  .logo .mark span{font-family:var(--display);font-weight:900;font-size:25px;color:var(--purple-deep)}
+  .logo .mark i{position:absolute;top:6px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
+  .logo .nm{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.02em}
+  .logo .sb{font-size:9px;font-weight:700;letter-spacing:.26em;color:#c9bdf2}
+  .tabhint{font-size:9px;font-weight:800;letter-spacing:.16em;color:#b3a6e6;padding:4px 12px 6px;text-transform:uppercase}
+  .nav{display:flex;flex-direction:column;gap:4px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:11px;color:#d8d0f5;text-decoration:none;font-size:13.5px;font-weight:600}
+  .nav a svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;opacity:.9}
+  .nav a.active{background:rgba(255,255,255,.15);color:#fff}
+  .nav a.active svg{color:#8ab4ff;opacity:1}
+  .side .spacer{flex:1}
+  .uwrap{border-top:1px solid rgba(255,255,255,.14);padding-top:12px}
+  .user{display:flex;align-items:center;gap:10px;padding:6px}
+  .user .av{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:12px}
+  .user .who{font-weight:700;font-size:13px}.user .role{font-size:11px;color:#bcb2e6}
+  .user .cv{margin-left:auto;opacity:.7}
+  .main{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  .content{flex:1;overflow:auto;padding:22px 26px 40px}
+  .head{margin-bottom:16px}
+  h1{font-size:27px;font-weight:800}
+  .subtitle{font-size:13px;color:var(--fg2);margin-top:6px}
+  .kpis{display:grid;gap:13px;margin-bottom:18px;grid-template-columns:repeat(4,1fr)}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:15px 16px;box-shadow:0 1px 2px rgba(26,31,57,.04)}
+  .kpi .l{font-size:10.5px;color:var(--fg2);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .kpi .v{font-family:var(--display);font-size:24px;font-weight:800;margin-top:8px}
+  .kpi .d{font-size:11px;margin-top:5px;font-weight:600;color:var(--fg3)}
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 1px 2px rgba(26,31,57,.04);margin-bottom:16px}
+  .card h3{font-size:14px;font-weight:800;margin-bottom:4px}
+  .card .cap{font-size:11.5px;color:var(--fg3);margin-bottom:12px}
+  .card.tight{margin-bottom:0}
+  .calmonth{margin-bottom:6px}
+  .mh{display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:var(--fg2);padding:12px 4px 8px;border-bottom:1px solid var(--line)}
+  .rel{display:flex;align-items:center;gap:14px;padding:13px 4px;border-bottom:1px solid var(--line2)}
+  .rel:last-child{border-bottom:none}
+  .rel .date{width:58px;text-align:center;flex:0 0 auto}
+  .rel .date .d{font-family:var(--display);font-weight:800;font-size:16px}
+  .rel .date .in{font-size:9px;color:var(--fg3);text-transform:uppercase;letter-spacing:.04em}
+  .rel .nm{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .rel .code{font-size:11px;color:var(--fg3);font-weight:600}
+  .rel .art{width:38px;height:44px;border-radius:8px;flex:0 0 auto;color:#fff;display:flex;align-items:flex-end;justify-content:center;font-family:var(--display);font-weight:900;font-size:11px;padding-bottom:4px;box-shadow:0 2px 6px rgba(26,31,57,.18)}
+  .a1{background:linear-gradient(160deg,#3b6fd4,#1e3a8a)}.a2{background:linear-gradient(160deg,#7c3aed,#4c1d95)}
+  .a3{background:linear-gradient(160deg,#0d9488,#0f766e)}.a4{background:linear-gradient(160deg,#e11d48,#9f1239)}
+  .badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px}
+  .b-green{background:var(--green-soft);color:var(--green-txt)}.b-amber{background:var(--amber-soft);color:var(--amber)}
+  .b-blue{background:var(--blue-soft);color:var(--blue)}.b-purple{background:var(--purple-soft);color:var(--purple)}.b-teal{background:var(--teal-soft);color:var(--teal)}
+  .up{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line2)}
+  .up:last-child{border-bottom:none}
+  .up .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .up .t{font-weight:600;font-size:12.5px}.up .s{font-size:11px;color:var(--fg3)}
+  .up .r{margin-left:auto;font-family:var(--display);font-weight:800;font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><div class="mark"><span>G</span><i></i></div><div class="nm">GAME GUYS</div><div class="sb">OPERATIONS</div></div>
+    <div class="tabhint">Navigation</div>
+    <nav class="nav">
+      <a><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg> Ownership</a>
+      <a><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg> Inventory &amp; Stock</a>
+      <a><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg> Machines</a>
+      <a class="active"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Miscellaneous</a>
+      <a><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/></svg> CRM</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="uwrap"><div class="user"><div class="av">GG</div><div><div class="who">Game Guys</div><div class="role">Owner · Admin</div></div>
+      <svg class="cv" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div>
+  </aside>
+
+  <div class="main">
+    <div class="content">
+      <div class="head">
+        <h1>Miscellaneous</h1>
+        <div class="subtitle">Release calendar — product timings and upcoming drops so buying never misses a release.</div>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="l">Releases next 30d</div><div class="v">6</div><div class="d">2 need a preorder PO</div></div>
+        <div class="kpi"><div class="l">Preordered / covered</div><div class="v" style="color:var(--green-txt)">4</div><div class="d">POs in flight</div></div>
+        <div class="kpi"><div class="l">Pre-payments due</div><div class="v" style="color:var(--amber)">2</div><div class="d">$8,400 scheduled</div></div>
+        <div class="kpi"><div class="l">Tracked total</div><div class="v">31</div><div class="d">next 12 months</div></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card tight">
+          <h3>Release calendar</h3><div class="cap">Grouped by month. Badges show language and whether stock is secured.</div>
+          <div class="calmonth">
+            <div class="mh"><span>JUNE 2025</span><span>3 releases</span></div>
+            <div class="rel"><div class="art a1">SV</div><div class="date"><div class="in">in 6d</div><div class="d">13</div></div><div style="flex:1"><div class="nm">Destined Rivals <span class="code">SV10</span> <span class="badge b-blue">EN</span> <span class="badge b-green">✓ Preordered · PO-1042</span></div></div></div>
+            <div class="rel"><div class="art a2">OP</div><div class="date"><div class="in">in 13d</div><div class="d">20</div></div><div style="flex:1"><div class="nm">OP-09 Emperors <span class="code">OP-09</span> <span class="badge b-purple">JP</span> <span class="badge b-amber">Needs preorder</span></div></div></div>
+            <div class="rel"><div class="art a3">MB</div><div class="date"><div class="in">in 20d</div><div class="d">27</div></div><div style="flex:1"><div class="nm">Mystery Box — Anime S3 <span class="badge b-teal">Blind box</span> <span class="badge b-green">✓ Preordered</span></div></div></div>
+          </div>
+          <div class="calmonth">
+            <div class="mh"><span>JULY 2025</span><span>2 releases</span></div>
+            <div class="rel"><div class="art a1">PE</div><div class="date"><div class="in">in 34d</div><div class="d">11</div></div><div style="flex:1"><div class="nm">Prismatic Evolutions <span class="code">SV11</span> <span class="badge b-blue">EN</span> <span class="badge b-amber">Needs preorder</span></div></div></div>
+            <div class="rel"><div class="art a2">TF</div><div class="date"><div class="in">in 41d</div><div class="d">18</div></div><div style="flex:1"><div class="nm">Terastal Festival <span class="code">SV-TF</span> <span class="badge b-purple">JP</span> <span class="badge b-green">✓ Preordered</span></div></div></div>
+          </div>
+          <div class="calmonth">
+            <div class="mh"><span>AUGUST 2025</span><span>1 release</span></div>
+            <div class="rel"><div class="art a4">TC</div><div class="date"><div class="in">in 68d</div><div class="d">14</div></div><div style="flex:1"><div class="nm">TOPPS Chrome 2026 NBA <span class="code">Rookie</span> <span class="badge b-blue">EN</span> <span class="badge b-amber">Watching</span></div></div></div>
+          </div>
+        </div>
+
+        <div class="card tight">
+          <h3>Action needed</h3><div class="cap">Releases without secured stock.</div>
+          <div class="up"><span class="dot" style="background:var(--amber)"></span><div><div class="t">OP-09 Emperors (JP)</div><div class="s">Preorder closes in 4 days</div></div><span class="r" style="color:var(--amber)">$4,200</span></div>
+          <div class="up"><span class="dot" style="background:var(--amber)"></span><div><div class="t">Prismatic Evolutions (EN)</div><div class="s">Allocation tightening</div></div><span class="r" style="color:var(--amber)">$4,200</span></div>
+          <div class="up"><span class="dot" style="background:var(--fg3)"></span><div><div class="t">TOPPS Chrome NBA</div><div class="s">Confirm interest before Jul</div></div><span class="r muted">TBD</span></div>
+          <div style="margin-top:14px;padding:12px;background:var(--purple-soft);border-radius:11px;font-size:12px;color:var(--purple);font-weight:600">Tip: securing OP-09 + Prismatic now protects ~$18k of projected Q3 sales.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
