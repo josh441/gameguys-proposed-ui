@@ -131,6 +131,18 @@
   .rec .ic{width:30px;height:30px;border-radius:8px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
   .rec .ic svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
   .rec .tt{font-weight:700;font-size:13px}.rec .ss{font-size:11.5px;color:var(--fg2);margin-top:2px;line-height:1.45}
+  .card.p0{padding:0}
+  .card .ph{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 6px}
+  .live{font-size:10px;font-weight:800;color:var(--green-txt);letter-spacing:.05em}
+  .livebox{display:flex;align-items:center;gap:11px;background:var(--purple-soft);border:1px solid var(--purple-line);border-radius:12px;padding:12px 15px;margin-bottom:16px;font-size:12.5px;color:var(--fg2);line-height:1.5}
+  .livebox svg{width:19px;height:19px;stroke:var(--purple);fill:none;stroke-width:2;flex:0 0 auto}
+  .callout{background:var(--purple-soft);border:1px solid var(--purple-line);border-radius:14px;padding:16px 18px;margin-top:16px;font-size:12.5px;color:var(--fg2);line-height:1.6}
+  .callout b{color:var(--purple)}
+  .callout .steps{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+  .callout .step{display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--purple-line);border-radius:10px;padding:9px 13px}
+  .callout .step .t{font-size:10.5px;color:var(--fg3);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .callout .step .a{font-family:var(--display);font-weight:800;font-size:16px}
+  .callout .arrow{color:var(--purple);font-weight:800;font-size:16px}
 </style>
 </head>
 <body>
@@ -141,9 +153,9 @@
     <div class="tabhint">Navigation</div>
     <nav class="nav">
       <a href="ownership.html" class="active"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg> Ownership</a>
-      <a href="inventory.html"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg> Inventory &amp; Stock</a>
+      <a href="inventory.html"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg> Inventory</a>
       <a href="machines.html"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg> Machines</a>
-      <a href="miscellaneous.html"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Miscellaneous</a>
+      <a href="miscellaneous.html"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Calendar</a>
       <a href="crm.html"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/></svg> CRM</a>
     </nav>
     <div class="spacer"></div>
@@ -162,6 +174,7 @@
 
       <div class="subtabs">
         <button class="on" data-v="fin">Financials &amp; Sales</button>
+        <button data-v="value">Machine Value</button>
         <button data-v="stats">Machine &amp; Product Stats</button>
         <button data-v="fore">Forecast</button>
       </div>
@@ -227,6 +240,43 @@
                 <tr><td style="font-weight:800">Net profit</td><td class="num" style="color:var(--green-txt)">$41,880</td></tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== MACHINE VALUE ===== -->
+      <section class="view" id="v-value">
+        <div class="livebox">
+          <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/></svg>
+          <span>Each machine tracks <b>cost</b> (what you paid) and <b>retail</b> (what it sells for). Value updates automatically: a sale lowers it, a restock raises it — so the number is always current.</span>
+        </div>
+        <div class="kpis k4">
+          <div class="kpi"><div class="l">Portfolio retail value</div><div class="v">$12,480</div><div class="d up">▲ live — updates on each sale</div></div>
+          <div class="kpi"><div class="l">Portfolio cost basis</div><div class="v">$7,940</div><div class="d muted">what you paid for it</div></div>
+          <div class="kpi"><div class="l">Unrealised margin</div><div class="v" style="color:var(--green-txt)">$4,540</div><div class="d muted">36.4% blended</div></div>
+          <div class="kpi"><div class="l">Machines tracked</div><div class="v">24</div><div class="d muted">1,842 units loaded</div></div>
+        </div>
+        <div class="card tight p0">
+          <div class="ph"><h3 style="margin:0">Value by machine</h3><span class="live">● LIVE</span></div>
+          <table>
+            <thead><tr><th>Machine</th><th class="num">Units</th><th class="num">Cost value</th><th class="num">Retail value</th><th class="num">Margin</th><th class="num">Today's change</th></tr></thead>
+            <tbody>
+              <tr><td>GGV-001 · Westfield Parramatta</td><td class="num">142</td><td class="num">$980</td><td class="num">$1,540</td><td class="num">36%</td><td class="num down">▼ $65 sold</td></tr>
+              <tr><td>GGV-004 · Bondi Junction</td><td class="num">168</td><td class="num">$1,120</td><td class="num">$1,760</td><td class="num">36%</td><td class="num up">▲ $140 restocked</td></tr>
+              <tr><td>GGV-007 · Chatswood Chase</td><td class="num">96</td><td class="num">$610</td><td class="num">$980</td><td class="num">38%</td><td class="num down">▼ $120 sold</td></tr>
+              <tr><td>GGV-011 · Macquarie Centre</td><td class="num">88</td><td class="num">$560</td><td class="num">$900</td><td class="num">38%</td><td class="num down">▼ $30 sold</td></tr>
+              <tr><td>GGV-018 · Warringah Mall</td><td class="num">60</td><td class="num">$410</td><td class="num">$660</td><td class="num">38%</td><td class="num up">▲ $150 restocked</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <b>How the value stays current</b> — worked example for one machine:
+          <div class="steps">
+            <div class="step"><span class="t">Start of day</span><span class="a">$1,000</span></div>
+            <span class="arrow">→</span>
+            <div class="step"><span class="t">Customer buys $50</span><span class="a" style="color:var(--red)">$950</span></div>
+            <span class="arrow">→</span>
+            <div class="step"><span class="t">Filler restocks $100</span><span class="a" style="color:var(--green-txt)">$1,050</span></div>
           </div>
         </div>
       </section>

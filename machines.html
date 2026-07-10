@@ -121,6 +121,27 @@
   .total .lab{font-size:10.5px;font-weight:800;letter-spacing:.05em;color:var(--fg2)}
   .total .amt{font-family:var(--display);font-weight:900;font-size:25px;color:var(--purple)}
   .total .chev{color:var(--fg3)}
+  /* flexible pick list */
+  .pltoolbar{display:flex;align-items:center;gap:10px;padding:11px 18px;background:#faf9fe;border-bottom:1px solid var(--line2);font-size:12px;color:var(--fg2);line-height:1.4}
+  .pltoolbar svg{width:16px;height:16px;stroke:var(--purple);fill:none;stroke-width:2;flex:0 0 auto}
+  .pltoolbar .sp{flex:1}
+  .toggle{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--fg2);font-size:11.5px;white-space:nowrap}
+  .toggle .sw{width:34px;height:20px;border-radius:999px;background:var(--purple);position:relative;flex:0 0 auto}
+  .toggle .sw::after{content:"";position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff}
+  .pin{font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
+  .pin-ok{background:var(--green-soft);color:var(--green-txt)}
+  .pin-part{background:#fdf3e0;color:var(--amber)}
+  .pin-out{background:#fdeceb;color:var(--red)}
+  .stepper{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
+  .stepper button{border:none;background:#f4f3fb;width:26px;height:32px;font-size:15px;font-weight:800;color:var(--purple);cursor:pointer;font-family:var(--display)}
+  .stepper .val{width:38px;text-align:center;font-family:var(--display);font-weight:800;font-size:15px}
+  .warn{font-size:10px;color:var(--amber);font-weight:700;margin-top:5px}
+  .rowout{background:#fdfbfb}.rowout .stepper{opacity:.45}
+  .miniact{display:inline-flex;gap:6px;margin-top:7px}
+  .miniact button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;font-size:10px;font-weight:700;color:var(--fg2);cursor:pointer}
+  .miniact button.on{background:var(--red);color:#fff;border-color:var(--red)}
+  .addbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px 18px;background:#faf9fe;border:none;border-top:1px dashed var(--purple-line);color:var(--purple);font-weight:700;font-size:12.5px;cursor:pointer}
+  .addbtn svg{width:16px;height:16px;stroke:var(--purple);fill:none;stroke-width:2.2}
 </style>
 </head>
 <body>
@@ -130,9 +151,9 @@
     <div class="tabhint">Navigation</div>
     <nav class="nav">
       <a href="ownership.html"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg> Ownership</a>
-      <a href="inventory.html"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg> Inventory &amp; Stock</a>
+      <a href="inventory.html"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg> Inventory</a>
       <a href="machines.html" class="active"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg> Machines</a>
-      <a href="miscellaneous.html"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Miscellaneous</a>
+      <a href="miscellaneous.html"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Calendar</a>
       <a href="crm.html"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/></svg> CRM</a>
     </nav>
     <div class="spacer"></div>
@@ -168,17 +189,24 @@
           <span class="m"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <b>25 min</b> Est. route time</span>
           <div class="right"><button class="collapse">Collapse <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 15l6-6 6 6"/></svg></button><div class="updot"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></div></div>
         </div>
+        <div class="pltoolbar">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <span>This is a <b>suggested</b> pick list — adjust it to what's actually in the warehouse. Quantities are capped to what's available; flag out-of-stock items so the office can reorder.</span>
+          <span class="sp"></span>
+          <span class="toggle"><span class="sw"></span> Only show what I can fill</span>
+        </div>
         <table class="dtable">
-          <thead><tr><th>Product</th><th>Current Stock</th><th>Qty to Bring</th><th>Packs/Box</th><th>Cost/Pack</th><th>Est. Line Cost</th></tr></thead>
+          <thead><tr><th>Product</th><th>In machine</th><th>Warehouse</th><th>Qty to bring</th><th>Cost/Pack</th><th>Est. Line Cost</th></tr></thead>
           <tbody>
-            <tr><td><div class="prod"><div class="thumb2 th-rb">RB</div><div><div class="pname">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250</div></div></div></td><td><div class="stk">3</div><div class="sub2">(1 pack)</div></td><td><div class="qtybox"><div class="inp">10</div><div class="pk">(10 packs)</div></div></td><td>24</td><td>$3.20</td><td class="money">$32.00</td></tr>
-            <tr><td><div class="prod"><div class="thumb2 th-pr">P</div><div><div class="pname">Pringles Original 134g</div><div class="sku">SKU: PR-134</div></div></div></td><td><div class="stk">2</div><div class="sub2">(1 pack)</div></td><td><div class="qtybox"><div class="inp">6</div><div class="pk">(6 packs)</div></div></td><td>12</td><td>$2.50</td><td class="money">$15.00</td></tr>
-            <tr><td><div class="prod"><div class="thumb2 th-pk">ポ</div><div><div class="pname">ポッキー チョコレート <span class="custom">Custom 20 packs/box</span></div><div class="sku">Pocky Chocolate · SKU: JP-PC-2P</div></div></div></td><td><div class="stk">0</div><div class="sub2">(0 packs)</div></td><td><div class="qtybox"><div class="inp">20</div><div class="pk">(20 packs)</div></div></td><td>20<div class="sub2">(Custom)</div></td><td>$1.80</td><td class="money">$36.00</td></tr>
+            <tr><td><div class="prod"><div class="thumb2 th-rb">RB</div><div><div class="pname">Red Bull Energy Drink 250ml <span class="pin pin-ok">In stock</span></div><div class="sku">SKU: RB-250 · 24 packs/box</div></div></div></td><td><div class="stk">3</div><div class="sub2">(1 pack)</div></td><td><div class="stk">240</div><div class="sub2">packs</div></td><td><div class="stepper"><button>−</button><span class="val">10</span><button>+</button></div></td><td>$3.20</td><td class="money">$32.00</td></tr>
+            <tr><td><div class="prod"><div class="thumb2 th-pr">P</div><div><div class="pname">Pringles Original 134g <span class="pin pin-ok">In stock</span></div><div class="sku">SKU: PR-134 · 12 packs/box</div></div></div></td><td><div class="stk">2</div><div class="sub2">(1 pack)</div></td><td><div class="stk">40</div><div class="sub2">packs</div></td><td><div class="stepper"><button>−</button><span class="val">6</span><button>+</button></div></td><td>$2.50</td><td class="money">$15.00</td></tr>
+            <tr><td><div class="prod"><div class="thumb2 th-pk">ポ</div><div><div class="pname">ポッキー チョコレート <span class="custom">Custom 20/box</span> <span class="pin pin-part">Only 12 left</span></div><div class="sku">Pocky Chocolate · SKU: JP-PC-2P</div></div></div></td><td><div class="stk">0</div><div class="sub2">(0 packs)</div></td><td><div class="stk" style="color:var(--amber)">12</div><div class="sub2">packs</div></td><td><div class="stepper"><button>−</button><span class="val">12</span><button>+</button></div><div class="warn">Wanted 20 · capped to 12 available</div></td><td>$1.80</td><td class="money">$21.60</td></tr>
             <tr><td colspan="6" class="cnote"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> Customs duty &amp; GST will be added later at checkout.</span></td></tr>
-            <tr><td><div class="prod"><div class="thumb2 th-do">D</div><div><div class="pname">Doritos Nacho Cheese 170g</div><div class="sku">SKU: DO-170</div></div></div></td><td><div class="stk">1</div><div class="sub2">(1 pack)</div></td><td><div class="qtybox"><div class="inp">8</div><div class="pk">(8 packs)</div></div></td><td>14</td><td>$2.30</td><td class="money">$18.40</td></tr>
+            <tr class="rowout"><td><div class="prod"><div class="thumb2 th-do">D</div><div><div class="pname">Doritos Nacho Cheese 170g <span class="pin pin-out">Out of stock</span></div><div class="sku">SKU: DO-170 · 14 packs/box</div><div class="miniact"><button class="on">Skip for now</button><button>Substitute</button><button>Notify office</button></div></div></div></td><td><div class="stk">1</div><div class="sub2">(1 pack)</div></td><td><div class="stk" style="color:var(--red)">0</div><div class="sub2">packs</div></td><td><div class="stepper"><button>−</button><span class="val">0</span><button>+</button></div></td><td>$2.30</td><td class="money">—</td></tr>
           </tbody>
         </table>
-        <div class="dfoot"><span class="l">Estimated Cost for GGV-001</span><span class="v">$101.40</span></div>
+        <button class="addbtn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add a product that isn't on the list</button>
+        <div class="dfoot"><span class="l" style="margin-right:auto">2 in stock · 1 adjusted · 1 out of stock</span><span class="l">Estimated Cost for GGV-001</span><span class="v">$68.60</span></div>
       </div>
     </div>
 
