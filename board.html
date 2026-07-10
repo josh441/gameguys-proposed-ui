@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Game Guys — Planning Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#6d28d9;--purple-2:#7c3aed;--purple-deep:#4c1d95;--indigo:#3b1d8f;
+    --purple-soft:#f3efff;--purple-line:#e7ddfb;--blue:#2563eb;--blue-soft:#e8f0ff;
+    --bg:#f4f2fb;--surface:#fff;--line:#e7e9ef;--fg:#1a1f39;--fg2:#5d6379;--fg3:#9a9fb2;
+    --teal:#0d9488;--green:#16a34a;--amber:#f59e0b;--red:#ef4444;
+    --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --display:"Montserrat","Inter",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;margin:0}
+  .top{background:linear-gradient(150deg,#2a1264,#1b1140 60%,#160e33);color:#fff;padding:34px 30px 30px}
+  .top .wrap{max-width:1180px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .mark{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+  .mark span{font-family:var(--display);font-weight:900;font-size:22px;color:var(--purple-deep)}
+  .mark i{position:absolute;top:6px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+  .brand .nm{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.05}
+  .brand .sb{font-size:9px;font-weight:700;letter-spacing:.26em;color:#c9bdf2}
+  .top h1{font-size:30px;font-weight:900;margin-bottom:8px}
+  .top p{color:#d8d2f0;font-size:14px;max-width:720px;line-height:1.55;margin:0}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13px;padding:11px 16px;border-radius:11px;text-decoration:none;cursor:pointer;border:none}
+  .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+  .btn-p{background:#fff;color:var(--purple-deep)}
+  .btn-o{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3)}
+  .wrap{max-width:1180px;margin:0 auto;padding:26px 30px 60px}
+  .howto{background:var(--purple-soft);border:1px solid var(--purple-line);border-radius:14px;padding:16px 18px;margin-bottom:26px;font-size:13px;color:var(--fg2);line-height:1.6}
+  .howto b{color:var(--purple)}
+  .howto code{background:#fff;border:1px solid var(--purple-line);border-radius:6px;padding:2px 7px;font-size:12px}
+  .sec-title{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin:30px 0 12px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(26,31,57,.05);margin-bottom:18px}
+  .card h3{font-size:16px;font-weight:800;margin-bottom:4px}
+  .card .cap{font-size:12.5px;color:var(--fg3);margin-bottom:16px;line-height:1.5}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+  .mermaid{overflow-x:auto}
+  .rules{display:grid;gap:10px}
+  .rule{display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.5}
+  .rule .n{width:24px;height:24px;border-radius:7px;background:var(--purple);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;font-family:var(--display)}
+  .rule b{color:var(--fg)}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="wrap">
+      <div class="brand"><div class="mark"><span>G</span><i></i></div><div><div class="nm">GAME GUYS</div><div class="sb">OPERATIONS</div></div></div>
+      <h1>Planning Board — flows for the build</h1>
+      <p>The intended app flow in a form your developer can drop straight into an AI assistant so it understands what to build. The visual prototype shows the <em>look</em>; this board explains the <em>behaviour</em>.</p>
+      <div class="cta">
+        <button class="btn btn-p" id="copyBtn"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy build plan for AI</button>
+        <a class="btn btn-o" href="https://github.com/josh441/gameguys-proposed-ui/blob/main/BUILD-PLAN.md" target="_blank"><svg viewBox="0 0 24 24"><path d="M9 18c-4.5 1.5-4.5-2.5-6-3m12 5v-3.5a3 3 0 0 0-.9-2.4c3-.3 6-1.5 6-6.6a5 5 0 0 0-1.4-3.5 4.6 4.6 0 0 0-.1-3.5s-1.1-.3-3.6 1.4a12 12 0 0 0-6.4 0C6.6 1.7 5.5 2 5.5 2a4.6 4.6 0 0 0-.1 3.5A5 5 0 0 0 4 9c0 5 3 6.3 6 6.6a3 3 0 0 0-.9 2.3V22"/></svg> Open the full plan</a>
+        <a class="btn btn-o" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg> Back to prototype</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="howto">
+      <b>How to use this:</b> click <b>“Copy build plan for AI”</b> (copies the full spec to your clipboard), then paste it into your AI coding assistant in the repo along with the prompt:
+      <code>“Use this build plan; the live prototype is the visual reference. Reorganise into these 5 tabs and implement the flows without duplicating existing deduct logic.”</code>
+    </div>
+
+    <div class="sec-title">Golden rules the AI must respect</div>
+    <div class="card">
+      <div class="rules">
+        <div class="rule"><div class="n">1</div><div><b>Surface, don’t rebuild.</b> Xero, Nayax/Shopify sync, PDF PO reader, release calendar, supplier + task features already exist — reorganise and expose them.</div></div>
+        <div class="rule"><div class="n">2</div><div><b>Split source of truth.</b> Nayax = sales &amp; price truth (we pull/mirror). App = stock truth (deduct on fill), reconciled by the existing route reconciliation.</div></div>
+        <div class="rule"><div class="n">3</div><div><b>Deduct exactly once.</b> Stock is withdrawn only at “Mark route complete” via the existing <code>picklist_final_rows</code> trigger. The filler hub must not add a second deduction (double-count risk).</div></div>
+        <div class="rule"><div class="n">4</div><div><b>Fillers are scoped.</b> A filler only ever sees their assigned machines (individual assignments; routes are a bulk convenience).</div></div>
+        <div class="rule"><div class="n">5</div><div><b>Five tabs, max.</b> Ownership · Inventory · Machines · Calendar · CRM. Everything deeper is a sub-tab. No stored supplier credentials.</div></div>
+      </div>
+    </div>
+
+    <div class="sec-title">Navigation (information architecture)</div>
+    <div class="card">
+      <div class="cap">Five top-level tabs mapped to who uses them. Sub-views live inside each screen.</div>
+      <pre class="mermaid">
+flowchart LR
+  Root[Game Guys Operations] --> O[Ownership - owner]
+  Root --> I[Inventory - receiver]
+  Root --> M[Machines - filler]
+  Root --> C[Calendar - all]
+  Root --> R[CRM - owner/team]
+  O --> O1[Financials & Sales]
+  O --> O2[Machine Value]
+  O --> O3[Machine & Product Stats]
+  O --> O4[Forecast]
+  I --> I1[Stock Overview]
+  I --> I2[POs & Invoices]
+  R --> R1[Suppliers]
+  R --> R2[Task Management]
+      </pre>
+    </div>
+
+    <div class="sec-title">Core flows</div>
+    <div class="card">
+      <h3>Filler fill workflow (flexible pick list)</h3>
+      <div class="cap">Warehouse-aware quantities, out-of-stock handling, and the single authoritative deduction at the end.</div>
+      <pre class="mermaid">
+flowchart TD
+  A[Filler opens Machines tab] --> B[Sees ONLY assigned machines]
+  B --> C[Tap Start Fill]
+  C --> D[Suggested pick list from Nayax low-stock + par levels]
+  D --> E{Enough warehouse stock per line?}
+  E -- Yes --> F[Keep suggested qty]
+  E -- Partial --> G[Auto-cap to available: wanted X, capped to Y]
+  E -- Out of stock --> H[Skip / Substitute / Notify office]
+  F --> I[Edit quantities with +/- stepper]
+  G --> I
+  H --> I
+  I --> J[Add ad-hoc product if needed]
+  J --> K[Print / PDF for poor reception]
+  K --> L[Fill machine + set prices on Nayax]
+  L --> M[Mark route complete]
+  M --> N[Insert picklist_final_rows]
+  N --> P[Trigger deducts warehouse stock ONCE]
+  P --> Q[Reconciliation vs Nayax sales]
+      </pre>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Source of truth</h3>
+        <div class="cap">Who owns which number.</div>
+        <pre class="mermaid">
+flowchart TD
+  N[Nayax: sales + price truth] -->|pull entries| APP[App - mirror]
+  APP -->|deduct at fill| S[App: stock truth]
+  N --> RC[Route reconciliation]
+  S --> RC
+  RC --> V[Variance per filler / machine]
+        </pre>
+      </div>
+      <div class="card">
+        <h3>Machine Value (live)</h3>
+        <div class="cap">Tracks cost vs retail; updates on every sale and restock.</div>
+        <pre class="mermaid">
+flowchart TD
+  Start[Start of day: retail value $1,000] -->|customer buys $50| Down[$950]
+  Down -->|filler restocks $100| Up[$1,050]
+        </pre>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Inventory receiving (with AI)</h3>
+        <div class="cap">AI PDF reader on POs, AI camera on receiving.</div>
+        <pre class="mermaid">
+flowchart TD
+  PO[Create PO] --> AIP[AI PDF reader extracts lines + costs]
+  AIP --> CF[Confirm PO]
+  CF --> INC[Incoming synced Nayax/Shopify]
+  INC --> RCV[Receiver counts via AI camera]
+  RCV --> WH[Warehouse stock increases]
+        </pre>
+      </div>
+      <div class="card">
+        <h3>Task assignment</h3>
+        <div class="cap">Assign work, assignee is notified.</div>
+        <pre class="mermaid">
+flowchart TD
+  T[Anyone creates a task] --> AS[Assign to teammate]
+  AS --> NT[Assignee notified]
+  NT --> BD[Board: To do / In progress / Done]
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Build plan copied to clipboard</div>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad:true, theme:'base',
+    themeVariables:{
+      primaryColor:'#f3efff', primaryBorderColor:'#7c3aed', primaryTextColor:'#1a1f39',
+      lineColor:'#7c3aed', fontFamily:'Inter, sans-serif', fontSize:'13px'
+    }
+  });
+</script>
+<script>
+  const RAW='https://raw.githubusercontent.com/josh441/gameguys-proposed-ui/main/BUILD-PLAN.md';
+  const toast=document.getElementById('toast');
+  document.getElementById('copyBtn').addEventListener('click', async ()=>{
+    try{
+      const md=await (await fetch(RAW,{cache:'no-store'})).text();
+      await navigator.clipboard.writeText(md);
+      toast.textContent='Build plan copied to clipboard';
+    }catch(e){
+      window.open('https://github.com/josh441/gameguys-proposed-ui/blob/main/BUILD-PLAN.md','_blank');
+      toast.textContent='Opened the plan — copy from there';
+    }
+    toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2600);
+  });
+</script>
+</body>
+</html>
