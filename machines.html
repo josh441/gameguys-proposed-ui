@@ -121,27 +121,48 @@
   .total .lab{font-size:10.5px;font-weight:800;letter-spacing:.05em;color:var(--fg2)}
   .total .amt{font-family:var(--display);font-weight:900;font-size:25px;color:var(--purple)}
   .total .chev{color:var(--fg3)}
-  /* flexible pick list */
+  /* ✔ / ✘ pick list */
   .pltoolbar{display:flex;align-items:center;gap:10px;padding:11px 18px;background:#faf9fe;border-bottom:1px solid var(--line2);font-size:12px;color:var(--fg2);line-height:1.4}
   .pltoolbar svg{width:16px;height:16px;stroke:var(--purple);fill:none;stroke-width:2;flex:0 0 auto}
   .pltoolbar .sp{flex:1}
+  .pltoolbar .yeschip{display:inline-flex;width:17px;height:17px;border-radius:5px;background:var(--green);align-items:center;justify-content:center;vertical-align:-3px}
+  .pltoolbar .nochip{display:inline-flex;width:17px;height:17px;border-radius:5px;background:var(--red);align-items:center;justify-content:center;vertical-align:-3px}
+  .pltoolbar .yeschip svg,.pltoolbar .nochip svg{width:12px;height:12px;stroke:#fff;stroke-width:3}
   .toggle{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--fg2);font-size:11.5px;white-space:nowrap}
   .toggle .sw{width:34px;height:20px;border-radius:999px;background:var(--purple);position:relative;flex:0 0 auto}
   .toggle .sw::after{content:"";position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff}
   .pin{font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
   .pin-ok{background:var(--green-soft);color:var(--green-txt)}
-  .pin-part{background:#fdf3e0;color:var(--amber)}
   .pin-out{background:#fdeceb;color:var(--red)}
+  .needed{font-family:var(--display);font-weight:800;font-size:19px;line-height:1}
+  .needed .u{display:block;font-size:10.5px;color:var(--fg3);font-weight:600;margin-top:3px;font-family:var(--font)}
+  /* the ONE thing the filler touches: ✔ or ✘ */
+  .checkx{display:inline-flex;border:1.5px solid var(--line);border-radius:11px;overflow:hidden}
+  .checkx button{border:none;background:#fff;width:54px;height:42px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .12s}
+  .checkx button svg{width:22px;height:22px;fill:none;stroke-width:2.8}
+  .checkx .yes{border-right:1.5px solid var(--line)}
+  .checkx .yes svg{stroke:var(--green-txt)}
+  .checkx .no svg{stroke:var(--red)}
+  .checkx .yes.on{background:var(--green)}
+  .checkx .yes.on svg{stroke:#fff}
+  .checkx .no.on{background:var(--red)}
+  .checkx .no.on svg{stroke:#fff}
+  .adjust{display:inline-flex;align-items:center;gap:5px;margin-top:7px;font-size:10.5px;font-weight:700;color:var(--blue);cursor:pointer}
+  .adjust svg{width:12px;height:12px;stroke:var(--blue);fill:none;stroke-width:2.4}
+  .adjrow{display:inline-flex;align-items:center;gap:8px;margin-top:7px}
+  .adjrow .lbl{font-size:10.5px;color:var(--fg2);font-weight:700}
   .stepper{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
-  .stepper button{border:none;background:#f4f3fb;width:26px;height:32px;font-size:15px;font-weight:800;color:var(--purple);cursor:pointer;font-family:var(--display)}
-  .stepper .val{width:38px;text-align:center;font-family:var(--display);font-weight:800;font-size:15px}
-  .warn{font-size:10px;color:var(--amber);font-weight:700;margin-top:5px}
-  .rowout{background:#fdfbfb}.rowout .stepper{opacity:.45}
-  .miniact{display:inline-flex;gap:6px;margin-top:7px}
-  .miniact button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;font-size:10px;font-weight:700;color:var(--fg2);cursor:pointer}
-  .miniact button.on{background:var(--red);color:#fff;border-color:var(--red)}
-  .addbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px 18px;background:#faf9fe;border:none;border-top:1px dashed var(--purple-line);color:var(--purple);font-weight:700;font-size:12.5px;cursor:pointer}
-  .addbtn svg{width:16px;height:16px;stroke:var(--purple);fill:none;stroke-width:2.2}
+  .stepper button{border:none;background:#f4f3fb;width:26px;height:30px;font-size:15px;font-weight:800;color:var(--purple);cursor:pointer;font-family:var(--display)}
+  .stepper .val{width:34px;text-align:center;font-family:var(--display);font-weight:800;font-size:14px}
+  .warn{font-size:10px;color:var(--amber);font-weight:700;margin-top:6px}
+  .reorder{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;color:var(--red);font-weight:700;margin-top:7px}
+  .reorder svg{width:13px;height:13px;stroke:var(--red);fill:none;stroke-width:2;flex:0 0 auto}
+  .rowout{background:#fdfbfb}.rowout .prod{opacity:.7}
+  .nayaxnote{display:flex;align-items:center;gap:12px;padding:13px 18px;background:#eef4ff;border-top:1px solid var(--line2)}
+  .nayaxnote .ic{width:32px;height:32px;border-radius:9px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .nayaxnote .ic svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+  .nayaxnote .tx{font-size:12px;color:var(--fg2);line-height:1.45}
+  .nayaxnote .tx b{color:var(--fg)}
 </style>
 </head>
 <body>
@@ -191,27 +212,27 @@
         </div>
         <div class="pltoolbar">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-          <span>This is a <b>suggested</b> pick list — adjust it to what's actually in the warehouse. Quantities are capped to what's available; flag out-of-stock items so the office can reorder.</span>
+          <span>Just tap <span class="yeschip"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></span> for what you filled and <span class="nochip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></span> for what's out of stock. Only adjust the amount if you filled a different quantity. Anything marked <b>✘</b> is flagged to the office to reorder — no other input needed.</span>
           <span class="sp"></span>
-          <span class="toggle"><span class="sw"></span> Only show what I can fill</span>
+          <span class="toggle"><span class="sw"></span> Only show what I still need</span>
         </div>
         <table class="dtable">
-          <thead><tr><th>Product</th><th>In machine</th><th>Warehouse</th><th>Qty to bring</th><th>Cost/Pack</th><th>Est. Line Cost</th></tr></thead>
+          <thead><tr><th>Product</th><th>In machine</th><th>To fill</th><th>Filled?</th><th>Value (auto-deducts)</th></tr></thead>
           <tbody>
-            <tr><td><div class="prod"><div class="thumb2 th-rb">RB</div><div><div class="pname">Red Bull Energy Drink 250ml <span class="pin pin-ok">In stock</span></div><div class="sku">SKU: RB-250 · 24 packs/box</div></div></div></td><td><div class="stk">3</div><div class="sub2">(1 pack)</div></td><td><div class="stk">240</div><div class="sub2">packs</div></td><td><div class="stepper"><button>−</button><span class="val">10</span><button>+</button></div></td><td>$3.20</td><td class="money">$32.00</td></tr>
-            <tr><td><div class="prod"><div class="thumb2 th-pr">P</div><div><div class="pname">Pringles Original 134g <span class="pin pin-ok">In stock</span></div><div class="sku">SKU: PR-134 · 12 packs/box</div></div></div></td><td><div class="stk">2</div><div class="sub2">(1 pack)</div></td><td><div class="stk">40</div><div class="sub2">packs</div></td><td><div class="stepper"><button>−</button><span class="val">6</span><button>+</button></div></td><td>$2.50</td><td class="money">$15.00</td></tr>
-            <tr><td><div class="prod"><div class="thumb2 th-pk">ポ</div><div><div class="pname">ポッキー チョコレート <span class="custom">Custom 20/box</span> <span class="pin pin-part">Only 12 left</span></div><div class="sku">Pocky Chocolate · SKU: JP-PC-2P</div></div></div></td><td><div class="stk">0</div><div class="sub2">(0 packs)</div></td><td><div class="stk" style="color:var(--amber)">12</div><div class="sub2">packs</div></td><td><div class="stepper"><button>−</button><span class="val">12</span><button>+</button></div><div class="warn">Wanted 20 · capped to 12 available</div></td><td>$1.80</td><td class="money">$21.60</td></tr>
-            <tr><td colspan="6" class="cnote"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> Customs duty &amp; GST will be added later at checkout.</span></td></tr>
-            <tr class="rowout"><td><div class="prod"><div class="thumb2 th-do">D</div><div><div class="pname">Doritos Nacho Cheese 170g <span class="pin pin-out">Out of stock</span></div><div class="sku">SKU: DO-170 · 14 packs/box</div><div class="miniact"><button class="on">Skip for now</button><button>Substitute</button><button>Notify office</button></div></div></div></td><td><div class="stk">1</div><div class="sub2">(1 pack)</div></td><td><div class="stk" style="color:var(--red)">0</div><div class="sub2">packs</div></td><td><div class="stepper"><button>−</button><span class="val">0</span><button>+</button></div></td><td>$2.30</td><td class="money">—</td></tr>
+            <tr><td><div class="prod"><div class="thumb2 th-rb">RB</div><div><div class="pname">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250 · 24 packs/box</div></div></div></td><td><div class="stk">3</div><div class="sub2">now</div></td><td><div class="needed">10<span class="u">packs</span></div></td><td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="adjust"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Filled a different amount?</div></td><td class="money">$32.00</td></tr>
+            <tr><td><div class="prod"><div class="thumb2 th-pr">P</div><div><div class="pname">Pringles Original 134g</div><div class="sku">SKU: PR-134 · 12 packs/box</div></div></div></td><td><div class="stk">2</div><div class="sub2">now</div></td><td><div class="needed">6<span class="u">packs</span></div></td><td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="adjrow"><span class="lbl">Filled</span><div class="stepper"><button>−</button><span class="val">4</span><button>+</button></div></div><div class="warn">Planned 6 · filled 4 (2 short)</div></td><td class="money">$10.00</td></tr>
+            <tr><td><div class="prod"><div class="thumb2 th-pk">ポ</div><div><div class="pname">ポッキー チョコレート <span class="custom">Custom 20/box</span></div><div class="sku">Pocky Chocolate · SKU: JP-PC-2P</div></div></div></td><td><div class="stk">0</div><div class="sub2">now</div></td><td><div class="needed">20<span class="u">packs</span></div></td><td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="adjust"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Filled a different amount?</div></td><td class="money">$36.00</td></tr>
+            <tr><td colspan="5" class="cnote"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> Customs duty &amp; GST are added later at checkout.</span></td></tr>
+            <tr class="rowout"><td><div class="prod"><div class="thumb2 th-do">D</div><div><div class="pname">Doritos Nacho Cheese 170g <span class="pin pin-out">Out of stock</span></div><div class="sku">SKU: DO-170 · 14 packs/box</div></div></div></td><td><div class="stk">1</div><div class="sub2">now</div></td><td><div class="needed">14<span class="u">packs</span></div></td><td><div class="checkx"><button class="yes" title="Filled"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button><button class="no on" title="Out of stock"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="reorder"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.7 3M3 3v4h4"/></svg> Flagged — office notified to reorder</div></td><td class="money">—</td></tr>
           </tbody>
         </table>
-        <button class="addbtn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add a product that isn't on the list</button>
-        <div class="dfoot"><span class="l" style="margin-right:auto">2 in stock · 1 adjusted · 1 out of stock</span><span class="l">Estimated Cost for GGV-001</span><span class="v">$68.60</span></div>
+        <div class="nayaxnote"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg></div><div class="tx"><b>Added a brand-new product at the machine?</b> Just set it up on Nayax like you normally would — it syncs back here automatically, and the office matches it to inventory &amp; cost. No manual entry for you.</div></div>
+        <div class="dfoot"><span class="l" style="margin-right:auto">3 filled · 1 adjusted · 1 flagged to reorder</span><span class="l">Filled value (auto-deducted)</span><span class="v">$78.00</span></div>
       </div>
     </div>
 
     <div class="actionbar">
-      <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg></div><div><div class="tt">SYNC TO NAYAX</div><div class="ss">Push updated inventory &amp; pricing</div></div></div>
+      <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><div><div class="tt">CONFIRM FILLS</div><div class="ss">Records ✔ / ✘ · auto-deducts inventory</div></div></div>
       <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><div><div class="tt">MARK ROUTE COMPLETE</div><div class="ss">All machine fills done</div></div></div>
       <button class="prbtn"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> Print / PDF</button>
       <div class="abspacer"></div>
