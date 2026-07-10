@@ -183,10 +183,10 @@ flowchart TD
 
   <div class="toast" id="toast">Build plan copied to clipboard</div>
 
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
   mermaid.initialize({
-    startOnLoad:true, theme:'base',
+    startOnLoad:true, theme:'base', securityLevel:'loose',
     themeVariables:{
       primaryColor:'#f3efff', primaryBorderColor:'#7c3aed', primaryTextColor:'#1a1f39',
       lineColor:'#7c3aed', fontFamily:'Inter, sans-serif', fontSize:'13px'
