@@ -199,6 +199,29 @@
   .total .chev{color:var(--fg3)}
   .machinesonly{display:none}
   .stamp{position:fixed;top:9px;right:12px;font-size:10px;color:var(--fg3);background:#fff;border:1px solid var(--line);border-radius:7px;padding:3px 8px;font-weight:600;z-index:5}
+  /* ---------- mobile ---------- */
+  @media (max-width:860px){
+    html,body{height:auto;overflow-y:auto}
+    .app{display:flex;flex-direction:column;height:auto;overflow:visible}
+    .side{flex-direction:row;align-items:center;gap:10px;padding:9px 12px;overflow-x:auto;position:sticky;top:0;z-index:30}
+    .logo{flex-direction:row;align-items:center;gap:8px;padding:0;flex:0 0 auto}
+    .logo .mark{width:32px;height:32px;box-shadow:none}.logo .mark span{font-size:16px}
+    .logo .nm{font-size:12.5px}.logo .sb,.tabhint{display:none}
+    .nav{flex-direction:row;gap:6px;flex:1 1 auto;overflow-x:auto}
+    .nav a{padding:8px 11px;font-size:12.5px;white-space:nowrap;border-radius:9px;gap:8px}
+    .nav a svg{width:16px;height:16px}
+    .side .spacer,.uwrap{display:none}
+    .main{height:auto;overflow:visible}
+    .content{overflow:visible;padding:14px}
+    .head{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px}
+    h1{font-size:21px}
+    .content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+    .k4,.k3{grid-template-columns:repeat(2,1fr)}
+    .grid2,.grid2b{grid-template-columns:1fr}
+    .board{grid-template-columns:1fr}
+    .mcards{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:520px){ .k4,.k3,.mcards{grid-template-columns:1fr} }
 </style>
 </head>
 <body>

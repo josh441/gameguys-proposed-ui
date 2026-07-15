@@ -51,6 +51,16 @@
   .rule b{color:var(--fg)}
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:20}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media (max-width:620px){
+    body{overflow-x:hidden}
+    .top{padding:24px 16px 22px}
+    .top h1{font-size:22px;overflow-wrap:break-word}
+    .top p{font-size:13px}
+    .wrap{padding:20px 16px 50px}
+    .cta{gap:9px}
+    .btn{font-size:12.5px;padding:10px 13px}
+    .card{padding:16px}
+  }
 </style>
 </head>
 <body>

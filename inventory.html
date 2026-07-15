@@ -96,6 +96,27 @@
   .drop .t{font-family:var(--display);font-weight:800;font-size:14px;color:var(--fg)}
   .drop .s{font-size:11.5px;color:var(--fg2);margin-top:5px}
   .flag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+  /* ---------- mobile ---------- */
+  @media (max-width:860px){
+    html,body{height:auto;overflow-y:auto}
+    .app{display:flex;flex-direction:column;height:auto;overflow:visible}
+    .side{flex-direction:row;align-items:center;gap:10px;padding:9px 12px;overflow-x:auto;position:sticky;top:0;z-index:30}
+    .logo{flex-direction:row;align-items:center;gap:8px;padding:0;flex:0 0 auto}
+    .logo .mark{width:32px;height:32px;box-shadow:none}.logo .mark span{font-size:16px}
+    .logo .nm{font-size:12.5px}.logo .sb,.tabhint{display:none}
+    .nav{flex-direction:row;gap:6px;flex:0 0 auto}
+    .nav a{padding:8px 11px;font-size:12.5px;white-space:nowrap;border-radius:9px;gap:8px}
+    .nav a svg{width:16px;height:16px}
+    .side .spacer,.uwrap{display:none}
+    .main{height:auto;overflow:visible}
+    .content{overflow:visible;padding:14px}
+    .head{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px}
+    h1{font-size:21px}
+    .content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+    .k4{grid-template-columns:repeat(2,1fr)}
+    .grid2{grid-template-columns:1fr}
+  }
+  @media (max-width:520px){ .k4{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
