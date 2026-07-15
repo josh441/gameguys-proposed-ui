@@ -163,6 +163,64 @@
   .nayaxnote .ic svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
   .nayaxnote .tx{font-size:12px;color:var(--fg2);line-height:1.45}
   .nayaxnote .tx b{color:var(--fg)}
+  /* generation bar */
+  .genbar{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line2);background:#fbfaff}
+  .genbar .gi{width:34px;height:34px;border-radius:9px;background:var(--purple-soft);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .genbar .gi svg{width:18px;height:18px;stroke:var(--purple);fill:none;stroke-width:2}
+  .genbar .gt{font-size:12px;color:var(--fg2);line-height:1.45}
+  .genbar .gt b{color:var(--fg)}
+  .genbar .regen{margin-left:auto;border:none;background:var(--purple);color:#fff;font-family:var(--display);font-weight:800;font-size:12.5px;padding:9px 14px;border-radius:10px;display:inline-flex;align-items:center;gap:7px;cursor:pointer;white-space:nowrap}
+  .genbar .regen svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.4}
+  /* richer working table */
+  .dtable.work th,.dtable.work td{padding:11px 9px;text-align:left}
+  .dtable.work th:first-child,.dtable.work td:first-child{padding-left:18px}
+  .dtable.work th:last-child,.dtable.work td:last-child{padding-right:18px;text-align:left}
+  .dtable.work thead th{text-align:left}
+  .slot{width:30px;height:30px;border-radius:8px;background:var(--indigo);color:#fff;font-family:var(--display);font-weight:800;font-size:14px;display:inline-flex;align-items:center;justify-content:center}
+  .grp{font-size:9px;font-weight:800;letter-spacing:.02em;padding:4px 7px;border-radius:6px;background:var(--purple-soft);color:var(--purple);white-space:nowrap}
+  .par{font-family:var(--display);font-weight:800;font-size:16px;color:var(--fg2)}
+  .par .u{display:block;font-size:8.5px;color:var(--fg3);font-weight:700;font-family:var(--font);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+  .price{font-family:var(--display);font-weight:800;font-size:15px}
+  .pace{font-size:10.5px;color:var(--fg3);line-height:1.4;font-weight:600}
+  .pace b{color:var(--fg2)}
+  .pace .hot{color:var(--red)}
+  .scrtag{font-size:8px;font-weight:800;letter-spacing:.03em;color:var(--amber);border:1px solid #f3d9a6;background:#fdf6e8;padding:1px 5px;border-radius:5px;margin-left:5px;text-transform:uppercase;vertical-align:1px}
+  .swapbox{margin-top:9px;border:1.5px dashed var(--blue);background:var(--blue-soft);border-radius:10px;padding:9px 10px;max-width:280px}
+  .swapbox .sh{font-size:10.5px;font-weight:800;color:var(--blue);display:flex;align-items:center;gap:6px;margin-bottom:7px}
+  .swapbox .sh svg{width:13px;height:13px;stroke:var(--blue);fill:none;stroke-width:2.4}
+  .swapfield{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #c7d8ff;border-radius:8px;padding:7px 9px;font-size:11.5px;color:var(--fg3)}
+  .swapfield svg{width:14px;height:14px;stroke:var(--fg3);fill:none;stroke-width:2}
+  .swopt{margin-top:6px;display:flex;flex-direction:column;gap:4px}
+  .swopt button{text-align:left;border:1px solid #d7e3ff;background:#fff;border-radius:7px;padding:6px 9px;font-size:11px;font-weight:600;color:var(--fg);cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+  .swopt button b{color:var(--green-txt);font-weight:800}
+  .swapnote{font-size:9.5px;color:var(--fg2);margin-top:6px}
+  .addrow{display:flex;align-items:center;gap:10px;padding:13px 18px;border-top:1px dashed var(--purple-line);background:#faf9fe}
+  .addrow .plus{width:32px;height:32px;border-radius:9px;background:var(--purple);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .addrow .plus svg{width:16px;height:16px;stroke:#fff;stroke-width:2.4;fill:none}
+  .addrow .field{flex:1;border:1.5px solid var(--line);border-radius:9px;padding:9px 12px;font-size:12px;color:var(--fg3);background:#fff;display:flex;align-items:center;gap:8px}
+  .addrow .field svg{width:15px;height:15px;stroke:var(--fg3);fill:none;stroke-width:2;flex:0 0 auto}
+  .addrow .qtyf{flex:0 0 118px}
+  .addrow .addbtn2{border:none;background:var(--blue-btn);color:#fff;font-family:var(--display);font-weight:800;font-size:12.5px;padding:10px 16px;border-radius:10px;cursor:pointer;white-space:nowrap}
+  .addrow .hint{font-size:10.5px;color:var(--fg3);flex:0 0 auto}
+  /* print preview */
+  .printcard{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 8px rgba(26,31,57,.06);overflow:hidden;margin-top:16px}
+  .printcard .ph{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line2)}
+  .printcard .ph svg{width:18px;height:18px;stroke:var(--purple);fill:none;stroke-width:2;flex:0 0 auto}
+  .printcard .ph h3{font-size:15px}
+  .printcard .ph .note{font-size:11px;color:var(--fg3);margin-left:auto;font-weight:600;max-width:360px;text-align:right;line-height:1.35}
+  .ptable{width:100%;border-collapse:collapse}
+  .ptable th{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--fg3);padding:10px 18px;text-align:left;background:#fafafd}
+  .ptable th.r,.ptable td.r{text-align:right}
+  .ptable td{padding:12px 18px;border-top:1px solid var(--line2);font-size:15px}
+  .ptable .ps{font-family:var(--display);font-weight:800;color:var(--indigo)}
+  .ptable .pi{font-weight:600}
+  .ptable .pp,.ptable .pq{font-family:var(--display);font-weight:800}
+  @media print{
+    body *{visibility:hidden}
+    .printcard,.printcard *{visibility:visible}
+    .printcard{position:absolute;left:0;top:0;width:100%;box-shadow:none;border:none;margin:0}
+    .printcard .ph .note{display:none}
+  }
 </style>
 </head>
 <body>
@@ -210,24 +268,98 @@
           <span class="m"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <b>25 min</b> Est. route time</span>
           <div class="right"><button class="collapse">Collapse <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 15l6-6 6 6"/></svg></button><div class="updot"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></div></div>
         </div>
+        <div class="genbar">
+          <div class="gi"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h11M4 19h7"/><path d="M16 15l4 4-4 4" transform="translate(0 -6)"/></svg></div>
+          <div class="gt"><b>Generated on demand</b> for GGV-001 · built from the <b>last 7 days of sales</b> · rows ordered by <b>slot</b>. Regenerate any day, for whichever machines you're prepping.</div>
+          <button class="regen"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg> Regenerate</button>
+        </div>
         <div class="pltoolbar">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-          <span>Just tap <span class="yeschip"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></span> for what you filled and <span class="nochip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></span> for what's out of stock. Only adjust the amount if you filled a different quantity. Anything marked <b>✘</b> is flagged to the office to reorder — no other input needed.</span>
+          <span>You can only change <b>product</b> (swap when out of stock) and <b>quantity</b> — everything else is locked. Covers ~90% of runs, so it's usually 1–2 tweaks, then print. <b>Sales/wk</b> &amp; <b>days left</b> are on-screen only — they don't print.</span>
           <span class="sp"></span>
           <span class="toggle"><span class="sw"></span> Only show what I still need</span>
         </div>
-        <table class="dtable">
-          <thead><tr><th>Product</th><th>In machine</th><th>To fill</th><th>Filled?</th><th>Value (auto-deducts)</th></tr></thead>
+        <table class="dtable work">
+          <thead><tr><th>Slot</th><th>Group</th><th>Product</th><th>In machine</th><th>PAR</th><th>Qty to add</th><th>Price</th><th>Pace <span class="scrtag">screen only</span></th><th>Fill?</th></tr></thead>
           <tbody>
-            <tr><td><div class="prod"><div class="thumb2 th-rb">RB</div><div><div class="pname">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250 · 24 packs/box</div></div></div></td><td><div class="stk">3</div><div class="sub2">now</div></td><td><div class="needed">10<span class="u">packs</span></div></td><td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="adjust"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Filled a different amount?</div></td><td class="money">$32.00</td></tr>
-            <tr><td><div class="prod"><div class="thumb2 th-pr">P</div><div><div class="pname">Pringles Original 134g</div><div class="sku">SKU: PR-134 · 12 packs/box</div></div></div></td><td><div class="stk">2</div><div class="sub2">now</div></td><td><div class="needed">6<span class="u">packs</span></div></td><td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="adjrow"><span class="lbl">Filled</span><div class="stepper"><button>−</button><span class="val">4</span><button>+</button></div></div><div class="warn">Planned 6 · filled 4 (2 short)</div></td><td class="money">$10.00</td></tr>
-            <tr><td><div class="prod"><div class="thumb2 th-pk">ポ</div><div><div class="pname">ポッキー チョコレート <span class="custom">Custom 20/box</span></div><div class="sku">Pocky Chocolate · SKU: JP-PC-2P</div></div></div></td><td><div class="stk">0</div><div class="sub2">now</div></td><td><div class="needed">20<span class="u">packs</span></div></td><td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="adjust"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Filled a different amount?</div></td><td class="money">$36.00</td></tr>
-            <tr><td colspan="5" class="cnote"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> Customs duty &amp; GST are added later at checkout.</span></td></tr>
-            <tr class="rowout"><td><div class="prod"><div class="thumb2 th-do">D</div><div><div class="pname">Doritos Nacho Cheese 170g <span class="pin pin-out">Out of stock</span></div><div class="sku">SKU: DO-170 · 14 packs/box</div></div></div></td><td><div class="stk">1</div><div class="sub2">now</div></td><td><div class="needed">14<span class="u">packs</span></div></td><td><div class="checkx"><button class="yes" title="Filled"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button><button class="no on" title="Out of stock"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="reorder"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.7 3M3 3v4h4"/></svg> Flagged — office notified to reorder</div></td><td class="money">—</td></tr>
+            <tr>
+              <td><span class="slot">1</span></td>
+              <td><span class="grp">DRINKS</span></td>
+              <td><div class="prod"><div class="thumb2 th-rb">RB</div><div><div class="pname">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250</div></div></div></td>
+              <td><div class="stk">3</div></td>
+              <td><div class="par">12<span class="u">capacity</span></div></td>
+              <td><div class="stepper"><button>−</button><span class="val">9</span><button>+</button></div></td>
+              <td><div class="price">$4.50</div></td>
+              <td><div class="pace"><b class="hot">18 / wk</b><br>~1 day left</div></td>
+              <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
+            </tr>
+            <tr>
+              <td><span class="slot">2</span></td>
+              <td><span class="grp">SNACKS</span></td>
+              <td><div class="prod"><div class="thumb2 th-pr">P</div><div><div class="pname">Pringles Original 134g</div><div class="sku">SKU: PR-134</div></div></div></td>
+              <td><div class="stk">2</div></td>
+              <td><div class="par">8<span class="u">capacity</span></div></td>
+              <td><div class="stepper"><button>−</button><span class="val">6</span><button>+</button></div></td>
+              <td><div class="price">$3.80</div></td>
+              <td><div class="pace"><b>9 / wk</b><br>~2 days left</div></td>
+              <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
+            </tr>
+            <tr>
+              <td><span class="slot">3</span></td>
+              <td><span class="grp">JAPANESE</span></td>
+              <td><div class="prod"><div class="thumb2 th-pk">ポ</div><div><div class="pname">ポッキー チョコレート <span class="custom">Custom</span></div><div class="sku">Pocky Chocolate · JP-PC-2P</div></div></div></td>
+              <td><div class="stk">0</div></td>
+              <td><div class="par">10<span class="u">capacity</span></div></td>
+              <td><div class="stepper"><button>−</button><span class="val">10</span><button>+</button></div></td>
+              <td><div class="price">$3.20</div></td>
+              <td><div class="pace"><b>6 / wk</b><br>empty now</div></td>
+              <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
+            </tr>
+            <tr class="rowout">
+              <td><span class="slot">4</span></td>
+              <td><span class="grp">SNACKS</span></td>
+              <td>
+                <div class="prod"><div class="thumb2 th-do">D</div><div><div class="pname">Doritos Nacho Cheese 170g <span class="pin pin-out">Out of stock</span></div><div class="sku">SKU: DO-170</div></div></div>
+                <div class="swapbox">
+                  <div class="sh"><svg viewBox="0 0 24 24"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg> Swap in a replacement</div>
+                  <div class="swapfield"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Search product…</div>
+                  <div class="swopt">
+                    <button>Smith's Original 170g <b>$3.50</b></button>
+                    <button>Cheetos Cheese 190g <b>$3.80</b></button>
+                  </div>
+                  <div class="swapnote">Price &amp; qty auto-update to the item you pick.</div>
+                </div>
+              </td>
+              <td><div class="stk">1</div></td>
+              <td><div class="par">12<span class="u">capacity</span></div></td>
+              <td><div class="stepper" style="opacity:.4"><button>−</button><span class="val">11</span><button>+</button></div></td>
+              <td><div class="price" style="color:var(--fg3)">—</div></td>
+              <td><div class="pace"><b>11 / wk</b><br>~1 day left</div></td>
+              <td><div class="checkx"><button class="yes" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no on" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
+            </tr>
           </tbody>
         </table>
-        <div class="nayaxnote"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg></div><div class="tx"><b>Added a brand-new product at the machine?</b> Just set it up on Nayax like you normally would — it syncs back here automatically, and the office matches it to inventory &amp; cost. No manual entry for you.</div></div>
-        <div class="dfoot"><span class="l" style="margin-right:auto">3 filled · 1 adjusted · 1 flagged to reorder</span><span class="l">Filled value (auto-deducted)</span><span class="v">$78.00</span></div>
+        <div class="addrow">
+          <div class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="field"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Add an item — search a product (new set or a hot seller)…</div>
+          <div class="field qtyf"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4z"/></svg> Qty</div>
+          <button class="addbtn2">Add row</button>
+          <span class="hint">product + qty only</span>
+        </div>
+        <div class="nayaxnote"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg></div><div class="tx"><b>Brand-new product not in the catalogue yet?</b> Set it up on Nayax as usual — it syncs back here and the office matches it to inventory &amp; cost.</div></div>
+        <div class="dfoot"><span class="l" style="margin-right:auto">4 items · ordered by slot · generated on demand</span><span class="l">Locked to product + quantity edits</span></div>
+      </div>
+      <div class="printcard">
+        <div class="ph"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg><h3>Print preview — GGV-001</h3><span class="note">Slot · item · exact price · amount. One exact price per item — nothing else prints.</span></div>
+        <table class="ptable">
+          <thead><tr><th style="width:70px">Slot</th><th>Item</th><th class="r" style="width:120px">Price</th><th class="r" style="width:90px">Qty</th></tr></thead>
+          <tbody>
+            <tr><td class="ps">1</td><td class="pi">Red Bull Energy Drink 250ml</td><td class="r pp">$4.50</td><td class="r pq">9</td></tr>
+            <tr><td class="ps">2</td><td class="pi">Pringles Original 134g</td><td class="r pp">$3.80</td><td class="r pq">6</td></tr>
+            <tr><td class="ps">3</td><td class="pi">Pocky Chocolate</td><td class="r pp">$3.20</td><td class="r pq">10</td></tr>
+            <tr><td class="ps">4</td><td class="pi">Smith's Original 170g <span style="font-size:10.5px;color:var(--green-txt);font-weight:700">· swapped in</span></td><td class="r pp">$3.50</td><td class="r pq">11</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
