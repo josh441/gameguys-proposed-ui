@@ -18,6 +18,8 @@
 2. **Source of truth is split:**
    - **Nayax = sales & price truth.** The app *mirrors* Nayax; fillers price/update on Nayax, we pull.
    - **App = stock truth.** Stock is deducted when a fill is finalised, then reconciled against Nayax sales.
+   - ✅ **Confirmed available from Nayax:** per-machine, per-SKU **last-7-day sales** and **selling price**.
+     This powers pick-list generation (`qty_to_add`), the exact price column, the pace figures, and Machine Value.
 3. **Auto-deduct already works** via the `picklist_final_rows` insert trigger
    (`apply_picklist_withdrawal()`) → creates a negative `stock_movements` row → surfaced in `/reconciliation`.
    **Do NOT add a second deduction path** (e.g. from the filler hub) or stock will double-count.
@@ -221,8 +223,10 @@ flowchart LR
 **Likely additions for this plan:**
 - **Machine planogram / par config** — `machine_slots(machine_id, slot_number, product_id, par_qty)`.
   Drives slot ordering, PAR (capacity), and `qty_to_add = par_qty − current_in_machine`.
-- **Selling price per SKU** (mirrored from Nayax) + **unit cost** (from PO) → powers price column + Machine Value.
-- **Sales velocity** per machine+SKU (last-7-day units → `sales_per_week`, `days_of_cover`) — screen-only pace.
+- **Selling price per SKU** (mirrored from Nayax — ✅ confirmed pullable) + **unit cost** (from PO)
+  → powers the price column + Machine Value.
+- **Sales velocity** per machine+SKU (last-7-day units from Nayax — ✅ confirmed pullable →
+  `sales_per_week`, `days_of_cover`) — drives generation and the screen-only pace column.
 - **Pick list generation** — `picklists(id, machine_id, generated_by, generated_at, source='last_7d_sales')`
   and `picklist_rows(picklist_id, slot_number, product_id, current_qty, par_qty, qty_to_add,
   unit_price, row_type ∈ {generated, swapped, added}, swapped_from_product_id, edited_qty)`.
