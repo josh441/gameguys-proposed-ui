@@ -96,6 +96,54 @@
   .drop .t{font-family:var(--display);font-weight:800;font-size:14px;color:var(--fg)}
   .drop .s{font-size:11.5px;color:var(--fg2);margin-top:5px}
   .flag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+  /* route returns recorded by fillers */
+  .return-hero{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px}
+  .return-callout{background:linear-gradient(135deg,#fff 0%,#effdf4 100%);border:1px solid #c9ead4;border-radius:16px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+  .return-callout .ic{width:44px;height:44px;border-radius:12px;background:var(--green);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .return-callout .ic svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2}
+  .return-callout h3{font-size:15px;margin:0}
+  .return-callout p{font-size:11.5px;color:var(--fg2);line-height:1.5;margin:5px 0 0}
+  .return-flow{display:flex;align-items:center;gap:7px;margin-top:12px;flex-wrap:wrap}
+  .return-flow span{background:#fff;border:1px solid #c9ead4;color:var(--fg2);font-size:10px;font-weight:700;padding:5px 7px;border-radius:7px}
+  .return-flow b{color:var(--green-txt);font-size:12px}
+  .return-rule{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+  .return-rule h3{font-size:14px}
+  .return-rule ul{padding:0;margin:10px 0 0;list-style:none;display:grid;gap:8px}
+  .return-rule li{display:flex;gap:8px;font-size:11.5px;color:var(--fg2);line-height:1.4}
+  .return-rule li svg{width:15px;height:15px;stroke:var(--teal);fill:none;stroke-width:2.2;flex:0 0 auto;margin-top:1px}
+  .return-batch{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(26,31,57,.04)}
+  .return-batch .bh{display:flex;align-items:center;gap:13px;padding:16px 18px;border-bottom:1px solid var(--line2);flex-wrap:wrap}
+  .return-batch .bid{font-family:var(--display);font-size:15px;font-weight:800}
+  .return-batch .route{font-size:11.5px;color:var(--fg2)}
+  .return-batch .when{margin-left:auto;text-align:right;font-size:10.5px;color:var(--fg3);line-height:1.4}
+  .returned-by{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:var(--fg2)}
+  .returned-by .av2{width:25px;height:25px;border-radius:7px;background:var(--blue-soft);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800}
+  .move{font-family:var(--display);font-weight:800;color:var(--green-txt)}
+  .movement-note{display:flex;align-items:center;gap:8px;padding:12px 18px;background:#f5fff8;border-top:1px solid #d9f1e1;font-size:10.5px;color:var(--fg2)}
+  .movement-note svg{width:15px;height:15px;stroke:var(--green-txt);fill:none;stroke-width:2.2;flex:0 0 auto}
+  .audit-ref{font-family:var(--display);font-size:10px;font-weight:800;color:var(--fg3)}
+  /* ---------- mobile ---------- */
+  @media (max-width:860px){
+    html,body{height:auto;overflow-y:auto}
+    .app{display:flex;flex-direction:column;height:auto;overflow:visible}
+    .side{flex-direction:row;align-items:center;gap:10px;padding:9px 12px;overflow-x:auto;position:sticky;top:0;z-index:30}
+    .logo{flex-direction:row;align-items:center;gap:8px;padding:0;flex:0 0 auto}
+    .logo .mark{width:32px;height:32px;box-shadow:none}.logo .mark span{font-size:16px}
+    .logo .nm{font-size:12.5px}.logo .sb,.tabhint{display:none}
+    .nav{flex-direction:row;gap:6px;flex:0 0 auto}
+    .nav a{padding:8px 11px;font-size:12.5px;white-space:nowrap;border-radius:9px;gap:8px}
+    .nav a svg{width:16px;height:16px}
+    .side .spacer,.uwrap{display:none}
+    .main{height:auto;overflow:visible}
+    .content{overflow:visible;padding:14px}
+    .head{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px}
+    h1{font-size:21px}
+    .content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+    .k4{grid-template-columns:repeat(2,1fr)}
+    .grid2{grid-template-columns:1fr}
+    .return-hero{grid-template-columns:1fr}
+  }
+  @media (max-width:520px){ .k4{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -126,12 +174,13 @@
       <div class="subtabs">
         <button class="on" data-v="stock">Stock Overview</button>
         <button data-v="po">Purchase Orders &amp; Invoices</button>
+        <button data-v="returns">Route Returns</button>
       </div>
 
       <!-- ===== 2.a STOCK OVERVIEW ===== -->
       <section class="view show" id="v-stock">
         <div class="kpis k4">
-          <div class="kpi"><div class="l">On-hand value</div><div class="v">$63,410</div><div class="d muted">1,842 units</div></div>
+          <div class="kpi"><div class="l">On-hand value</div><div class="v">$63,421</div><div class="d muted">1,845 units</div></div>
           <div class="kpi"><div class="l">Incoming (14d)</div><div class="v">2,160</div><div class="d muted">across 5 POs</div></div>
           <div class="kpi"><div class="l">Low / out of stock</div><div class="v" style="color:var(--amber)">37</div><div class="d muted">SKUs need reorder</div></div>
           <div class="kpi"><div class="l">Dead / slow stock</div><div class="v" style="color:var(--red)">148</div><div class="d muted">units aging &gt; 90d</div></div>
@@ -147,7 +196,7 @@
                 <tr><td>OP-08 Two Legends (JP)</td><td>Warehouse</td><td class="num">180</td><td><div class="track"><i style="width:55%"></i></div></td></tr>
                 <tr><td>Mystery Box — Anime S2</td><td>Warehouse</td><td class="num">64</td><td><div class="track"><i class="low" style="width:22%"></i></div></td></tr>
                 <tr><td>Pocky Chocolate (JP)</td><td>Warehouse</td><td class="num">0</td><td><div class="track"><i class="out" style="width:4%"></i></div></td></tr>
-                <tr><td>Red Bull 250ml</td><td>Warehouse</td><td class="num">96</td><td><div class="track"><i style="width:48%"></i></div></td></tr>
+                <tr><td>Red Bull 250ml <span class="badge b-green" style="margin-left:5px">+2 returned</span></td><td>Warehouse</td><td class="num">98</td><td><div class="track"><i style="width:49%"></i></div></td></tr>
               </tbody>
             </table>
           </div>
@@ -204,15 +253,66 @@
         </div>
       </section>
 
+      <!-- ===== 2.c ROUTE RETURNS ===== -->
+      <section class="view" id="v-returns">
+        <div class="kpis k4">
+          <div class="kpi"><div class="l">Returned today</div><div class="v" style="color:var(--green-txt)">3</div><div class="d muted">units from 1 route</div></div>
+          <div class="kpi"><div class="l">Products returned</div><div class="v">2</div><div class="d muted">Red Bull + Pringles</div></div>
+          <div class="kpi"><div class="l">Needs review</div><div class="v">0</div><div class="d muted">all returns recorded</div></div>
+          <div class="kpi"><div class="l">Warehouse movement</div><div class="v" style="color:var(--green-txt)">+3</div><div class="d muted">net units added back</div></div>
+        </div>
+
+        <div class="return-hero">
+          <div class="return-callout">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7H8a4 4 0 0 0-4 4v7"/><path d="M8 3L4 7l4 4"/><path d="M4 18h16"/><path d="M17 15l3 3-3 3"/></svg></div>
+            <div><h3>Filler returns are added back immediately</h3><p>When a filler gets back with unopened stock that a machine did not need, they count it from their completed route and confirm the return. Inventory records one positive movement per product.</p>
+              <div class="return-flow"><span>Filler counts leftovers</span><b>&rarr;</b><span>Confirms once</span><b>&rarr;</b><span>Warehouse stock increases</span></div>
+            </div>
+          </div>
+          <div class="return-rule">
+            <h3>Stock rules</h3>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg><span>The return is linked to the filler, route, and machine for audit.</span></li>
+              <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg><span>Warehouse stock updates once; the receiver does not approve it again.</span></li>
+              <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg><span>Nayax sales and selling prices stay unchanged.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="return-batch" id="route-returns">
+          <div class="bh">
+            <span class="badge b-green">Recorded</span>
+            <span class="bid">RET-00518</span>
+            <span class="route">North route · GGV-001 · Westfield Parramatta</span>
+            <span class="returned-by"><span class="av2">SM</span> Sam · Filler</span>
+            <span class="when">Today, 4:42 PM<br><span class="audit-ref">ROUTE NR-0524</span></span>
+          </div>
+          <table>
+            <thead><tr><th>Product</th><th>Source</th><th>Destination</th><th>Movement</th><th>Warehouse on hand</th></tr></thead>
+            <tbody>
+              <tr><td><b>Red Bull Energy Drink 250ml</b><div class="muted" style="font-size:10.5px;margin-top:2px">SKU: RB-250</div></td><td>North route carry stock</td><td>Warehouse</td><td class="move">+2 units</td><td class="num">96 &rarr; 98</td></tr>
+              <tr><td><b>Pringles Original 134g</b><div class="muted" style="font-size:10.5px;margin-top:2px">SKU: PR-134</div></td><td>North route carry stock</td><td>Warehouse</td><td class="move">+1 unit</td><td class="num">51 &rarr; 52</td></tr>
+            </tbody>
+          </table>
+          <div class="movement-note"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg> 3 units added to warehouse inventory in one return batch. No extra Nayax transaction was created.</div>
+        </div>
+      </section>
+
     </div>
   </div>
 </div>
 <script>
-  document.querySelectorAll('.subtabs button').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('.subtabs button').forEach(x=>x.classList.toggle('on',x===b));
-    document.querySelectorAll('.view').forEach(v=>v.classList.toggle('show', v.id==='v-'+b.dataset.v));
+  function showInventoryView(name){
+    const button = document.querySelector(`.subtabs button[data-v="${name}"]`);
+    if(!button) return;
+    document.querySelectorAll('.subtabs button').forEach(x=>x.classList.toggle('on',x===button));
+    document.querySelectorAll('.view').forEach(v=>v.classList.toggle('show', v.id==='v-'+name));
     document.querySelector('.content').scrollTop=0;
+  }
+  document.querySelectorAll('.subtabs button').forEach(b=>b.addEventListener('click',()=>{
+    showInventoryView(b.dataset.v);
   }));
+  if(location.hash==='#route-returns') showInventoryView('returns');
 </script>
 </body>
 </html>

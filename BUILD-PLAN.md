@@ -26,6 +26,10 @@
 4. **Fillers are scoped** to their assigned machines only (individual `filler_machine_assignments`;
    route assignment is a bulk convenience that writes those rows).
 5. Keep navigation to **5 top-level tabs**. Everything deeper is a sub-tab.
+6. **Unused route stock returns through one explicit positive movement.** After a route is completed,
+   the filler can return unopened leftovers to Warehouse. The existing fill finalisation remains the
+   only negative movement; the confirmed return writes one positive `stock_movements` row per product.
+   The receiver sees the audit trail but does not approve it again or create another movement.
 
 ---
 
@@ -99,7 +103,14 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
     - **Add an extra row** (a new set or a hot seller) not on the generated list — product + qty only.
     - Qty is an inline stepper (manual override); everything else is locked.
 - **Printout** — see §3.1b. Stripped to **slot · item · exact price · amount** and nothing else.
-- Bottom bar: Confirm fills · Mark route complete · Print/PDF (bad reception) · total est. cost.
+- **Return unused stock** — after the route is complete and the filler is back at the warehouse,
+  show products issued for that route, the actual quantity filled, and an editable unused quantity.
+  Confirmation adds the returned quantity back to Warehouse and produces a route-linked return reference.
+- Bottom bar: Confirm fills · Mark route complete · Return stock · Print/PDF (bad reception) · total est. cost.
+
+On **Inventory**, add a **Route Returns** sub-view. It is an audit view, not a second receiving action:
+the receiver sees the return reference, filler, route, machine, product movements, and resulting
+warehouse quantities after the filler confirms the return.
 
 ### 2.4 Calendar (all)
 Release calendar grouped by month: product, set code, language, preorder status. "Action needed"
@@ -157,6 +168,34 @@ flowchart TD
 
 **Rule:** the hub does NOT deduct stock itself — deduction happens only at "Mark route complete"
 through the existing `picklist_final_rows` path (see Golden Rule #3).
+
+#### 3.1c Return unused stock
+
+```mermaid
+flowchart TD
+  A[Filler completes the route] --> B[Existing finalisation writes negative stock movements]
+  B --> C[Filler returns to the warehouse with unused stock]
+  C --> D[Open Return unused stock from Machines]
+  D --> E[App shows products issued for the completed route]
+  E --> F[Filler counts unopened leftovers and adjusts quantities]
+  F --> G[Confirm return once]
+  G --> H[Create route return batch and positive stock movements]
+  H --> I[Warehouse on-hand increases]
+  H --> J[Inventory Route Returns shows the audit trail]
+```
+
+**Rules:**
+- Only show the filler’s own completed routes and the products issued on those routes.
+- Destination is fixed to **Warehouse**. Quantity is constrained to
+  `0..(issued_qty - filled_qty)` per product.
+- Confirmation is idempotent. Disable the submitted batch and use a unique idempotency key so a
+  retry cannot add the same stock twice.
+- Write one positive `stock_movements` row per returned product, linked to the return batch, route,
+  machine, and filler. The negative fill movement is not edited or replayed.
+- The net warehouse change is: `finalised fill withdrawal + confirmed positive return`.
+- The receiver gets an audit-only **Route Returns** view; no second approval or stock movement.
+- Nayax is untouched: no sale, selling-price, or machine-stock update is pushed for a warehouse return.
+- Only unopened/resalable stock follows this path. Damaged stock uses the existing damage/adjustment flow.
 
 ### 3.2 Source of truth
 
@@ -233,6 +272,10 @@ flowchart LR
   This is the *editable working draft*; on "Mark route complete" it feeds the existing
   `picklist_final_rows` (do NOT add a second deduct path — Golden Rule #3).
 - Price snapshot stored on each row at print time so the printout shows one exact price.
+- **Route stock returns** — `route_stock_returns(id, route_id, machine_id, filler_id, destination,
+  status, idempotency_key, returned_at)` plus `route_stock_return_rows(return_id, product_id,
+  issued_qty, filled_qty, returned_qty, stock_movement_id)`. Confirming a return inserts positive
+  warehouse `stock_movements`; Inventory only reads those rows for its audit view.
 
 **Pick-list schema sketch:**
 
@@ -267,6 +310,30 @@ create table picklist_rows (          -- editable working draft (product + qty o
   row_type               text default 'generated',   -- generated | swapped | added
   swapped_from_product_id uuid references products(id)
 );
+
+create table route_stock_returns (    -- one confirmed warehouse return batch
+  id              uuid primary key default gen_random_uuid(),
+  route_id        uuid references routes(id),
+  machine_id      uuid references machines(id),
+  filler_id       uuid references users(id),
+  destination     text default 'warehouse',
+  status          text default 'confirmed',
+  idempotency_key text unique not null,
+  returned_at     timestamptz default now()
+);
+
+create table route_stock_return_rows (
+  id                uuid primary key default gen_random_uuid(),
+  return_id         uuid references route_stock_returns(id) on delete cascade,
+  product_id        uuid references products(id),
+  issued_qty        int not null check (issued_qty >= 0),
+  filled_qty        int not null check (filled_qty >= 0),
+  returned_qty      int not null check (returned_qty >= 0),
+  stock_movement_id uuid references stock_movements(id),
+  unique (return_id, product_id),
+  check (filled_qty <= issued_qty),
+  check (returned_qty <= issued_qty - filled_qty)
+);
 ```
 
 ---
@@ -278,9 +345,11 @@ create table picklist_rows (          -- editable working draft (product + qty o
    columns; swap-on-out-of-stock (auto price+qty); add-row (product+qty only); stripped 4-column printout
    (slot·item·price·qty). Needs `machine_slots` par/planogram + `picklists`/`picklist_rows`.
    Reuse existing final-upload/deduct path — do NOT add a second deduct.
-3. **Machine Value** — join qty × (cost, selling price); recompute on sale-pull + restock; Ownership sub-tab.
-4. **Inventory polish** — surface incoming + AI PDF reader on PO form; scope AI camera (identity/barcode).
-5. **CRM/Calendar** — relocate existing supplier + task + release-calendar features under new tabs.
+3. **Route stock returns** — filler records unopened leftovers from a completed route; one idempotent
+   positive movement per product; Inventory gets an audit-only Route Returns view.
+4. **Machine Value** — join qty × (cost, selling price); recompute on sale-pull + restock; Ownership sub-tab.
+5. **Inventory polish** — surface incoming + AI PDF reader on PO form; scope AI camera (identity/barcode).
+6. **CRM/Calendar** — relocate existing supplier + task + release-calendar features under new tabs.
 
 ---
 
