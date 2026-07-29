@@ -187,6 +187,35 @@
   .cnote span{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--blue);font-weight:500}
   .dfoot{display:flex;justify-content:flex-end;align-items:baseline;gap:14px;padding:14px 18px;border-top:1px solid var(--line2)}
   .dfoot .l{font-size:13px;color:var(--fg2);font-weight:600}.dfoot .v{font-family:var(--display);font-weight:800;font-size:22px;color:var(--purple)}
+  .demo-return{background:linear-gradient(135deg,#fff,#f2f7ff);border:1px solid #cddcff;border-radius:16px;overflow:hidden;margin-top:16px}
+  .demo-return-top{display:flex;align-items:center;gap:13px;padding:16px 18px}
+  .demo-return-top .ric{width:42px;height:42px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .demo-return-top .ric svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:2}
+  .demo-return-top .ey{font-size:9px;font-weight:800;letter-spacing:.08em;color:var(--blue);text-transform:uppercase}
+  .demo-return-top h3{font-size:16px;margin-top:3px}
+  .demo-return-top p{font-size:11.5px;color:var(--fg2);margin:4px 0 0;line-height:1.4}
+  .demo-return-top button,.demo-return-action{margin-left:auto;border:none;background:var(--blue-btn);color:#fff;font-family:var(--display);font-weight:800;font-size:12px;padding:10px 13px;border-radius:9px;cursor:pointer;white-space:nowrap}
+  .demo-return-form{display:none;border-top:1px solid #dbe6ff;background:#fff}
+  .demo-return.open .demo-return-form{display:block}
+  .demo-return.complete .demo-return-top,.demo-return.complete .demo-return-form{display:none}
+  .demo-return-row{display:grid;grid-template-columns:1fr 90px 130px;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line2)}
+  .demo-return-row .nm{font-weight:700;font-size:12.5px}.demo-return-row .sub{font-size:10.5px;color:var(--fg3);margin-top:2px}
+  .demo-return-row .used{font-size:10px;color:var(--fg3);text-align:center}.demo-return-row .used b{display:block;font-family:var(--display);font-size:14px;color:var(--fg)}
+  .demo-step{display:inline-flex;align-items:center;border:1px solid #c7d8ff;border-radius:8px;overflow:hidden;justify-self:end}
+  .demo-step button{border:0;background:var(--blue-soft);color:var(--blue);font-weight:800;width:29px;height:30px;cursor:pointer}.demo-step output{width:36px;text-align:center;font-family:var(--display);font-weight:800}
+  .demo-return-foot{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#f9fbff}
+  .demo-return-foot span{font-size:11px;color:var(--fg2)}.demo-return-foot b{color:var(--fg)}
+  .demo-return-foot button{margin-left:auto;border:0;background:var(--green-txt);color:#fff;font-family:var(--display);font-weight:800;font-size:12px;padding:10px 13px;border-radius:9px;cursor:pointer}
+  .demo-return-success{display:none;align-items:center;gap:12px;padding:17px 18px;background:#f3fff7}
+  .demo-return.complete .demo-return-success{display:flex}
+  .demo-return-success .ok{width:40px;height:40px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center}
+  .demo-return-success .ok svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:2.7}
+  .demo-return-success h3{font-size:15px;color:var(--green-txt)}.demo-return-success p{font-size:11px;color:var(--fg2);margin:4px 0 0}
+  .route-audit{display:flex;align-items:center;gap:13px;padding:14px 16px;border:1px solid #c9ead4;background:#f5fff8;border-radius:13px;margin-top:14px}
+  .route-audit .aic{width:36px;height:36px;border-radius:10px;background:var(--green);display:flex;align-items:center;justify-content:center}
+  .route-audit .aic svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+  .route-audit .copy{font-size:11px;color:var(--fg2);line-height:1.4}.route-audit .copy b{display:block;font-family:var(--display);font-size:12.5px;color:var(--fg)}
+  .route-audit .plus{margin-left:auto;font-family:var(--display);font-size:17px;font-weight:800;color:var(--green-txt)}
   .actionbar{display:flex;align-items:center;gap:22px;padding:15px 26px;background:linear-gradient(90deg,var(--purple-deep),var(--purple) 55%,var(--purple-2));color:#fff}
   .act{display:flex;align-items:center;gap:13px}
   .act .circ{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center}
@@ -220,6 +249,8 @@
     .grid2,.grid2b{grid-template-columns:1fr}
     .board{grid-template-columns:1fr}
     .mcards{grid-template-columns:repeat(2,1fr)}
+    .demo-return-top{align-items:flex-start;flex-wrap:wrap}.demo-return-top button{margin-left:55px}
+    .demo-return-row{grid-template-columns:1fr auto}.demo-return-row .used{display:none}
   }
   @media (max-width:520px){ .k4,.k3,.mcards{grid-template-columns:1fr} }
 </style>
@@ -325,7 +356,7 @@
           <div class="subtitle">Everything coming in and on hand — synced with Nayax and Shopify — plus purchase orders and invoices.</div></div>
         </div>
         <div class="kpis k4">
-          <div class="kpi"><div class="l">On-hand value</div><div class="v">$63,410</div><div class="d">1,842 units</div></div>
+          <div class="kpi"><div class="l">On-hand value</div><div class="v">$63,421</div><div class="d">1,845 units</div></div>
           <div class="kpi"><div class="l">Incoming (next 14d)</div><div class="v">2,160</div><div class="d">units across 5 POs</div></div>
           <div class="kpi"><div class="l">Dead / slow stock</div><div class="v" style="color:var(--amber)">148</div><div class="d">units aging &gt; 90d</div></div>
           <div class="kpi"><div class="l">Open purchase orders</div><div class="v">7</div><div class="d">3 awaiting delivery</div></div>
@@ -347,6 +378,7 @@
               <div class="aichip" style="margin-top:14px">◎ Open camera</div>
             </div>
             <div class="legend" style="margin-top:12px">Proposed — recognises product identity / barcodes to auto-count on receiving and stocktake.</div>
+            <div class="route-audit"><div class="aic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div><div class="copy"><b>Latest route return · RET-00518</b>Sam returned Red Bull +2 and Pringles +1 from GGV-001.</div><span class="plus">+3</span></div>
           </div>
         </div>
 
@@ -406,6 +438,19 @@
             </tbody>
           </table>
           <div class="dfoot"><span class="l">Estimated Cost for GGV-001</span><span class="v">$101.40</span></div>
+        </div>
+        <div class="demo-return" id="demo-return">
+          <div class="demo-return-top">
+            <div class="ric"><svg viewBox="0 0 24 24"><path d="M20 7H8a4 4 0 0 0-4 4v7"/><path d="M8 3L4 7l4 4"/></svg></div>
+            <div><div class="ey">Stocking items · back at the warehouse?</div><h3>Return unused stock</h3><p>Count what Machine 1 did not need and add it back to Warehouse in one return.</p></div>
+            <button type="button" id="demo-open-return">Start a return</button>
+          </div>
+          <div class="demo-return-form">
+            <div class="demo-return-row"><div><div class="nm">Red Bull Energy Drink 250ml</div><div class="sub">North route · GGV-001</div></div><div class="used"><b>7 of 9</b>filled</div><div class="demo-step" data-demo-max="2"><button type="button" data-demo-step="-1">−</button><output>2</output><button type="button" data-demo-step="1">+</button></div></div>
+            <div class="demo-return-row"><div><div class="nm">Pringles Original 134g</div><div class="sub">North route · GGV-001</div></div><div class="used"><b>5 of 6</b>filled</div><div class="demo-step" data-demo-max="1"><button type="button" data-demo-step="-1">−</button><output>1</output><button type="button" data-demo-step="1">+</button></div></div>
+            <div class="demo-return-foot"><span><b id="demo-return-total">3 units</b> will be added back. Nayax is unchanged.</span><button type="button" id="demo-confirm-return">Confirm return</button></div>
+          </div>
+          <div class="demo-return-success"><div class="ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div><div><h3 id="demo-success-title">3 units added back to Warehouse</h3><p id="demo-success-detail">RET-00518 · Red Bull +2 · Pringles +1 · recorded once</p></div></div>
         </div>
       </section>
 
@@ -479,8 +524,9 @@
 
     <!-- Bottom action bar (Machines/filler only) -->
     <div class="actionbar machinesonly" id="actionbar">
-      <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg></div><div><div class="tt">SYNC TO NAYAX</div><div class="ss">Push updated inventory &amp; pricing</div></div></div>
+      <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><div><div class="tt">CONFIRM FILLS</div><div class="ss">Records fills · auto-deducts inventory</div></div></div>
       <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><div><div class="tt">MARK ROUTE COMPLETE</div><div class="ss">All machine fills done</div></div></div>
+      <button class="demo-return-action" id="demo-action-return" type="button">Return stock</button>
       <div class="abspacer"></div>
       <div class="total"><div><div class="lab">TOTAL ESTIMATED ROUTE COST</div><div class="amt">$418.90</div></div><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
     </div>
@@ -495,6 +541,31 @@
     document.querySelector('.content').scrollTop = 0;
   }
   document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click', e=>{e.preventDefault();setMode(a.dataset.m);}));
+  const demoReturn = document.getElementById('demo-return');
+  function openDemoReturn(){
+    setMode('machines');
+    demoReturn.classList.remove('complete');
+    demoReturn.classList.add('open');
+    demoReturn.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  document.getElementById('demo-open-return').addEventListener('click',openDemoReturn);
+  document.getElementById('demo-action-return').addEventListener('click',openDemoReturn);
+  document.querySelectorAll('[data-demo-step]').forEach(button=>button.addEventListener('click',()=>{
+    const stepper=button.parentElement;
+    const output=stepper.querySelector('output');
+    output.textContent=Math.max(0,Math.min(Number(stepper.dataset.demoMax),Number(output.textContent)+Number(button.dataset.demoStep)));
+    const total=[...document.querySelectorAll('.demo-step output')].reduce((sum,item)=>sum+Number(item.textContent),0);
+    document.getElementById('demo-return-total').textContent=`${total} ${total===1?'unit':'units'}`;
+    document.getElementById('demo-confirm-return').disabled=total===0;
+  }));
+  document.getElementById('demo-confirm-return').addEventListener('click',()=>{
+    const quantities=[...document.querySelectorAll('.demo-step output')].map(item=>Number(item.textContent));
+    const total=quantities.reduce((sum,qty)=>sum+qty,0);
+    document.getElementById('demo-success-title').textContent=`${total} ${total===1?'unit':'units'} added back to Warehouse`;
+    document.getElementById('demo-success-detail').textContent=`RET-00518 · Red Bull +${quantities[0]} · Pringles +${quantities[1]} · recorded once`;
+    demoReturn.classList.remove('open');
+    demoReturn.classList.add('complete');
+  });
   setMode('machines');
 </script>
 </body>

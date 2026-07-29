@@ -202,6 +202,62 @@
   .addrow .qtyf{flex:0 0 118px}
   .addrow .addbtn2{border:none;background:var(--blue-btn);color:#fff;font-family:var(--display);font-weight:800;font-size:12.5px;padding:10px 16px;border-radius:10px;cursor:pointer;white-space:nowrap}
   .addrow .hint{font-size:10.5px;color:var(--fg3);flex:0 0 auto}
+  /* route leftovers returned by the filler */
+  .return-card{background:linear-gradient(135deg,#fff 0%,#f4f8ff 100%);border:1px solid #cddcff;border-radius:16px;box-shadow:0 2px 8px rgba(37,99,235,.08);margin-top:16px;overflow:hidden}
+  .return-intro{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:15px;padding:18px}
+  .return-icon{width:46px;height:46px;border-radius:13px;background:var(--blue);display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px rgba(37,99,235,.22)}
+  .return-icon svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2}
+  .return-copy .eyebrow{font-size:9.5px;font-weight:800;letter-spacing:.09em;color:var(--blue);text-transform:uppercase;margin-bottom:4px}
+  .return-copy h3{font-size:17px}
+  .return-copy p{font-size:12px;color:var(--fg2);line-height:1.45;margin:5px 0 0}
+  .return-flow{display:flex;align-items:center;gap:7px;margin-top:10px;flex-wrap:wrap}
+  .return-flow span{font-size:10.5px;font-weight:700;color:var(--fg2);background:#fff;border:1px solid #dbe6ff;border-radius:7px;padding:5px 8px}
+  .return-flow b{color:var(--blue);font-size:12px}
+  .return-start{border:none;background:var(--blue-btn);color:#fff;font-family:var(--display);font-weight:800;font-size:13px;padding:11px 16px;border-radius:10px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 12px rgba(47,107,255,.22)}
+  .return-rule{display:flex;align-items:center;gap:7px;padding:10px 18px;border-top:1px solid #dbe6ff;background:rgba(255,255,255,.72);font-size:10.5px;color:var(--fg2);font-weight:600}
+  .return-rule svg{width:14px;height:14px;stroke:var(--green-txt);fill:none;stroke-width:2.4;flex:0 0 auto}
+  .return-form{display:none;border-top:1px solid #cddcff;background:#fff}
+  .return-card.is-open .return-form{display:block}
+  .return-card.is-open .return-flow{display:none}
+  .return-card.is-open .return-start{background:#fff;color:var(--blue);border:1px solid #c7d8ff;box-shadow:none}
+  .return-meta{display:flex;align-items:center;gap:10px;padding:13px 18px;background:#f8faff;border-bottom:1px solid var(--line2);flex-wrap:wrap}
+  .return-meta .route{font-family:var(--display);font-size:12.5px;font-weight:800}
+  .return-meta .where{font-size:11.5px;color:var(--fg2)}
+  .return-meta .dest{margin-left:auto;display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green-txt);font-size:10.5px;font-weight:800;padding:6px 9px;border-radius:8px}
+  .return-meta .dest svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+  .rtable th{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--fg3);padding:10px 18px;background:#fff;text-align:left}
+  .rtable td{padding:12px 18px;border-top:1px solid var(--line2);font-size:12.5px;vertical-align:middle}
+  .rtable th.num,.rtable td.num{text-align:center}
+  .rproduct{display:flex;align-items:center;gap:10px}
+  .rthumb{width:34px;height:38px;border-radius:8px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;color:#fff;font-family:var(--display);font-size:9.5px;font-weight:900;flex:0 0 auto}
+  .rproduct .name{font-weight:700}
+  .rproduct .sku{font-size:10.5px}
+  .routeqty{font-family:var(--display);font-weight:800;font-size:15px}
+  .routeqty small{display:block;font-family:var(--font);font-size:9px;color:var(--fg3);font-weight:600;margin-top:2px}
+  .rstepper{display:inline-flex;align-items:center;border:1.5px solid #c7d8ff;border-radius:9px;overflow:hidden;background:#fff}
+  .rstepper button{border:none;background:var(--blue-soft);width:30px;height:32px;font-size:16px;font-weight:800;color:var(--blue);cursor:pointer;font-family:var(--display)}
+  .rstepper output{width:38px;text-align:center;font-family:var(--display);font-weight:800;font-size:14px}
+  .rzero{color:var(--fg3);font-size:11px;font-weight:600}
+  .return-review{display:flex;align-items:center;gap:15px;padding:14px 18px;border-top:1px solid var(--line2);background:#fbfcff}
+  .return-review .summary{font-size:11.5px;color:var(--fg2);line-height:1.45}
+  .return-review .summary b{color:var(--fg);font-family:var(--display)}
+  .return-review .condition{font-size:10.5px;color:var(--fg3)}
+  .return-review .spacer{flex:1}
+  .return-confirm{border:none;background:var(--green-txt);color:#fff;font-family:var(--display);font-weight:800;font-size:12.5px;padding:11px 15px;border-radius:10px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 12px rgba(22,163,74,.18)}
+  .return-confirm:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
+  .return-success{display:none;align-items:center;gap:14px;padding:18px;border-top:1px solid #cddcff;background:#f4fff7}
+  .return-card.is-complete .return-intro,.return-card.is-complete .return-form,.return-card.is-complete .return-rule{display:none}
+  .return-card.is-complete .return-success{display:flex}
+  .success-check{width:46px;height:46px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .success-check svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2.8}
+  .return-success h3{font-size:16px;color:var(--green-txt)}
+  .return-success p{font-size:11.5px;color:var(--fg2);margin:4px 0 0;line-height:1.45}
+  .movement-chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .movement-chips span{font-size:10px;font-weight:700;background:#fff;border:1px solid #ccebd6;color:var(--green-txt);padding:4px 7px;border-radius:7px}
+  .success-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .success-actions a,.success-actions button{border:1px solid #b9dfc5;background:#fff;color:var(--green-txt);font-size:11px;font-weight:800;padding:8px 10px;border-radius:9px;text-decoration:none;cursor:pointer}
+  .return-action{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);color:#fff;font-family:var(--display);font-size:12px;font-weight:800;padding:9px 12px;border-radius:10px;display:flex;align-items:center;gap:7px;cursor:pointer}
+  .return-action svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
   /* print preview */
   .printcard{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 8px rgba(26,31,57,.06);overflow:hidden;margin-top:16px}
   .printcard .ph{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line2)}
@@ -242,10 +298,23 @@
     .mcards{grid-template-columns:repeat(2,1fr)}
     .genbar{flex-wrap:wrap}.genbar .regen{margin-left:0}
     .addrow{flex-wrap:wrap}.addrow .field{flex:1 1 100%}.addrow .qtyf{flex:1 1 auto}
+    .return-intro{grid-template-columns:auto 1fr}.return-start{grid-column:1/-1;width:100%}
+    .return-meta .dest{margin-left:0}.return-review{align-items:flex-start;flex-wrap:wrap}.return-review .spacer{display:none}.return-confirm{width:100%}
+    .return-success{align-items:flex-start;flex-wrap:wrap}.success-actions{margin-left:60px}
     .actionbar{flex-wrap:wrap;gap:12px;padding:12px 14px}.actionbar .abspacer{display:none}
     .total{width:100%;justify-content:space-between}
   }
-  @media (max-width:520px){ .mcards{grid-template-columns:1fr} }
+  @media (max-width:520px){
+    .mcards{grid-template-columns:1fr}
+    .return-icon{width:40px;height:40px}.return-intro{gap:11px;padding:14px}.return-rule{padding:10px 14px}
+    .rtable,.rtable tbody{display:block!important;overflow:visible!important;white-space:normal!important}
+    .rtable thead{display:none}.rtable tr{display:grid;grid-template-columns:1fr auto;gap:10px;padding:13px 14px;border-top:1px solid var(--line2)}
+    .rtable td{display:block;border:0;padding:0;text-align:left!important}.rtable td:first-child{grid-column:1/-1}
+    .rtable td:nth-child(2)::before{content:"Issued  ";font-size:9px;color:var(--fg3);font-family:var(--font)}
+    .rtable td:nth-child(3)::before{content:"Filled  ";font-size:9px;color:var(--fg3);font-family:var(--font)}
+    .rtable td:last-child{grid-column:1/-1;display:flex;justify-content:flex-end}
+    .success-actions{margin-left:0;width:100%}.success-actions a,.success-actions button{flex:1;text-align:center}
+  }
 </style>
 </head>
 <body>
@@ -374,6 +443,69 @@
         <div class="nayaxnote"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg></div><div class="tx"><b>Brand-new product not in the catalogue yet?</b> Set it up on Nayax as usual — it syncs back here and the office matches it to inventory &amp; cost.</div></div>
         <div class="dfoot"><span class="l" style="margin-right:auto">4 items · ordered by slot · generated on demand</span><span class="l">Locked to product + quantity edits</span></div>
       </div>
+      <section class="return-card" id="warehouse-return" aria-labelledby="return-title">
+        <div class="return-intro">
+          <div class="return-icon"><svg viewBox="0 0 24 24"><path d="M20 7H8a4 4 0 0 0-4 4v7"/><path d="M8 3L4 7l4 4"/><path d="M4 18h16"/><path d="M17 15l3 3-3 3"/></svg></div>
+          <div class="return-copy">
+            <div class="eyebrow">Stocking items · back at the warehouse?</div>
+            <h3 id="return-title">Return unused stock</h3>
+            <p>Got more product than Machine 1 needed? Count what came back and add it straight into warehouse inventory.</p>
+            <div class="return-flow"><span>1. Count leftovers</span><b>&rarr;</b><span>2. Confirm return</span><b>&rarr;</b><span>3. Warehouse stock updates</span></div>
+          </div>
+          <button class="return-start" id="open-return" type="button" aria-expanded="false" aria-controls="return-form">Start a return</button>
+        </div>
+        <div class="return-rule"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg> Adds one positive stock movement per returned product, linked to this route. Nayax sales and prices are not changed.</div>
+        <div class="return-form" id="return-form">
+          <div class="return-meta">
+            <span class="route">North route · GGV-001</span>
+            <span class="where">Westfield Parramatta · completed today</span>
+            <span class="dest"><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5v11H3zM8 20v-6h8v6"/></svg> Destination: Warehouse</span>
+          </div>
+          <table class="rtable">
+            <thead><tr><th>Product from this fill</th><th class="num">Issued for route</th><th class="num">Filled</th><th class="num">Unused qty to return</th></tr></thead>
+            <tbody>
+              <tr data-return-row>
+                <td><div class="rproduct"><div class="rthumb th-rb">RB</div><div><div class="name">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250</div></div></div></td>
+                <td class="num"><div class="routeqty">9<small>units issued</small></div></td>
+                <td class="num"><div class="routeqty">7<small>units filled</small></div></td>
+                <td class="num"><div class="rstepper" data-max="2"><button type="button" data-step="-1" aria-label="Return one fewer Red Bull">−</button><output aria-live="polite">2</output><button type="button" data-step="1" aria-label="Return one more Red Bull">+</button></div></td>
+              </tr>
+              <tr data-return-row>
+                <td><div class="rproduct"><div class="rthumb th-pr">P</div><div><div class="name">Pringles Original 134g</div><div class="sku">SKU: PR-134</div></div></div></td>
+                <td class="num"><div class="routeqty">6<small>units issued</small></div></td>
+                <td class="num"><div class="routeqty">5<small>units filled</small></div></td>
+                <td class="num"><div class="rstepper" data-max="1"><button type="button" data-step="-1" aria-label="Return one fewer Pringles">−</button><output aria-live="polite">1</output><button type="button" data-step="1" aria-label="Return one more Pringles">+</button></div></td>
+              </tr>
+              <tr data-return-row>
+                <td><div class="rproduct"><div class="rthumb th-pk">PC</div><div><div class="name">Pocky Chocolate</div><div class="sku">SKU: JP-PC-2P</div></div></div></td>
+                <td class="num"><div class="routeqty">10<small>units issued</small></div></td>
+                <td class="num"><div class="routeqty">10<small>units filled</small></div></td>
+                <td class="num"><span class="rzero">Nothing left over</span></td>
+              </tr>
+              <tr data-return-row>
+                <td><div class="rproduct"><div class="rthumb th-do">S</div><div><div class="name">Smith's Original 170g</div><div class="sku">SKU: SM-170 · swapped in</div></div></div></td>
+                <td class="num"><div class="routeqty">11<small>units issued</small></div></td>
+                <td class="num"><div class="routeqty">11<small>units filled</small></div></td>
+                <td class="num"><span class="rzero">Nothing left over</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="return-review">
+            <div><div class="summary"><b id="return-total">3 units</b> across <b id="return-items">2 products</b> will be added back to warehouse stock.</div><div class="condition">Only return unopened, resalable stock. Record damaged items separately.</div></div>
+            <span class="spacer"></span>
+            <button class="return-confirm" id="confirm-return" type="button">Confirm 3-unit return</button>
+          </div>
+        </div>
+        <div class="return-success" role="status" aria-live="polite">
+          <div class="success-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div>
+          <div>
+            <h3><span id="success-total">3 units</span> added back to Warehouse</h3>
+            <p>Return RET-00518 · North route · recorded by Sam today at 4:42 PM</p>
+            <div class="movement-chips" id="movement-chips"><span>Red Bull +2</span><span>Pringles +1</span></div>
+          </div>
+          <div class="success-actions"><a href="inventory.html#route-returns">View in Inventory</a><button type="button" id="return-more">Return more stock</button></div>
+        </div>
+      </section>
       <div class="printcard">
         <div class="ph"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg><h3>Print preview — GGV-001</h3><span class="note">Slot · item · exact price · amount. One exact price per item — nothing else prints.</span></div>
         <table class="ptable">
@@ -391,11 +523,78 @@
     <div class="actionbar">
       <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><div><div class="tt">CONFIRM FILLS</div><div class="ss">Records ✔ / ✘ · auto-deducts inventory</div></div></div>
       <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><div><div class="tt">MARK ROUTE COMPLETE</div><div class="ss">All machine fills done</div></div></div>
+      <button class="return-action" id="action-return" type="button"><svg viewBox="0 0 24 24"><path d="M20 7H8a4 4 0 0 0-4 4v7"/><path d="M8 3L4 7l4 4"/></svg> Return stock</button>
       <button class="prbtn"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> Print / PDF</button>
       <div class="abspacer"></div>
       <div class="total"><div><div class="lab">TOTAL ESTIMATED ROUTE COST</div><div class="amt">$418.90</div></div><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
     </div>
   </div>
 </div>
+<script>
+  const returnCard = document.getElementById('warehouse-return');
+  const openReturn = document.getElementById('open-return');
+  const actionReturn = document.getElementById('action-return');
+  const confirmReturn = document.getElementById('confirm-return');
+  const returnMore = document.getElementById('return-more');
+  const returnOutputs = [...document.querySelectorAll('.rstepper output')];
+  const productNames = ['Red Bull', 'Pringles', 'Pocky', "Smith's"];
+
+  function openReturnForm(){
+    returnCard.classList.remove('is-complete');
+    returnCard.classList.add('is-open');
+    openReturn.setAttribute('aria-expanded','true');
+    openReturn.textContent = 'Return form open';
+    returnCard.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  function updateReturnSummary(){
+    const quantities = returnOutputs.map(output => Number(output.textContent));
+    const total = quantities.reduce((sum, qty) => sum + qty, 0);
+    const items = quantities.filter(Boolean).length;
+    document.getElementById('return-total').textContent = `${total} ${total === 1 ? 'unit' : 'units'}`;
+    document.getElementById('return-items').textContent = `${items} ${items === 1 ? 'product' : 'products'}`;
+    confirmReturn.textContent = total ? `Confirm ${total}-unit return` : 'Add a return quantity';
+    confirmReturn.disabled = total === 0;
+  }
+
+  openReturn.addEventListener('click',()=>{
+    if(returnCard.classList.contains('is-open')){
+      returnCard.classList.remove('is-open');
+      openReturn.setAttribute('aria-expanded','false');
+      openReturn.textContent = 'Start a return';
+    }else{
+      openReturnForm();
+    }
+  });
+  actionReturn.addEventListener('click',openReturnForm);
+
+  document.querySelectorAll('.rstepper button').forEach(button=>{
+    button.addEventListener('click',()=>{
+      const stepper = button.closest('.rstepper');
+      const output = stepper.querySelector('output');
+      const next = Math.max(0,Math.min(Number(stepper.dataset.max),Number(output.textContent) + Number(button.dataset.step)));
+      output.textContent = next;
+      updateReturnSummary();
+    });
+  });
+
+  confirmReturn.addEventListener('click',()=>{
+    const quantities = returnOutputs.map(output => Number(output.textContent));
+    const total = quantities.reduce((sum, qty) => sum + qty, 0);
+    document.getElementById('success-total').textContent = `${total} ${total === 1 ? 'unit' : 'units'}`;
+    const chips = quantities.map((qty,index)=>qty ? `<span>${productNames[index]} +${qty}</span>` : '').join('');
+    document.getElementById('movement-chips').innerHTML = chips;
+    returnCard.classList.remove('is-open');
+    returnCard.classList.add('is-complete');
+    returnCard.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+
+  returnMore.addEventListener('click',()=>{
+    returnOutputs.forEach(output=>output.textContent='0');
+    updateReturnSummary();
+    openReturnForm();
+  });
+  updateReturnSummary();
+</script>
 </body>
 </html>
