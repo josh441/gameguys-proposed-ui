@@ -96,6 +96,63 @@
   .drop .t{font-family:var(--display);font-weight:800;font-size:14px;color:var(--fg)}
   .drop .s{font-size:11.5px;color:var(--fg2);margin-top:5px}
   .flag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+  /* purchase order editing and delivery receiving */
+  .po-id{font-family:var(--display);font-weight:800;color:var(--purple)}
+  .po-actions{display:flex;justify-content:flex-end;gap:6px;white-space:nowrap}
+  .po-action{border:1px solid var(--purple-line);background:#fff;color:var(--purple);font:800 10.5px var(--font);padding:7px 9px;border-radius:8px;cursor:pointer}
+  .po-action.receive{background:var(--teal);border-color:var(--teal);color:#fff}
+  .po-workspace{display:none;background:#fff;border:1px solid #d8cef5;border-radius:16px;box-shadow:0 8px 28px rgba(76,29,149,.09);margin-top:16px;overflow:hidden}
+  .po-workspace.show{display:block}
+  .po-workspace-head{display:flex;align-items:center;gap:12px;padding:17px 18px;background:linear-gradient(135deg,#faf8ff,#f2fffd);border-bottom:1px solid var(--line)}
+  .po-workspace-head h3{font-size:16px}
+  .po-workspace-head p{font-size:11px;color:var(--fg2);margin:4px 0 0}
+  .po-workspace-head .spacer{flex:1}
+  .po-close{border:1px solid var(--line);background:#fff;color:var(--fg2);font-weight:800;padding:7px 10px;border-radius:8px;cursor:pointer}
+  .po-tabs{display:flex;gap:4px;padding:0 18px;border-bottom:1px solid var(--line)}
+  .po-tabs button{border:none;background:none;color:var(--fg3);font:800 12px var(--display);padding:12px 10px 10px;border-bottom:2.5px solid transparent;cursor:pointer}
+  .po-tabs button.on{color:var(--teal);border-bottom-color:var(--teal)}
+  .po-panel{display:none;padding:18px}.po-panel.show{display:block}
+  .form-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  .form-field label{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--fg3);font-weight:800;margin-bottom:6px}
+  .form-field input,.form-field select,.form-field textarea,.edit-table input,.receipt-table input,.receipt-table select{width:100%;border:1px solid var(--line);background:#fff;color:var(--fg);font:600 12px var(--font);padding:9px 10px;border-radius:8px;outline:none}
+  .form-field input:focus,.form-field select:focus,.form-field textarea:focus,.edit-table input:focus,.receipt-table input:focus,.receipt-table select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.1)}
+  .form-field.wide{grid-column:span 2}
+  .form-field textarea{min-height:70px;resize:vertical}
+  .edit-table,.receipt-table{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .edit-table input{padding:7px 8px}
+  .edit-table .remove-line{border:none;background:var(--red-soft);color:var(--red);font-weight:900;width:28px;height:28px;border-radius:7px;cursor:pointer}
+  .panel-actions{display:flex;align-items:center;gap:8px;margin-top:14px}
+  .panel-actions .spacer{flex:1}
+  .btn-secondary,.btn-primary,.btn-teal{border:1px solid var(--line);background:#fff;color:var(--fg2);font:800 11.5px var(--font);padding:9px 12px;border-radius:9px;cursor:pointer}
+  .btn-primary{background:var(--purple);border-color:var(--purple);color:#fff}
+  .btn-teal{background:var(--teal);border-color:var(--teal);color:#fff}
+  .btn-teal:disabled{opacity:.45;cursor:not-allowed}
+  .save-message{display:none;color:var(--green-txt);background:var(--green-soft);font-size:11px;font-weight:800;padding:7px 9px;border-radius:8px}
+  .save-message.show{display:inline-flex}
+  .receive-guide{display:flex;align-items:flex-start;gap:10px;background:var(--teal-soft);color:var(--fg2);font-size:11px;line-height:1.5;padding:11px 12px;border-radius:10px;margin-bottom:14px}
+  .receive-guide b{color:var(--teal)}
+  .receipt-table th{text-align:center}.receipt-table th:first-child,.receipt-table td:first-child{text-align:left}
+  .receipt-table td{text-align:center}
+  .receipt-table input[type="number"]{width:68px;text-align:center;padding:7px 5px}
+  .receipt-table select{min-width:105px;padding:7px 6px}
+  .receipt-table .receipt-damage-reason{display:block;min-width:92px;margin:5px auto 0;font-size:9.5px;padding:5px}
+  .receipt-table output{font-family:var(--display);font-weight:800}
+  .receipt-item{min-width:180px}.receipt-item b{display:block}.receipt-item span{display:block;color:var(--fg3);font-size:10px;margin-top:3px}
+  .damage-input{border-color:#f2b8b8!important;background:#fffafa!important;color:var(--red)!important}
+  .allocation{min-width:210px}
+  .allocation-fields{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px}
+  .allocation-fields label{font-size:9px;color:var(--fg3);font-weight:800}
+  .allocation-fields input{width:100%!important;margin-top:3px}
+  .receipt-table tr.allocation-invalid{background:#fff8ed}
+  .allocation-warning{display:none;color:#b45309;font-size:9px;font-weight:800;margin-top:5px}
+  .receipt-table tr.allocation-invalid .allocation-warning{display:block}
+  .receipt-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+  .receipt-summary div{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fafbfd}
+  .receipt-summary span{display:block;font-size:9px;color:var(--fg3);font-weight:800;text-transform:uppercase}
+  .receipt-summary b{display:block;font-family:var(--display);font-size:17px;margin-top:5px}
+  .receipt-summary .damaged b{color:var(--red)}.receipt-summary .due b{color:var(--amber)}
+  .receipt-confirmation{display:none;margin-top:14px;background:#f0fff5;border:1px solid #c9ead4;border-radius:11px;padding:12px;color:var(--green-txt);font-size:11.5px;font-weight:700;line-height:1.45}
+  .receipt-confirmation.show{display:block}
   /* route returns recorded by fillers */
   .return-hero{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px}
   .return-callout{background:linear-gradient(135deg,#fff 0%,#effdf4 100%);border:1px solid #c9ead4;border-radius:16px;padding:18px;display:flex;gap:14px;align-items:flex-start}
@@ -142,8 +199,11 @@
     .k4{grid-template-columns:repeat(2,1fr)}
     .grid2{grid-template-columns:1fr}
     .return-hero{grid-template-columns:1fr}
+    .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .receipt-summary{grid-template-columns:repeat(2,1fr)}
+    .po-workspace-head{align-items:flex-start;flex-wrap:wrap}
   }
-  @media (max-width:520px){ .k4{grid-template-columns:1fr} }
+  @media (max-width:520px){ .k4,.form-grid,.receipt-summary{grid-template-columns:1fr}.form-field.wide{grid-column:auto}.panel-actions{flex-wrap:wrap} }
 </style>
 </head>
 <body>
@@ -241,16 +301,95 @@
         <div class="card tight p0">
           <div class="ph"><h3 style="margin:0">Purchase orders &amp; invoices</h3><span class="aichip">✦ AI-read 3 of 4</span></div>
           <table>
-            <thead><tr><th>PO</th><th>Supplier</th><th>Type</th><th>Status</th><th class="num">Unit basis</th><th class="num">Cost</th><th class="num">Total</th></tr></thead>
+            <thead><tr><th>PO</th><th>Supplier</th><th>Type</th><th>Status</th><th class="num">Unit basis</th><th class="num">Cost</th><th class="num">Total</th><th class="num">Actions</th></tr></thead>
             <tbody>
-              <tr><td>PO-1042</td><td>TCG Direct</td><td>Booster box</td><td><span class="badge b-blue">Ordered</span></td><td class="num">$4.20 / pack</td><td class="num">36 packs/box</td><td class="num">$3,780</td></tr>
-              <tr><td>PO-1039</td><td>Ignins JP</td><td>Booster box</td><td><span class="badge b-amber">Partial</span></td><td class="num">$3.10 / pack</td><td class="num">30 packs/box</td><td class="num">$5,208</td></tr>
-              <tr><td>PO-1044</td><td>Shopify dropship</td><td>Blind box</td><td><span class="badge b-green">Received</span></td><td class="num">$6.80 / box</td><td class="num">1 unit/box</td><td class="num">$2,040</td></tr>
-              <tr><td>PO-1031</td><td>Metcash</td><td>Snacks case</td><td><span class="badge b-green">Received</span></td><td class="num">$2.30 / unit</td><td class="num">24 units/case</td><td class="num">$1,104</td></tr>
-              <tr><td>PO-1045</td><td>Metcash</td><td>Drinks case</td><td><span class="badge b-blue">Ordered</span></td><td class="num">$1.90 / unit</td><td class="num">24 units/case</td><td class="num">$912</td></tr>
+              <tr><td class="po-id">PO-1042</td><td>TCG Direct</td><td>Booster box</td><td><span class="badge b-blue" id="po-status-1042">Ordered</span></td><td class="num">$4.20 / pack</td><td class="num">36 packs/box</td><td class="num">$3,780</td><td><div class="po-actions"><button class="po-action" type="button" data-po-action="edit" data-po="PO-1042" data-supplier="TCG Direct">View / edit</button><button class="po-action receive" type="button" data-po-action="receive" data-po="PO-1042" data-supplier="TCG Direct">Receive</button></div></td></tr>
+              <tr><td class="po-id">PO-1039</td><td>Ignins JP</td><td>Booster box</td><td><span class="badge b-amber">Partial</span></td><td class="num">$3.10 / pack</td><td class="num">30 packs/box</td><td class="num">$5,208</td><td><div class="po-actions"><button class="po-action" type="button" data-po-action="edit" data-po="PO-1039" data-supplier="Ignins JP">View / edit</button><button class="po-action receive" type="button" data-po-action="receive" data-po="PO-1039" data-supplier="Ignins JP">Receive</button></div></td></tr>
+              <tr><td class="po-id">PO-1044</td><td>Shopify dropship</td><td>Blind box</td><td><span class="badge b-green">Received</span></td><td class="num">$6.80 / box</td><td class="num">1 unit/box</td><td class="num">$2,040</td><td><div class="po-actions"><button class="po-action" type="button" data-po-action="edit" data-po="PO-1044" data-supplier="Shopify dropship">View / edit</button></div></td></tr>
+              <tr><td class="po-id">PO-1031</td><td>Metcash</td><td>Snacks case</td><td><span class="badge b-green">Received</span></td><td class="num">$2.30 / unit</td><td class="num">24 units/case</td><td class="num">$1,104</td><td><div class="po-actions"><button class="po-action" type="button" data-po-action="edit" data-po="PO-1031" data-supplier="Metcash">View / edit</button></div></td></tr>
+              <tr><td class="po-id">PO-1045</td><td>Metcash</td><td>Drinks case</td><td><span class="badge b-blue">Ordered</span></td><td class="num">$1.90 / unit</td><td class="num">24 units/case</td><td class="num">$912</td><td><div class="po-actions"><button class="po-action" type="button" data-po-action="edit" data-po="PO-1045" data-supplier="Metcash">View / edit</button><button class="po-action receive" type="button" data-po-action="receive" data-po="PO-1045" data-supplier="Metcash">Receive</button></div></td></tr>
             </tbody>
           </table>
         </div>
+
+        <section class="po-workspace" id="po-workspace" aria-labelledby="po-workspace-title">
+          <div class="po-workspace-head">
+            <div><h3 id="po-workspace-title">PO-1042 · TCG Direct</h3><p id="po-workspace-subtitle">Review the order, make changes, or mark off the delivery when it arrives.</p></div>
+            <span class="badge b-blue" id="workspace-po-status">Ordered</span>
+            <span class="spacer"></span>
+            <button class="po-close" id="po-close" type="button">Close</button>
+          </div>
+          <div class="po-tabs" role="tablist" aria-label="Purchase order workspace">
+            <button class="on" type="button" data-po-panel="edit">PO details &amp; editing</button>
+            <button type="button" data-po-panel="receive">Receive delivery</button>
+          </div>
+
+          <div class="po-panel show" id="po-panel-edit">
+            <div class="form-grid">
+              <div class="form-field"><label for="po-supplier">Supplier</label><select id="po-supplier"><option>TCG Direct</option><option>Ignins JP</option><option>Metcash</option><option>Shopify dropship</option></select></div>
+              <div class="form-field"><label for="po-status">PO status</label><select id="po-status"><option>Draft</option><option selected>Ordered</option><option>In transit</option><option>Partial</option><option>Received</option></select></div>
+              <div class="form-field"><label for="po-date">Ordered date</label><input id="po-date" type="date" value="2026-05-18"></div>
+              <div class="form-field"><label for="po-eta">Expected delivery</label><input id="po-eta" type="date" value="2026-05-26"></div>
+              <div class="form-field wide"><label for="po-reference">Supplier reference</label><input id="po-reference" value="TCG-AU-58491"></div>
+              <div class="form-field wide"><label for="po-notes">Internal notes</label><input id="po-notes" value="Call warehouse before unloading. Keep cartons dry."></div>
+            </div>
+
+            <div class="edit-table">
+              <table>
+                <thead><tr><th>Item</th><th>SKU</th><th class="num">Ordered qty</th><th class="num">Pack size</th><th class="num">Unit cost</th><th></th></tr></thead>
+                <tbody id="po-edit-lines">
+                  <tr><td><input value="Surging Sparks (EN)"></td><td><input value="PKM-SS-EN"></td><td><input type="number" min="0" value="240"></td><td><input value="36 packs / box"></td><td><input type="number" min="0" step=".01" value="4.20"></td><td><button class="remove-line" type="button" aria-label="Remove Surging Sparks line">×</button></td></tr>
+                  <tr><td><input value="Destined Rivals (EN)"></td><td><input value="PKM-DR-EN"></td><td><input type="number" min="0" value="120"></td><td><input value="36 packs / box"></td><td><input type="number" min="0" step=".01" value="4.55"></td><td><button class="remove-line" type="button" aria-label="Remove Destined Rivals line">×</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="panel-actions">
+              <button class="btn-secondary" id="add-po-line" type="button">+ Add line</button>
+              <span class="save-message" id="po-save-message" role="status">Changes saved to this PO</span>
+              <span class="spacer"></span>
+              <button class="btn-secondary" id="cancel-po-edit" type="button">Cancel changes</button>
+              <button class="btn-primary" id="save-po" type="button">Save PO changes</button>
+            </div>
+          </div>
+
+          <div class="po-panel" id="po-panel-receive">
+            <div class="receive-guide"><span>✓</span><div><b>Mark off exactly what arrived.</b> “Arrived now” includes damaged units. Good units must be allocated to Store, Vending, or split between both; damaged units go to Quarantine and never increase sellable stock.</div></div>
+            <div class="receipt-table">
+              <table>
+                <thead><tr><th>Item</th><th>Ordered</th><th>Previously received</th><th>Arrived now</th><th>Damaged</th><th>Good</th><th>Still due</th><th>Allocate good stock</th></tr></thead>
+                <tbody>
+                  <tr data-receipt-row data-ordered="240" data-previous="0">
+                    <td><div class="receipt-item"><b>Surging Sparks (EN)</b><span>SKU: PKM-SS-EN</span></div></td><td>240</td><td>0</td>
+                    <td><input type="number" min="0" max="240" value="240" data-role="arrived" aria-label="Surging Sparks arrived now"></td>
+                    <td><input class="damage-input" type="number" min="0" max="240" value="4" data-role="damaged" aria-label="Surging Sparks damaged quantity"><select class="receipt-damage-reason" data-role="damage-reason" aria-label="Surging Sparks damage reason"><option>Crushed</option><option>Opened</option><option>Wet</option><option>Other</option></select></td>
+                    <td><output data-role="good">236</output></td><td><output data-role="due">0</output></td>
+                    <td class="allocation"><select data-role="allocation"><option value="store">Store</option><option value="vending">Vending</option><option value="split" selected>Split store + vending</option></select><div class="allocation-fields"><label>Store<input type="number" min="0" value="60" data-role="store"></label><label>Vending<input type="number" min="0" value="176" data-role="vending"></label></div><div class="allocation-warning">Allocation must equal good quantity.</div></td>
+                  </tr>
+                  <tr data-receipt-row data-ordered="120" data-previous="0">
+                    <td><div class="receipt-item"><b>Destined Rivals (EN)</b><span>SKU: PKM-DR-EN</span></div></td><td>120</td><td>0</td>
+                    <td><input type="number" min="0" max="120" value="116" data-role="arrived" aria-label="Destined Rivals arrived now"></td>
+                    <td><input class="damage-input" type="number" min="0" max="120" value="2" data-role="damaged" aria-label="Destined Rivals damaged quantity"><select class="receipt-damage-reason" data-role="damage-reason" aria-label="Destined Rivals damage reason"><option>Dented</option><option>Crushed</option><option>Opened</option><option>Wet</option><option>Other</option></select></td>
+                    <td><output data-role="good">114</output></td><td><output data-role="due">4</output></td>
+                    <td class="allocation"><select data-role="allocation"><option value="store">Store</option><option value="vending" selected>Vending</option><option value="split">Split store + vending</option></select><div class="allocation-fields"><label>Store<input type="number" min="0" value="0" data-role="store"></label><label>Vending<input type="number" min="0" value="114" data-role="vending"></label></div><div class="allocation-warning">Allocation must equal good quantity.</div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="receipt-summary">
+              <div><span>Good to Store</span><b id="receipt-store">60</b></div>
+              <div><span>Good to Vending</span><b id="receipt-vending">290</b></div>
+              <div class="damaged"><span>Damaged to Quarantine</span><b id="receipt-damaged">6</b></div>
+              <div class="due"><span>Still due from supplier</span><b id="receipt-due">4</b></div>
+            </div>
+            <div class="receipt-confirmation" id="receipt-confirmation" role="status">Receipt RCV-00842 confirmed. 350 good units were allocated, 6 damaged units were quarantined, and PO-1042 is now Partial with 4 units still due.</div>
+            <div class="panel-actions">
+              <span class="save-message" id="receipt-draft-message" role="status">Receiving draft saved</span>
+              <span class="spacer"></span>
+              <button class="btn-secondary" id="save-receipt-draft" type="button">Save receiving draft</button>
+              <button class="btn-teal" id="confirm-receipt" type="button">Confirm receipt</button>
+            </div>
+          </div>
+        </section>
       </section>
 
       <!-- ===== 2.c ROUTE RETURNS ===== -->
@@ -258,15 +397,15 @@
         <div class="kpis k4">
           <div class="kpi"><div class="l">Returned today</div><div class="v" style="color:var(--green-txt)">3</div><div class="d muted">units from 1 route</div></div>
           <div class="kpi"><div class="l">Products returned</div><div class="v">2</div><div class="d muted">Red Bull + Pringles</div></div>
-          <div class="kpi"><div class="l">Needs review</div><div class="v">0</div><div class="d muted">all returns recorded</div></div>
-          <div class="kpi"><div class="l">Warehouse movement</div><div class="v" style="color:var(--green-txt)">+3</div><div class="d muted">net units added back</div></div>
+          <div class="kpi"><div class="l">Needs review</div><div class="v" style="color:var(--red)">1</div><div class="d muted">damaged unit quarantined</div></div>
+          <div class="kpi"><div class="l">Warehouse movement</div><div class="v" style="color:var(--green-txt)">+2</div><div class="d muted">sellable units added back</div></div>
         </div>
 
         <div class="return-hero">
           <div class="return-callout">
             <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7H8a4 4 0 0 0-4 4v7"/><path d="M8 3L4 7l4 4"/><path d="M4 18h16"/><path d="M17 15l3 3-3 3"/></svg></div>
-            <div><h3>Filler returns are added back immediately</h3><p>When a filler gets back with unopened stock that a machine did not need, they count it from their completed route and confirm the return. Inventory records one positive movement per product.</p>
-              <div class="return-flow"><span>Filler counts leftovers</span><b>&rarr;</b><span>Confirms once</span><b>&rarr;</b><span>Warehouse stock increases</span></div>
+            <div><h3>Filler returns are sorted by condition immediately</h3><p>When a filler gets back with stock a machine did not need, they record the item, count, source machine, and whether it is good or damaged. Good stock returns to Warehouse; damaged stock goes to Quarantine.</p>
+              <div class="return-flow"><span>Count by source</span><b>&rarr;</b><span>Mark condition</span><b>&rarr;</b><span>Warehouse or Quarantine</span></div>
             </div>
           </div>
           <div class="return-rule">
@@ -274,6 +413,7 @@
             <ul>
               <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg><span>The return is linked to the filler, route, and machine for audit.</span></li>
               <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg><span>Warehouse stock updates once; the receiver does not approve it again.</span></li>
+              <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg><span>Damaged stock is quarantined and never increases sellable warehouse stock.</span></li>
               <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg><span>Nayax sales and selling prices stay unchanged.</span></li>
             </ul>
           </div>
@@ -288,13 +428,13 @@
             <span class="when">Today, 4:42 PM<br><span class="audit-ref">ROUTE NR-0524</span></span>
           </div>
           <table>
-            <thead><tr><th>Product</th><th>Source</th><th>Destination</th><th>Movement</th><th>Warehouse on hand</th></tr></thead>
+            <thead><tr><th>Item</th><th>Came from</th><th>Condition</th><th>Destination</th><th>Movement</th><th>Warehouse on hand</th></tr></thead>
             <tbody>
-              <tr><td><b>Red Bull Energy Drink 250ml</b><div class="muted" style="font-size:10.5px;margin-top:2px">SKU: RB-250</div></td><td>North route carry stock</td><td>Warehouse</td><td class="move">+2 units</td><td class="num">96 &rarr; 98</td></tr>
-              <tr><td><b>Pringles Original 134g</b><div class="muted" style="font-size:10.5px;margin-top:2px">SKU: PR-134</div></td><td>North route carry stock</td><td>Warehouse</td><td class="move">+1 unit</td><td class="num">51 &rarr; 52</td></tr>
+              <tr><td><b>Red Bull Energy Drink 250ml</b><div class="muted" style="font-size:10.5px;margin-top:2px">SKU: RB-250 · count 2</div></td><td><b>Machine 1 · GGV-001</b><div class="muted" style="font-size:10px;margin-top:2px">Westfield Parramatta · North route</div></td><td><span class="badge b-green">Good</span></td><td>Warehouse</td><td class="move">+2 sellable</td><td class="num">96 &rarr; 98</td></tr>
+              <tr><td><b>Pringles Original 134g</b><div class="muted" style="font-size:10.5px;margin-top:2px">SKU: PR-134 · count 1</div></td><td><b>Machine 1 · GGV-001</b><div class="muted" style="font-size:10px;margin-top:2px">Westfield Parramatta · North route</div></td><td><span class="badge b-red">Damaged · crushed</span></td><td>Damaged / Quarantine</td><td><span class="badge b-red">1 quarantined</span></td><td class="num">51 unchanged</td></tr>
             </tbody>
           </table>
-          <div class="movement-note"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg> 3 units added to warehouse inventory in one return batch. No extra Nayax transaction was created.</div>
+          <div class="movement-note"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg> Return batch processed once: 2 good units added to Warehouse and 1 damaged unit sent to Quarantine. No extra Nayax transaction was created.</div>
         </div>
       </section>
 
@@ -312,7 +452,141 @@
   document.querySelectorAll('.subtabs button').forEach(b=>b.addEventListener('click',()=>{
     showInventoryView(b.dataset.v);
   }));
+
+  const poWorkspace = document.getElementById('po-workspace');
+  const poTitle = document.getElementById('po-workspace-title');
+  const poSupplier = document.getElementById('po-supplier');
+  const poSaveMessage = document.getElementById('po-save-message');
+
+  function showPoPanel(name){
+    document.querySelectorAll('[data-po-panel]').forEach(button=>button.classList.toggle('on',button.dataset.poPanel===name));
+    document.querySelectorAll('.po-panel').forEach(panel=>panel.classList.toggle('show',panel.id===`po-panel-${name}`));
+  }
+
+  function openPoWorkspace(mode='edit', po='PO-1042', supplier='TCG Direct'){
+    showInventoryView('po');
+    poTitle.textContent = `${po} · ${supplier}`;
+    if([...poSupplier.options].some(option=>option.value===supplier)) poSupplier.value=supplier;
+    poWorkspace.classList.add('show');
+    showPoPanel(mode);
+    history.replaceState(null,'',mode==='receive' ? '#receive-po-1042' : '#po-1042');
+    poWorkspace.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  document.querySelectorAll('[data-po-action]').forEach(button=>button.addEventListener('click',()=>openPoWorkspace(button.dataset.poAction,button.dataset.po,button.dataset.supplier)));
+  document.querySelectorAll('[data-po-panel]').forEach(button=>button.addEventListener('click',()=>showPoPanel(button.dataset.poPanel)));
+  document.getElementById('po-close').addEventListener('click',()=>{
+    poWorkspace.classList.remove('show');
+    history.replaceState(null,'',location.pathname);
+  });
+  document.getElementById('cancel-po-edit').addEventListener('click',()=>document.getElementById('po-close').click());
+
+  document.getElementById('save-po').addEventListener('click',()=>{
+    const selectedStatus = document.getElementById('po-status').value;
+    document.getElementById('workspace-po-status').textContent=selectedStatus;
+    poSaveMessage.classList.add('show');
+    window.setTimeout(()=>poSaveMessage.classList.remove('show'),2400);
+  });
+
+  document.getElementById('add-po-line').addEventListener('click',()=>{
+    document.getElementById('po-edit-lines').insertAdjacentHTML('beforeend','<tr><td><input placeholder="Item name"></td><td><input placeholder="SKU"></td><td><input type="number" min="0" value="0"></td><td><input placeholder="Units / box"></td><td><input type="number" min="0" step=".01" value="0.00"></td><td><button class="remove-line" type="button" aria-label="Remove new PO line">×</button></td></tr>');
+  });
+  document.getElementById('po-edit-lines').addEventListener('click',event=>{
+    const removeButton = event.target.closest('.remove-line');
+    if(removeButton) removeButton.closest('tr').remove();
+  });
+
+  const receiptRows = [...document.querySelectorAll('[data-receipt-row]')];
+  const confirmReceipt = document.getElementById('confirm-receipt');
+  let receiptConfirmed=false;
+
+  function updateReceiptSummary(){
+    let storeTotal=0;
+    let vendingTotal=0;
+    let damagedTotal=0;
+    let dueTotal=0;
+    let arrivedTotal=0;
+    let hasInvalidAllocation=false;
+
+    receiptRows.forEach(row=>{
+      const ordered=Number(row.dataset.ordered);
+      const previous=Number(row.dataset.previous);
+      const arrivedInput=row.querySelector('[data-role="arrived"]');
+      const damagedInput=row.querySelector('[data-role="damaged"]');
+      const damageReason=row.querySelector('[data-role="damage-reason"]');
+      const arrived=Math.max(0,Math.min(ordered-previous,Number(arrivedInput.value)||0));
+      const damaged=Math.max(0,Math.min(arrived,Number(damagedInput.value)||0));
+      arrivedInput.value=arrived;
+      damagedInput.value=damaged;
+      damageReason.disabled=damaged===0;
+      const good=arrived-damaged;
+      const due=Math.max(ordered-previous-arrived,0);
+      const allocation=row.querySelector('[data-role="allocation"]').value;
+      const storeInput=row.querySelector('[data-role="store"]');
+      const vendingInput=row.querySelector('[data-role="vending"]');
+      if(allocation==='store'){
+        storeInput.value=good;
+        vendingInput.value=0;
+      }
+      if(allocation==='vending'){
+        storeInput.value=0;
+        vendingInput.value=good;
+      }
+      const store=Math.max(0,Number(storeInput.value)||0);
+      const vending=Math.max(0,Number(vendingInput.value)||0);
+      const invalidAllocation=store+vending!==good;
+      row.classList.toggle('allocation-invalid',invalidAllocation);
+      row.querySelector('[data-role="good"]').textContent=good;
+      row.querySelector('[data-role="due"]').textContent=due;
+      storeTotal+=store;
+      vendingTotal+=vending;
+      damagedTotal+=damaged;
+      dueTotal+=due;
+      arrivedTotal+=arrived;
+      hasInvalidAllocation ||= invalidAllocation;
+    });
+
+    document.getElementById('receipt-store').textContent=storeTotal;
+    document.getElementById('receipt-vending').textContent=vendingTotal;
+    document.getElementById('receipt-damaged').textContent=damagedTotal;
+    document.getElementById('receipt-due').textContent=dueTotal;
+    confirmReceipt.disabled=receiptConfirmed||arrivedTotal===0||hasInvalidAllocation;
+    confirmReceipt.textContent=receiptConfirmed ? 'Receipt confirmed' : (hasInvalidAllocation ? 'Fix allocations to confirm' : `Confirm ${arrivedTotal}-unit receipt`);
+    return {storeTotal,vendingTotal,damagedTotal,dueTotal};
+  }
+
+  receiptRows.forEach(row=>{
+    row.querySelectorAll('input,select').forEach(control=>control.addEventListener('input',updateReceiptSummary));
+    row.querySelector('[data-role="allocation"]').addEventListener('change',updateReceiptSummary);
+  });
+
+  document.getElementById('save-receipt-draft').addEventListener('click',()=>{
+    const message=document.getElementById('receipt-draft-message');
+    message.classList.add('show');
+    window.setTimeout(()=>message.classList.remove('show'),2400);
+  });
+
+  confirmReceipt.addEventListener('click',()=>{
+    const totals=updateReceiptSummary();
+    receiptConfirmed=true;
+    const goodTotal=totals.storeTotal+totals.vendingTotal;
+    const status=totals.dueTotal ? 'Partial' : 'Received';
+    const statusBadge=document.getElementById('po-status-1042');
+    statusBadge.textContent=status;
+    statusBadge.className=`badge ${totals.dueTotal ? 'b-amber' : 'b-green'}`;
+    document.getElementById('workspace-po-status').textContent=status;
+    document.getElementById('workspace-po-status').className=`badge ${totals.dueTotal ? 'b-amber' : 'b-green'}`;
+    const confirmation=document.getElementById('receipt-confirmation');
+    confirmation.textContent=`Receipt RCV-00842 confirmed. ${goodTotal} good units were allocated (${totals.storeTotal} Store, ${totals.vendingTotal} Vending), ${totals.damagedTotal} damaged units were quarantined, and PO-1042 is now ${status}${totals.dueTotal ? ` with ${totals.dueTotal} units still due` : ''}.`;
+    confirmation.classList.add('show');
+    confirmReceipt.disabled=true;
+    confirmReceipt.textContent='Receipt confirmed';
+  });
+
+  updateReceiptSummary();
   if(location.hash==='#route-returns') showInventoryView('returns');
+  if(location.hash==='#po-1042') openPoWorkspace('edit');
+  if(location.hash==='#receive-po-1042') openPoWorkspace('receive');
 </script>
 </body>
 </html>
