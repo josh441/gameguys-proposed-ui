@@ -232,16 +232,30 @@
   .rthumb{width:34px;height:38px;border-radius:8px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;color:#fff;font-family:var(--display);font-size:9.5px;font-weight:900;flex:0 0 auto}
   .rproduct .name{font-weight:700}
   .rproduct .sku{font-size:10.5px}
+  .return-source{min-width:145px}
+  .return-source b{display:block;font-size:11.5px}
+  .return-source span{display:block;font-size:10px;color:var(--fg3);margin-top:3px;line-height:1.35}
   .routeqty{font-family:var(--display);font-weight:800;font-size:15px}
   .routeqty small{display:block;font-family:var(--font);font-size:9px;color:var(--fg3);font-weight:600;margin-top:2px}
   .rstepper{display:inline-flex;align-items:center;border:1.5px solid #c7d8ff;border-radius:9px;overflow:hidden;background:#fff}
   .rstepper button{border:none;background:var(--blue-soft);width:30px;height:32px;font-size:16px;font-weight:800;color:var(--blue);cursor:pointer;font-family:var(--display)}
   .rstepper output{width:38px;text-align:center;font-family:var(--display);font-weight:800;font-size:14px}
   .rzero{color:var(--fg3);font-size:11px;font-weight:600}
+  .condition-toggle{display:inline-flex;padding:3px;background:#f1f4fa;border-radius:9px;border:1px solid var(--line);white-space:nowrap}
+  .condition-toggle button{border:none;background:transparent;color:var(--fg3);font-size:10px;font-weight:800;padding:6px 8px;border-radius:6px;cursor:pointer}
+  .condition-toggle button[aria-pressed="true"][data-condition="good"]{background:#fff;color:var(--green-txt);box-shadow:0 1px 4px rgba(26,31,57,.12)}
+  .condition-toggle button[aria-pressed="true"][data-condition="damaged"]{background:#fff0f0;color:var(--red);box-shadow:0 1px 4px rgba(26,31,57,.12)}
+  .damage-reason{display:none;margin-top:6px;width:100%;min-width:118px;border:1px solid #f2b8b8;background:#fffafa;color:var(--fg2);font:600 10px var(--font);padding:6px;border-radius:7px}
+  tr.is-damaged .damage-reason{display:block}
+  tr.is-damaged{background:#fffafa}
+  tr.is-damaged .rstepper{border-color:#f2b8b8}
   .return-review{display:flex;align-items:center;gap:15px;padding:14px 18px;border-top:1px solid var(--line2);background:#fbfcff}
   .return-review .summary{font-size:11.5px;color:var(--fg2);line-height:1.45}
   .return-review .summary b{color:var(--fg);font-family:var(--display)}
   .return-review .condition{font-size:10.5px;color:var(--fg3)}
+  .return-breakdown{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+  .return-breakdown span{font-size:10px;font-weight:800;padding:5px 7px;border-radius:7px;background:var(--green-soft);color:var(--green-txt)}
+  .return-breakdown .damaged{background:#fff0f0;color:var(--red)}
   .return-review .spacer{flex:1}
   .return-confirm{border:none;background:var(--green-txt);color:#fff;font-family:var(--display);font-weight:800;font-size:12.5px;padding:11px 15px;border-radius:10px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 12px rgba(22,163,74,.18)}
   .return-confirm:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
@@ -312,7 +326,11 @@
     .rtable td{display:block;border:0;padding:0;text-align:left!important}.rtable td:first-child{grid-column:1/-1}
     .rtable td:nth-child(2)::before{content:"Issued  ";font-size:9px;color:var(--fg3);font-family:var(--font)}
     .rtable td:nth-child(3)::before{content:"Filled  ";font-size:9px;color:var(--fg3);font-family:var(--font)}
-    .rtable td:last-child{grid-column:1/-1;display:flex;justify-content:flex-end}
+    .rtable td:nth-child(4){grid-column:1/-1;padding:8px 0;border-top:1px dashed var(--line)}
+    .rtable td:nth-child(4)::before{content:"Came from";display:block;font-size:9px;color:var(--fg3);font-family:var(--font);font-weight:800;margin-bottom:4px;text-transform:uppercase}
+    .rtable td:nth-child(5)::before{content:"Count returned  ";font-size:9px;color:var(--fg3);font-family:var(--font)}
+    .rtable td:last-child{grid-column:1/-1;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:6px}
+    .rtable td:last-child .damage-reason{flex:1 1 100%}
     .success-actions{margin-left:0;width:100%}.success-actions a,.success-actions button{flex:1;text-align:center}
   }
 </style>
@@ -459,39 +477,47 @@
           <div class="return-meta">
             <span class="route">North route · GGV-001</span>
             <span class="where">Westfield Parramatta · completed today</span>
-            <span class="dest"><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5v11H3zM8 20v-6h8v6"/></svg> Destination: Warehouse</span>
+            <span class="dest"><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5v11H3zM8 20v-6h8v6"/></svg> Good → Warehouse · Damaged → Quarantine</span>
           </div>
           <table class="rtable">
-            <thead><tr><th>Product from this fill</th><th class="num">Issued for route</th><th class="num">Filled</th><th class="num">Unused qty to return</th></tr></thead>
+            <thead><tr><th>Item</th><th class="num">Issued</th><th class="num">Filled</th><th>Came from</th><th class="num">Count returned</th><th>Condition</th></tr></thead>
             <tbody>
-              <tr data-return-row>
+              <tr data-return-row data-product="Red Bull">
                 <td><div class="rproduct"><div class="rthumb th-rb">RB</div><div><div class="name">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250</div></div></div></td>
                 <td class="num"><div class="routeqty">9<small>units issued</small></div></td>
                 <td class="num"><div class="routeqty">7<small>units filled</small></div></td>
+                <td><div class="return-source"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta<br>North route carry stock</span></div></td>
                 <td class="num"><div class="rstepper" data-max="2"><button type="button" data-step="-1" aria-label="Return one fewer Red Bull">−</button><output aria-live="polite">2</output><button type="button" data-step="1" aria-label="Return one more Red Bull">+</button></div></td>
+                <td><div class="condition-toggle" aria-label="Red Bull condition"><button type="button" data-condition="good" aria-pressed="true">Good</button><button type="button" data-condition="damaged" aria-pressed="false">Damaged</button></div><select class="damage-reason" aria-label="Red Bull damage reason"><option>Crushed</option><option>Opened</option><option>Leaking</option><option>Expired</option><option>Other</option></select></td>
               </tr>
-              <tr data-return-row>
+              <tr class="is-damaged" data-return-row data-product="Pringles">
                 <td><div class="rproduct"><div class="rthumb th-pr">P</div><div><div class="name">Pringles Original 134g</div><div class="sku">SKU: PR-134</div></div></div></td>
                 <td class="num"><div class="routeqty">6<small>units issued</small></div></td>
                 <td class="num"><div class="routeqty">5<small>units filled</small></div></td>
+                <td><div class="return-source"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta<br>North route carry stock</span></div></td>
                 <td class="num"><div class="rstepper" data-max="1"><button type="button" data-step="-1" aria-label="Return one fewer Pringles">−</button><output aria-live="polite">1</output><button type="button" data-step="1" aria-label="Return one more Pringles">+</button></div></td>
+                <td><div class="condition-toggle" aria-label="Pringles condition"><button type="button" data-condition="good" aria-pressed="false">Good</button><button type="button" data-condition="damaged" aria-pressed="true">Damaged</button></div><select class="damage-reason" aria-label="Pringles damage reason"><option>Crushed</option><option>Opened</option><option>Leaking</option><option>Expired</option><option>Other</option></select></td>
               </tr>
-              <tr data-return-row>
+              <tr data-return-row data-product="Pocky">
                 <td><div class="rproduct"><div class="rthumb th-pk">PC</div><div><div class="name">Pocky Chocolate</div><div class="sku">SKU: JP-PC-2P</div></div></div></td>
                 <td class="num"><div class="routeqty">10<small>units issued</small></div></td>
                 <td class="num"><div class="routeqty">10<small>units filled</small></div></td>
+                <td><div class="return-source"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta<br>North route carry stock</span></div></td>
                 <td class="num"><span class="rzero">Nothing left over</span></td>
+                <td><span class="rzero">No return</span></td>
               </tr>
-              <tr data-return-row>
+              <tr data-return-row data-product="Smith's">
                 <td><div class="rproduct"><div class="rthumb th-do">S</div><div><div class="name">Smith's Original 170g</div><div class="sku">SKU: SM-170 · swapped in</div></div></div></td>
                 <td class="num"><div class="routeqty">11<small>units issued</small></div></td>
                 <td class="num"><div class="routeqty">11<small>units filled</small></div></td>
+                <td><div class="return-source"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta<br>North route carry stock</span></div></td>
                 <td class="num"><span class="rzero">Nothing left over</span></td>
+                <td><span class="rzero">No return</span></td>
               </tr>
             </tbody>
           </table>
           <div class="return-review">
-            <div><div class="summary"><b id="return-total">3 units</b> across <b id="return-items">2 products</b> will be added back to warehouse stock.</div><div class="condition">Only return unopened, resalable stock. Record damaged items separately.</div></div>
+            <div><div class="summary"><b id="return-total">3 units</b> across <b id="return-items">2 products</b> will be recorded from Machine 1.</div><div class="return-breakdown"><span id="return-good">2 good → Warehouse</span><span class="damaged" id="return-damaged">1 damaged → Quarantine</span></div><div class="condition">Damaged items are recorded for audit but never added to sellable warehouse stock.</div></div>
             <span class="spacer"></span>
             <button class="return-confirm" id="confirm-return" type="button">Confirm 3-unit return</button>
           </div>
@@ -499,9 +525,9 @@
         <div class="return-success" role="status" aria-live="polite">
           <div class="success-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div>
           <div>
-            <h3><span id="success-total">3 units</span> added back to Warehouse</h3>
+            <h3><span id="success-total">3 units</span> processed from Machine 1</h3>
             <p>Return RET-00518 · North route · recorded by Sam today at 4:42 PM</p>
-            <div class="movement-chips" id="movement-chips"><span>Red Bull +2</span><span>Pringles +1</span></div>
+            <div class="movement-chips" id="movement-chips"><span>Red Bull +2 Warehouse</span><span>Pringles 1 damaged · Quarantine</span></div>
           </div>
           <div class="success-actions"><a href="inventory.html#route-returns">View in Inventory</a><button type="button" id="return-more">Return more stock</button></div>
         </div>
@@ -536,8 +562,8 @@
   const actionReturn = document.getElementById('action-return');
   const confirmReturn = document.getElementById('confirm-return');
   const returnMore = document.getElementById('return-more');
+  const returnRows = [...document.querySelectorAll('[data-return-row]')];
   const returnOutputs = [...document.querySelectorAll('.rstepper output')];
-  const productNames = ['Red Bull', 'Pringles', 'Pocky', "Smith's"];
 
   function openReturnForm(){
     returnCard.classList.remove('is-complete');
@@ -548,13 +574,25 @@
   }
 
   function updateReturnSummary(){
-    const quantities = returnOutputs.map(output => Number(output.textContent));
-    const total = quantities.reduce((sum, qty) => sum + qty, 0);
-    const items = quantities.filter(Boolean).length;
+    const entries = returnRows.map(row => {
+      const output = row.querySelector('.rstepper output');
+      return {
+        product: row.dataset.product,
+        qty: output ? Number(output.textContent) : 0,
+        damaged: row.classList.contains('is-damaged')
+      };
+    });
+    const total = entries.reduce((sum, entry) => sum + entry.qty, 0);
+    const good = entries.filter(entry => !entry.damaged).reduce((sum, entry) => sum + entry.qty, 0);
+    const damaged = total - good;
+    const items = entries.filter(entry => entry.qty).length;
     document.getElementById('return-total').textContent = `${total} ${total === 1 ? 'unit' : 'units'}`;
     document.getElementById('return-items').textContent = `${items} ${items === 1 ? 'product' : 'products'}`;
+    document.getElementById('return-good').textContent = `${good} good → Warehouse`;
+    document.getElementById('return-damaged').textContent = `${damaged} damaged → Quarantine`;
     confirmReturn.textContent = total ? `Confirm ${total}-unit return` : 'Add a return quantity';
     confirmReturn.disabled = total === 0;
+    return entries;
   }
 
   openReturn.addEventListener('click',()=>{
@@ -578,11 +616,20 @@
     });
   });
 
+  document.querySelectorAll('.condition-toggle button').forEach(button=>{
+    button.addEventListener('click',()=>{
+      const row = button.closest('[data-return-row]');
+      row.querySelectorAll('.condition-toggle button').forEach(choice=>choice.setAttribute('aria-pressed',String(choice===button)));
+      row.classList.toggle('is-damaged',button.dataset.condition==='damaged');
+      updateReturnSummary();
+    });
+  });
+
   confirmReturn.addEventListener('click',()=>{
-    const quantities = returnOutputs.map(output => Number(output.textContent));
-    const total = quantities.reduce((sum, qty) => sum + qty, 0);
+    const entries = updateReturnSummary();
+    const total = entries.reduce((sum, entry) => sum + entry.qty, 0);
     document.getElementById('success-total').textContent = `${total} ${total === 1 ? 'unit' : 'units'}`;
-    const chips = quantities.map((qty,index)=>qty ? `<span>${productNames[index]} +${qty}</span>` : '').join('');
+    const chips = entries.map(entry => entry.qty ? `<span>${entry.product} ${entry.damaged ? `${entry.qty} damaged · Quarantine` : `+${entry.qty} Warehouse`}</span>` : '').join('');
     document.getElementById('movement-chips').innerHTML = chips;
     returnCard.classList.remove('is-open');
     returnCard.classList.add('is-complete');
@@ -591,6 +638,10 @@
 
   returnMore.addEventListener('click',()=>{
     returnOutputs.forEach(output=>output.textContent='0');
+    returnRows.forEach(row=>{
+      row.classList.remove('is-damaged');
+      row.querySelectorAll('.condition-toggle button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.condition==='good')));
+    });
     updateReturnSummary();
     openReturnForm();
   });
