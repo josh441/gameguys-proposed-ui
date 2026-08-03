@@ -198,6 +198,9 @@
   .demo-return-form{display:none;border-top:1px solid #dbe6ff;background:#fff}
   .demo-return.open .demo-return-form{display:block}
   .demo-return.complete .demo-return-top,.demo-return.complete .demo-return-form{display:none}
+  .demo-route-picker{display:flex;align-items:center;gap:9px;padding:11px 18px;background:#f8faff;border-bottom:1px solid var(--line2);flex-wrap:wrap}
+  .demo-route-picker label{font-size:9px;font-weight:800;color:var(--fg3);text-transform:uppercase}
+  .demo-route-picker select{border:1px solid #c7d8ff;background:#fff;color:var(--fg);font:700 10.5px var(--font);padding:7px 9px;border-radius:8px;max-width:100%}
   .demo-return-row{display:grid;grid-template-columns:1fr 90px 120px 155px;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line2)}
   .demo-return-row .nm{font-weight:700;font-size:12.5px}.demo-return-row .sub{font-size:10.5px;color:var(--fg3);margin-top:2px}
   .demo-return-row .used{font-size:10px;color:var(--fg3);text-align:center}.demo-return-row .used b{display:block;font-family:var(--display);font-size:14px;color:var(--fg)}
@@ -351,10 +354,10 @@
           <div class="card">
             <h3>Products — top &amp; bottom (net profit)</h3>
             <div class="rank"><div class="n">1</div><div><div class="nm">Surging Sparks (EN)</div><div class="sub">Booster pack</div></div><div class="val good">$8,240</div></div>
-            <div class="rank"><div class="n">2</div><div><div class="nm">OP-08 Two Legends (JP)</div><div class="sub">Booster pack</div></div><div class="val good">$6,910</div></div>
-            <div class="rank"><div class="n">3</div><div><div class="nm">Mystery Box — Anime S2</div><div class="sub">Blind box</div></div><div class="val good">$5,120</div></div>
-            <div class="rank"><div class="n">—</div><div><div class="nm">Pocky Chocolate (JP)</div><div class="sub">slow mover</div></div><div class="val bad">$140</div></div>
-            <div class="rank"><div class="n">—</div><div><div class="nm">Doritos Nacho 170g</div><div class="sub">low margin</div></div><div class="val bad">$95</div></div>
+            <div class="rank"><div class="n">2</div><div><div class="nm">Pokémon Card 151 (JP)</div><div class="sub">Booster pack</div></div><div class="val good">$6,910</div></div>
+            <div class="rank"><div class="n">3</div><div><div class="nm">Prismatic Evolutions ETB</div><div class="sub">Elite Trainer Box</div></div><div class="val good">$5,120</div></div>
+            <div class="rank"><div class="n">—</div><div><div class="nm">Shrouded Fable Mini Tin</div><div class="sub">slow mover</div></div><div class="val bad">$140</div></div>
+            <div class="rank"><div class="n">—</div><div><div class="nm">Battle Academy 2024</div><div class="sub">low margin</div></div><div class="val bad">$95</div></div>
           </div>
         </div>
       </section>
@@ -367,8 +370,8 @@
         </div>
         <div class="kpis k4">
           <div class="kpi"><div class="l">On-hand value</div><div class="v">$63,421</div><div class="d">1,845 units</div></div>
-          <div class="kpi"><div class="l">Incoming (next 14d)</div><div class="v">2,160</div><div class="d">units across 5 POs</div></div>
-          <div class="kpi"><div class="l">Dead / slow stock</div><div class="v" style="color:var(--amber)">148</div><div class="d">units aging &gt; 90d</div></div>
+          <div class="kpi"><div class="l">Online store stock</div><div class="v" style="color:var(--purple)">820</div><div class="d">allocated to fulfilment</div></div>
+          <div class="kpi"><div class="l">Vending machine stock</div><div class="v" style="color:var(--blue)">1,025</div><div class="d">allocated to routes</div></div>
           <div class="kpi"><div class="l">Open purchase orders</div><div class="v">7</div><div class="d">3 awaiting delivery</div></div>
         </div>
 
@@ -376,9 +379,9 @@
           <div class="card">
             <h3>Incoming stock <span style="font-weight:600;color:var(--fg3);font-size:11px">· synced from Nayax + Shopify</span></h3>
             <div class="lrow"><div class="thumb">SV</div><div><div class="nm">Surging Sparks (EN) — Booster box</div><div class="sub">PO-1042 · Supplier: TCG Direct</div></div><div class="r"><span class="badge b-blue">In transit</span><div class="sub">ETA 26 May</div></div></div>
-            <div class="lrow"><div class="thumb">OP</div><div><div class="nm">OP-08 Two Legends (JP)</div><div class="sub">PO-1039 · Ignins JP</div></div><div class="r"><span class="badge b-amber">Customs</span><div class="sub">ETA 28 May</div></div></div>
-            <div class="lrow"><div class="thumb">MB</div><div><div class="nm">Mystery Box — Anime S3</div><div class="sub">PO-1044 · Shopify dropship</div></div><div class="r"><span class="badge b-green">Ready</span><div class="sub">Arrived</div></div></div>
-            <div class="lrow"><div class="thumb">RB</div><div><div class="nm">Red Bull 250ml — case</div><div class="sub">PO-1045 · Metcash</div></div><div class="r"><span class="badge b-blue">In transit</span><div class="sub">ETA 25 May</div></div></div>
+            <div class="lrow"><div class="thumb">DR</div><div><div class="nm">Destined Rivals — Booster box</div><div class="sub">PO-1039 · PokéJapan Direct</div></div><div class="r"><span class="badge b-amber">Customs</span><div class="sub">ETA 28 May</div></div></div>
+            <div class="lrow"><div class="thumb">JT</div><div><div class="nm">Journey Together — Elite Trainer Box</div><div class="sub">PO-1044 · Pokémon Centre AU</div></div><div class="r"><span class="badge b-green">Ready</span><div class="sub">Arrived</div></div></div>
+            <div class="lrow"><div class="thumb">PE</div><div><div class="nm">Prismatic Evolutions — Booster Bundle</div><div class="sub">PO-1045 · Southern Hobby Distribution</div></div><div class="r"><span class="badge b-blue">In transit</span><div class="sub">ETA 25 May</div></div></div>
           </div>
           <div class="card">
             <h3>AI stock camera</h3>
@@ -388,7 +391,7 @@
               <div class="aichip" style="margin-top:14px">◎ Open camera</div>
             </div>
             <div class="legend" style="margin-top:12px">Proposed — recognises product identity / barcodes to auto-count on receiving and stocktake.</div>
-            <div class="route-audit"><div class="aic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div><div class="copy"><b>Latest route return · RET-00518</b>From Machine 1 / GGV-001: Red Bull +2 Warehouse; Pringles 1 damaged to Quarantine.</div><span class="plus">+2</span></div>
+            <div class="route-audit"><div class="aic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div><div class="copy"><b>Latest route return · RET-00518</b>From Machine 1 / GGV-001: Surging Sparks +4 Warehouse; Destined Rivals 2 damaged to Quarantine.</div><span class="plus">+4</span></div>
           </div>
         </div>
 
@@ -401,14 +404,14 @@
             <thead><tr><th>PO</th><th>Supplier</th><th>Type</th><th>Status</th><th class="num">Cost / pack</th><th class="num">Total</th></tr></thead>
             <tbody>
               <tr><td>PO-1042</td><td>TCG Direct</td><td>Booster box</td><td><span class="badge b-blue">Ordered</span></td><td class="num">$4.20</td><td class="num">$3,780</td></tr>
-              <tr><td>PO-1039</td><td>Ignins JP</td><td>Booster box</td><td><span class="badge b-amber">Partial</span></td><td class="num">$3.10</td><td class="num">$5,208</td></tr>
-              <tr><td>PO-1031</td><td>Metcash</td><td>Snacks case</td><td><span class="badge b-green">Received</span></td><td class="num">$2.30</td><td class="num">$1,104</td></tr>
-              <tr><td>PO-1044</td><td>Shopify dropship</td><td>Blind box</td><td><span class="badge b-green">Received</span></td><td class="num">$6.80</td><td class="num">$2,040</td></tr>
+              <tr><td>PO-1039</td><td>PokéJapan Direct</td><td>JP booster box</td><td><span class="badge b-amber">Partial</span></td><td class="num">$8.10</td><td class="num">$4,860</td></tr>
+              <tr><td>PO-1031</td><td>Cardboard Collectibles</td><td>Sleeved boosters</td><td><span class="badge b-green">Received</span></td><td class="num">$6.20</td><td class="num">$1,488</td></tr>
+              <tr><td>PO-1044</td><td>Pokémon Centre AU</td><td>Elite Trainer Box</td><td><span class="badge b-green">Received</span></td><td class="num">$89.95</td><td class="num">$5,397</td></tr>
             </tbody>
           </table>
           <div class="po-demo">
             <div><h4>PO-1042 can be viewed and edited</h4><p>Supplier, dates, references, notes, ordered quantities, pack sizes, and unit costs are editable before delivery.</p></div>
-            <div class="po-demo-stats"><span>60 → Store</span><span>290 → Vending</span><span class="bad">6 damaged → Quarantine</span><span class="due">4 still due</span></div>
+            <div class="po-demo-stats"><span>60 → Online store</span><span>290 → Vending machines</span><span class="bad">6 damaged → Quarantine</span><span class="due">4 still due</span></div>
             <a href="inventory.html#receive-po-1042">Open PO receiving flow</a>
           </div>
         </div>
@@ -445,14 +448,14 @@
           <table class="dtable">
             <thead><tr><th>Product</th><th>Current Stock</th><th>Qty to Bring</th><th>Packs/Box</th><th>Cost/Pack</th><th>Est. Line Cost</th></tr></thead>
             <tbody>
-              <tr><td><div class="prod"><div class="thumb2 th-rb">RB</div><div><div class="pname">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250</div></div></div></td><td><div class="stk">3</div><div class="sub2">(1 pack)</div></td><td><div class="qtybox"><div class="inp">10</div><div class="pk">(10 packs)</div></div></td><td>24</td><td>$3.20</td><td class="money">$32.00</td></tr>
-              <tr><td><div class="prod"><div class="thumb2 th-pr">P</div><div><div class="pname">Pringles Original 134g</div><div class="sku">SKU: PR-134</div></div></div></td><td><div class="stk">2</div><div class="sub2">(1 pack)</div></td><td><div class="qtybox"><div class="inp">6</div><div class="pk">(6 packs)</div></div></td><td>12</td><td>$2.50</td><td class="money">$15.00</td></tr>
-              <tr><td><div class="prod"><div class="thumb2 th-pk">ポ</div><div><div class="pname">ポッキー チョコレート <span class="custom">Custom 20 packs/box</span></div><div class="sku">Pocky Chocolate · SKU: JP-PC-2P</div></div></div></td><td><div class="stk">0</div><div class="sub2">(0 packs)</div></td><td><div class="qtybox"><div class="inp">20</div><div class="pk">(20 packs)</div></div></td><td>20<div class="sub2">(Custom)</div></td><td>$1.80</td><td class="money">$36.00</td></tr>
+              <tr><td><div class="prod"><div class="thumb2 th-rb">SS</div><div><div class="pname">Surging Sparks Booster Pack</div><div class="sku">SKU: PKM-SS-EN</div></div></div></td><td><div class="stk">3</div><div class="sub2">(3 packs)</div></td><td><div class="qtybox"><div class="inp">21</div><div class="pk">(21 packs)</div></div></td><td>36</td><td>$4.20</td><td class="money">$88.20</td></tr>
+              <tr><td><div class="prod"><div class="thumb2 th-pr">DR</div><div><div class="pname">Destined Rivals Booster Pack</div><div class="sku">SKU: PKM-DR-EN</div></div></div></td><td><div class="stk">2</div><div class="sub2">(2 packs)</div></td><td><div class="qtybox"><div class="inp">16</div><div class="pk">(16 packs)</div></div></td><td>36</td><td>$4.55</td><td class="money">$72.80</td></tr>
+              <tr><td><div class="prod"><div class="thumb2 th-pk">151</div><div><div class="pname">Pokémon Card 151 Booster Pack (JP) <span class="custom">Imported</span></div><div class="sku">SKU: PKM-151-JP</div></div></div></td><td><div class="stk">0</div><div class="sub2">(0 packs)</div></td><td><div class="qtybox"><div class="inp">12</div><div class="pk">(12 packs)</div></div></td><td>20<div class="sub2">(JP box)</div></td><td>$6.10</td><td class="money">$73.20</td></tr>
               <tr><td colspan="6" class="cnote"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> Customs duty &amp; GST will be added later at checkout.</span></td></tr>
-              <tr><td><div class="prod"><div class="thumb2 th-do">D</div><div><div class="pname">Doritos Nacho Cheese 170g</div><div class="sku">SKU: DO-170</div></div></div></td><td><div class="stk">1</div><div class="sub2">(1 pack)</div></td><td><div class="qtybox"><div class="inp">8</div><div class="pk">(8 packs)</div></div></td><td>14</td><td>$2.30</td><td class="money">$18.40</td></tr>
+              <tr><td><div class="prod"><div class="thumb2 th-do">PE</div><div><div class="pname">Prismatic Evolutions Booster Bundle</div><div class="sku">SKU: PKM-PE-BB</div></div></div></td><td><div class="stk">1</div><div class="sub2">(1 bundle)</div></td><td><div class="qtybox"><div class="inp">5</div><div class="pk">(5 bundles)</div></div></td><td>6</td><td>$39.50</td><td class="money">$197.50</td></tr>
             </tbody>
           </table>
-          <div class="dfoot"><span class="l">Estimated Cost for GGV-001</span><span class="v">$101.40</span></div>
+          <div class="dfoot"><span class="l">Estimated Cost for GGV-001</span><span class="v">$431.70</span></div>
         </div>
         <div class="demo-return" id="demo-return">
           <div class="demo-return-top">
@@ -461,11 +464,12 @@
             <button type="button" id="demo-open-return">Start a return</button>
           </div>
           <div class="demo-return-form">
-            <div class="demo-return-row" data-demo-return-row data-product="Red Bull"><div><div class="nm">Red Bull Energy Drink 250ml</div><div class="sub">Came from Machine 1 · GGV-001 · Westfield Parramatta</div></div><div class="used"><b>7 of 9</b>filled</div><div class="demo-step" data-demo-max="2"><button type="button" data-demo-step="-1">−</button><output>2</output><button type="button" data-demo-step="1">+</button></div><div class="demo-condition"><button type="button" data-demo-condition="good" aria-pressed="true">Good</button><button type="button" data-demo-condition="damaged" aria-pressed="false">Damaged</button></div></div>
-            <div class="demo-return-row" data-demo-return-row data-product="Pringles"><div><div class="nm">Pringles Original 134g</div><div class="sub">Came from Machine 1 · GGV-001 · Westfield Parramatta</div></div><div class="used"><b>5 of 6</b>filled</div><div class="demo-step" data-demo-max="1"><button type="button" data-demo-step="-1">−</button><output>1</output><button type="button" data-demo-step="1">+</button></div><div class="demo-condition"><button type="button" data-demo-condition="good" aria-pressed="false">Good</button><button type="button" data-demo-condition="damaged" aria-pressed="true">Damaged</button></div></div>
-            <div class="demo-return-foot"><span><b id="demo-return-total">3 units</b> · 2 good to Warehouse · 1 damaged to Quarantine.</span><button type="button" id="demo-confirm-return">Confirm return</button></div>
+            <div class="demo-route-picker"><label for="demo-route-machine">Completed route / machine</label><select id="demo-route-machine"><option data-machine="Machine 1 · GGV-001" data-location="Westfield Parramatta">North route · Machine 1 · GGV-001</option><option data-machine="Machine 7 · GGV-007" data-location="Chatswood Chase">East route · Machine 7 · GGV-007</option><option data-machine="Machine 12 · GGV-012" data-location="Macquarie Centre">Campus route · Machine 12 · GGV-012</option></select></div>
+            <div class="demo-return-row" data-demo-return-row data-product="Surging Sparks"><div><div class="nm">Surging Sparks Booster Pack</div><div class="sub" data-demo-source>Came from Machine 1 · GGV-001 · Westfield Parramatta</div></div><div class="used"><b>20 of 24</b>stocked</div><div class="demo-step" data-demo-max="4"><button type="button" data-demo-step="-1">−</button><output>4</output><button type="button" data-demo-step="1">+</button></div><div class="demo-condition"><button type="button" data-demo-condition="good" aria-pressed="true">Good</button><button type="button" data-demo-condition="damaged" aria-pressed="false">Damaged</button></div></div>
+            <div class="demo-return-row" data-demo-return-row data-product="Destined Rivals" data-damage-note=" · dented packaging"><div><div class="nm">Destined Rivals Booster Pack</div><div class="sub" data-demo-source>Came from Machine 1 · GGV-001 · Westfield Parramatta · dented packaging</div></div><div class="used"><b>10 of 12</b>stocked</div><div class="demo-step" data-demo-max="2"><button type="button" data-demo-step="-1">−</button><output>2</output><button type="button" data-demo-step="1">+</button></div><div class="demo-condition"><button type="button" data-demo-condition="good" aria-pressed="false">Good</button><button type="button" data-demo-condition="damaged" aria-pressed="true">Damaged</button></div></div>
+            <div class="demo-return-foot"><span><b id="demo-return-total">6 units</b> · 4 good to Warehouse · 2 damaged to Quarantine.</span><button type="button" id="demo-confirm-return">Confirm return</button></div>
           </div>
-          <div class="demo-return-success"><div class="ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div><div><h3 id="demo-success-title">3 units processed from Machine 1</h3><p id="demo-success-detail">RET-00518 · Red Bull +2 Warehouse · Pringles 1 damaged / Quarantine</p></div></div>
+          <div class="demo-return-success"><div class="ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div><div><h3 id="demo-success-title">6 units processed from Machine 1 · GGV-001</h3><p id="demo-success-detail">RET-00518 · Surging Sparks +4 Warehouse · Destined Rivals 2 damaged / Quarantine</p></div></div>
         </div>
       </section>
 
@@ -486,8 +490,8 @@
           <div class="calmonth">
             <div class="mh"><span>June 2025</span><span>3 releases</span></div>
             <div class="rel"><div class="date"><div class="in">in 6d</div><div class="d">13 Jun</div></div><div style="flex:1"><div class="nm">Destined Rivals <span class="code">SV10</span> <span class="badge b-blue">EN</span> <span class="badge b-green">✓ Preordered · PO-1042</span></div></div></div>
-            <div class="rel"><div class="date"><div class="in">in 13d</div><div class="d">20 Jun</div></div><div style="flex:1"><div class="nm">OP-09 Emperors <span class="code">OP-09</span> <span class="badge b-purple">JP</span> <span class="badge b-amber">Needs preorder</span></div></div></div>
-            <div class="rel"><div class="date"><div class="in">in 20d</div><div class="d">27 Jun</div></div><div style="flex:1"><div class="nm">Mystery Box — Anime S3 <span class="badge b-teal">Blind box</span> <span class="badge b-green">✓ Preordered</span></div></div></div>
+            <div class="rel"><div class="date"><div class="in">in 13d</div><div class="d">20 Jun</div></div><div style="flex:1"><div class="nm">Black Bolt <span class="code">SV11B</span> <span class="badge b-blue">EN</span> <span class="badge b-amber">Needs preorder</span></div></div></div>
+            <div class="rel"><div class="date"><div class="in">in 20d</div><div class="d">27 Jun</div></div><div style="flex:1"><div class="nm">White Flare <span class="code">SV11W</span> <span class="badge b-purple">JP</span> <span class="badge b-green">✓ Preordered</span></div></div></div>
           </div>
           <div class="calmonth">
             <div class="mh"><span>July 2025</span><span>2 releases</span></div>
@@ -509,10 +513,10 @@
             <table>
               <thead><tr><th>Supplier</th><th>Contact</th><th>Products</th><th>Rating</th></tr></thead>
               <tbody>
-                <tr><td><b>Ignins JP</b><div class="sub2">Japan · NET30</div></td><td>orders@ignins.jp<div class="sub2">+81 3 5555 0192</div></td><td>JP booster boxes</td><td><span class="badge b-green">★ 4.8</span></td></tr>
+                <tr><td><b>PokéJapan Direct</b><div class="sub2">Japan · NET30</div></td><td>orders@pokejapan.jp<div class="sub2">+81 3 5555 0192</div></td><td>Pokémon JP booster boxes</td><td><span class="badge b-green">★ 4.8</span></td></tr>
                 <tr><td><b>TCG Direct</b><div class="sub2">AU · COD</div></td><td>sales@tcgdirect.au<div class="sub2">+61 2 8000 1234</div></td><td>EN boosters, ETBs</td><td><span class="badge b-green">★ 4.6</span></td></tr>
-                <tr><td><b>Metcash</b><div class="sub2">AU · NET14</div></td><td>Toshi Kishi<div class="sub2">+61 2 9000 4455</div></td><td>Snacks, drinks</td><td><span class="badge b-amber">★ 3.9</span></td></tr>
-                <tr><td><b>Shopify dropship</b><div class="sub2">Online</div></td><td>support@shop.co</td><td>Blind boxes</td><td><span class="badge b-green">★ 4.4</span></td></tr>
+                <tr><td><b>Cardboard Collectibles</b><div class="sub2">AU · NET14</div></td><td>trade@cardboard.au<div class="sub2">+61 2 9000 4455</div></td><td>Sleeved Pokémon boosters</td><td><span class="badge b-amber">★ 4.2</span></td></tr>
+                <tr><td><b>Pokémon Centre AU</b><div class="sub2">Online · Prepaid</div></td><td>support@pokemoncentre.au</td><td>ETBs and collection boxes</td><td><span class="badge b-green">★ 4.4</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -520,8 +524,8 @@
             <h3>Task management</h3>
             <div class="board">
               <div class="col-t"><div class="ch">To do <span>2</span></div>
-                <div class="task"><div class="tt">Chase OP-09 preorder allocation</div><div class="meta"><span class="badge b-amber">High</span><span class="av-sm">JM</span></div></div>
-                <div class="task"><div class="tt">Reprice slow Pocky stock</div><div class="meta"><span class="badge b-blue">Med</span><span class="av-sm">RJ</span></div></div>
+                <div class="task"><div class="tt">Chase Black Bolt preorder allocation</div><div class="meta"><span class="badge b-amber">High</span><span class="av-sm">JM</span></div></div>
+                <div class="task"><div class="tt">Reprice slow Shrouded Fable stock</div><div class="meta"><span class="badge b-blue">Med</span><span class="av-sm">RJ</span></div></div>
               </div>
               <div class="col-t"><div class="ch">In progress <span>1</span></div>
                 <div class="task"><div class="tt">Reconcile GGV-001 route variance</div><div class="meta"><span class="badge b-red">Urgent</span><span class="av-sm">JM</span></div></div>
@@ -566,6 +570,13 @@
   document.getElementById('demo-open-return').addEventListener('click',openDemoReturn);
   document.getElementById('demo-action-return').addEventListener('click',openDemoReturn);
   const demoReturnRows=[...document.querySelectorAll('[data-demo-return-row]')];
+  const demoRouteMachine=document.getElementById('demo-route-machine');
+  function syncDemoReturnSource(){
+    const option=demoRouteMachine.selectedOptions[0];
+    demoReturnRows.forEach(row=>{
+      row.querySelector('[data-demo-source]').textContent=`Came from ${option.dataset.machine} · ${option.dataset.location}${row.dataset.damageNote||''}`;
+    });
+  }
   function updateDemoReturn(){
     const entries=demoReturnRows.map(row=>({
       product:row.dataset.product,
@@ -590,14 +601,16 @@
     button.parentElement.querySelectorAll('button').forEach(choice=>choice.setAttribute('aria-pressed',String(choice===button)));
     updateDemoReturn();
   }));
+  demoRouteMachine.addEventListener('change',syncDemoReturnSource);
   document.getElementById('demo-confirm-return').addEventListener('click',()=>{
     const entries=updateDemoReturn();
     const total=entries.reduce((sum,item)=>sum+item.qty,0);
-    document.getElementById('demo-success-title').textContent=`${total} ${total===1?'unit':'units'} processed from Machine 1`;
+    document.getElementById('demo-success-title').textContent=`${total} ${total===1?'unit':'units'} processed from ${demoRouteMachine.selectedOptions[0].dataset.machine}`;
     document.getElementById('demo-success-detail').textContent=`RET-00518 · ${entries.filter(item=>item.qty).map(item=>`${item.product} ${item.damaged?`${item.qty} damaged / Quarantine`:`+${item.qty} Warehouse`}`).join(' · ')}`;
     demoReturn.classList.remove('open');
     demoReturn.classList.add('complete');
   });
+  syncDemoReturnSource();
   updateDemoReturn();
   setMode('machines');
 </script>

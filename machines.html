@@ -223,6 +223,10 @@
   .return-meta{display:flex;align-items:center;gap:10px;padding:13px 18px;background:#f8faff;border-bottom:1px solid var(--line2);flex-wrap:wrap}
   .return-meta .route{font-family:var(--display);font-size:12.5px;font-weight:800}
   .return-meta .where{font-size:11.5px;color:var(--fg2)}
+  .return-route-picker{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .return-route-picker label{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--fg3)}
+  .return-route-picker select{border:1.5px solid #c7d8ff;background:#fff;color:var(--fg);font:700 11.5px var(--font);padding:8px 34px 8px 10px;border-radius:9px;max-width:440px}
+  .return-route-picker small{font-size:9.5px;color:var(--fg3)}
   .return-meta .dest{margin-left:auto;display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green-txt);font-size:10.5px;font-weight:800;padding:6px 9px;border-radius:8px}
   .return-meta .dest svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
   .rtable th{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--fg3);padding:10px 18px;background:#fff;text-align:left}
@@ -273,7 +277,17 @@
   .return-action{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);color:#fff;font-family:var(--display);font-size:12px;font-weight:800;padding:9px 12px;border-radius:10px;display:flex;align-items:center;gap:7px;cursor:pointer}
   .return-action svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
   /* print preview */
-  .printcard{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 8px rgba(26,31,57,.06);overflow:hidden;margin-top:16px}
+  body.print-preview-open{overflow:hidden}
+  .print-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(17,13,38,.72);padding:24px;overflow:auto}
+  .print-overlay.is-open{display:flex}
+  .print-shell{width:min(980px,100%);margin:auto}
+  .print-tools{display:flex;align-items:center;gap:10px;background:#f7f5ff;border-radius:14px 14px 0 0;padding:12px 14px;border-bottom:1px solid var(--purple-line)}
+  .print-tools .copy{margin-right:auto}
+  .print-tools .copy b{display:block;font-family:var(--display);font-size:13px}
+  .print-tools .copy span{display:block;font-size:10.5px;color:var(--fg2);margin-top:2px}
+  .print-tools button{border:1px solid var(--purple-line);background:#fff;color:var(--purple);font:800 11px var(--font);padding:8px 11px;border-radius:8px;cursor:pointer}
+  .print-tools .print-now{background:var(--purple);border-color:var(--purple);color:#fff}
+  .printcard{background:#fff;border:1px solid var(--line);border-radius:0 0 16px 16px;box-shadow:0 16px 44px rgba(17,13,38,.3);overflow:hidden;margin:0}
   .printcard .ph{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line2)}
   .printcard .ph svg{width:18px;height:18px;stroke:var(--purple);fill:none;stroke-width:2;flex:0 0 auto}
   .printcard .ph h3{font-size:15px}
@@ -287,6 +301,8 @@
   .ptable .pp,.ptable .pq{font-family:var(--display);font-weight:800}
   @media print{
     body *{visibility:hidden}
+    .print-overlay{display:block;position:static;padding:0;background:#fff;overflow:visible}
+    .print-tools{display:none}
     .printcard,.printcard *{visibility:visible}
     .printcard{position:absolute;left:0;top:0;width:100%;box-shadow:none;border:none;margin:0}
     .printcard .ph .note{display:none}
@@ -315,6 +331,7 @@
     .return-intro{grid-template-columns:auto 1fr}.return-start{grid-column:1/-1;width:100%}
     .return-meta .dest{margin-left:0}.return-review{align-items:flex-start;flex-wrap:wrap}.return-review .spacer{display:none}.return-confirm{width:100%}
     .return-success{align-items:flex-start;flex-wrap:wrap}.success-actions{margin-left:60px}
+    .print-overlay{padding:12px}.print-tools{align-items:flex-start;flex-wrap:wrap}.print-tools .copy{flex:1 1 100%}
     .actionbar{flex-wrap:wrap;gap:12px;padding:12px 14px}.actionbar .abspacer{display:none}
     .total{width:100%;justify-content:space-between}
   }
@@ -396,57 +413,57 @@
           <tbody>
             <tr>
               <td><span class="slot">1</span></td>
-              <td><span class="grp">DRINKS</span></td>
-              <td><div class="prod"><div class="thumb2 th-rb">RB</div><div><div class="pname">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250</div></div></div></td>
+              <td><span class="grp">POKÉMON EN</span></td>
+              <td><div class="prod"><div class="thumb2 th-rb">SS</div><div><div class="pname">Pokémon TCG: Surging Sparks Booster Pack</div><div class="sku">SKU: PKM-SS-EN</div></div></div></td>
               <td><div class="stk">3</div></td>
-              <td><div class="par">12<span class="u">capacity</span></div></td>
-              <td><div class="stepper"><button>−</button><span class="val">9</span><button>+</button></div></td>
-              <td><div class="price">$4.50</div></td>
-              <td><div class="pace"><b class="hot">18 / wk</b><br>~1 day left</div></td>
+              <td><div class="par">24<span class="u">capacity</span></div></td>
+              <td><div class="stepper"><button>−</button><span class="val">21</span><button>+</button></div></td>
+              <td><div class="price">$6.50</div></td>
+              <td><div class="pace"><b class="hot">35 / wk</b><br>~1 day left</div></td>
               <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
             </tr>
             <tr>
               <td><span class="slot">2</span></td>
-              <td><span class="grp">SNACKS</span></td>
-              <td><div class="prod"><div class="thumb2 th-pr">P</div><div><div class="pname">Pringles Original 134g</div><div class="sku">SKU: PR-134</div></div></div></td>
+              <td><span class="grp">POKÉMON EN</span></td>
+              <td><div class="prod"><div class="thumb2 th-pr">DR</div><div><div class="pname">Pokémon TCG: Destined Rivals Booster Pack</div><div class="sku">SKU: PKM-DR-EN</div></div></div></td>
               <td><div class="stk">2</div></td>
-              <td><div class="par">8<span class="u">capacity</span></div></td>
-              <td><div class="stepper"><button>−</button><span class="val">6</span><button>+</button></div></td>
-              <td><div class="price">$3.80</div></td>
-              <td><div class="pace"><b>9 / wk</b><br>~2 days left</div></td>
+              <td><div class="par">18<span class="u">capacity</span></div></td>
+              <td><div class="stepper"><button>−</button><span class="val">16</span><button>+</button></div></td>
+              <td><div class="price">$7.00</div></td>
+              <td><div class="pace"><b>22 / wk</b><br>~1 day left</div></td>
               <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
             </tr>
             <tr>
               <td><span class="slot">3</span></td>
-              <td><span class="grp">JAPANESE</span></td>
-              <td><div class="prod"><div class="thumb2 th-pk">ポ</div><div><div class="pname">ポッキー チョコレート <span class="custom">Custom</span></div><div class="sku">Pocky Chocolate · JP-PC-2P</div></div></div></td>
+              <td><span class="grp">POKÉMON JP</span></td>
+              <td><div class="prod"><div class="thumb2 th-pk">151</div><div><div class="pname">Pokémon Card 151 Booster Pack (JP) <span class="custom">Imported</span></div><div class="sku">SKU: PKM-151-JP</div></div></div></td>
               <td><div class="stk">0</div></td>
-              <td><div class="par">10<span class="u">capacity</span></div></td>
-              <td><div class="stepper"><button>−</button><span class="val">10</span><button>+</button></div></td>
-              <td><div class="price">$3.20</div></td>
-              <td><div class="pace"><b>6 / wk</b><br>empty now</div></td>
+              <td><div class="par">12<span class="u">capacity</span></div></td>
+              <td><div class="stepper"><button>−</button><span class="val">12</span><button>+</button></div></td>
+              <td><div class="price">$8.50</div></td>
+              <td><div class="pace"><b>14 / wk</b><br>empty now</div></td>
               <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
             </tr>
             <tr class="rowout">
               <td><span class="slot">4</span></td>
-              <td><span class="grp">SNACKS</span></td>
+              <td><span class="grp">POKÉMON EN</span></td>
               <td>
-                <div class="prod"><div class="thumb2 th-do">D</div><div><div class="pname">Doritos Nacho Cheese 170g <span class="pin pin-out">Out of stock</span></div><div class="sku">SKU: DO-170</div></div></div>
+                <div class="prod"><div class="thumb2 th-do">PE</div><div><div class="pname">Prismatic Evolutions Booster Bundle <span class="pin pin-out">Out of stock</span></div><div class="sku">SKU: PKM-PE-BB</div></div></div>
                 <div class="swapbox">
                   <div class="sh"><svg viewBox="0 0 24 24"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg> Swap in a replacement</div>
                   <div class="swapfield"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Search product…</div>
                   <div class="swopt">
-                    <button>Smith's Original 170g <b>$3.50</b></button>
-                    <button>Cheetos Cheese 190g <b>$3.80</b></button>
+                    <button>Journey Together Booster Bundle <b>$44.95</b></button>
+                    <button>Black Bolt Booster Bundle <b>$49.95</b></button>
                   </div>
                   <div class="swapnote">Price &amp; qty auto-update to the item you pick.</div>
                 </div>
               </td>
               <td><div class="stk">1</div></td>
-              <td><div class="par">12<span class="u">capacity</span></div></td>
-              <td><div class="stepper" style="opacity:.4"><button>−</button><span class="val">11</span><button>+</button></div></td>
+              <td><div class="par">6<span class="u">capacity</span></div></td>
+              <td><div class="stepper" style="opacity:.4"><button>−</button><span class="val">5</span><button>+</button></div></td>
               <td><div class="price" style="color:var(--fg3)">—</div></td>
-              <td><div class="pace"><b>11 / wk</b><br>~1 day left</div></td>
+              <td><div class="pace"><b>5 / wk</b><br>~1 day left</div></td>
               <td><div class="checkx"><button class="yes" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no on" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
             </tr>
           </tbody>
@@ -467,7 +484,7 @@
           <div class="return-copy">
             <div class="eyebrow">Stocking items · back at the warehouse?</div>
             <h3 id="return-title">Return unused stock</h3>
-            <p>Got more product than Machine 1 needed? Count what came back and add it straight into warehouse inventory.</p>
+            <p>Got more product than a machine needed? Choose the completed run, then count what came back.</p>
             <div class="return-flow"><span>1. Count leftovers</span><b>&rarr;</b><span>2. Confirm return</span><b>&rarr;</b><span>3. Warehouse stock updates</span></div>
           </div>
           <button class="return-start" id="open-return" type="button" aria-expanded="false" aria-controls="return-form">Start a return</button>
@@ -475,74 +492,90 @@
         <div class="return-rule"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg> Adds one positive stock movement per returned product, linked to this route. Nayax sales and prices are not changed.</div>
         <div class="return-form" id="return-form">
           <div class="return-meta">
-            <span class="route">North route · GGV-001</span>
-            <span class="where">Westfield Parramatta · completed today</span>
+            <div class="return-route-picker">
+              <label for="return-route-machine">Completed route / machine</label>
+              <select id="return-route-machine">
+                <option value="ggv-001" data-route="North route" data-machine="Machine 1 · GGV-001" data-location="Westfield Parramatta">North route · Machine 1 · GGV-001 · Westfield Parramatta</option>
+                <option value="ggv-007" data-route="East route" data-machine="Machine 7 · GGV-007" data-location="Chatswood Chase">East route · Machine 7 · GGV-007 · Chatswood Chase</option>
+                <option value="ggv-012" data-route="Campus route" data-machine="Machine 12 · GGV-012" data-location="Macquarie Centre">Campus route · Machine 12 · GGV-012 · Macquarie Centre</option>
+              </select>
+              <small>Completed runs with returnable stock only</small>
+            </div>
             <span class="dest"><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5v11H3zM8 20v-6h8v6"/></svg> Good → Warehouse · Damaged → Quarantine</span>
           </div>
           <table class="rtable">
             <thead><tr><th>Item</th><th class="num">Issued</th><th class="num">Filled</th><th>Came from</th><th class="num">Count returned</th><th>Condition</th></tr></thead>
             <tbody>
-              <tr data-return-row data-product="Red Bull">
-                <td><div class="rproduct"><div class="rthumb th-rb">RB</div><div><div class="name">Red Bull Energy Drink 250ml</div><div class="sku">SKU: RB-250</div></div></div></td>
-                <td class="num"><div class="routeqty">9<small>units issued</small></div></td>
-                <td class="num"><div class="routeqty">7<small>units filled</small></div></td>
-                <td><div class="return-source"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta<br>North route carry stock</span></div></td>
-                <td class="num"><div class="rstepper" data-max="2"><button type="button" data-step="-1" aria-label="Return one fewer Red Bull">−</button><output aria-live="polite">2</output><button type="button" data-step="1" aria-label="Return one more Red Bull">+</button></div></td>
-                <td><div class="condition-toggle" aria-label="Red Bull condition"><button type="button" data-condition="good" aria-pressed="true">Good</button><button type="button" data-condition="damaged" aria-pressed="false">Damaged</button></div><select class="damage-reason" aria-label="Red Bull damage reason"><option>Crushed</option><option>Opened</option><option>Leaking</option><option>Expired</option><option>Other</option></select></td>
+              <tr data-return-row data-product="Surging Sparks">
+                <td><div class="rproduct"><div class="rthumb th-rb">SS</div><div><div class="name">Surging Sparks Booster Pack</div><div class="sku">SKU: PKM-SS-EN</div></div></div></td>
+                <td class="num"><div class="routeqty">24<small>packs issued</small></div></td>
+                <td class="num"><div class="routeqty">20<small>packs stocked</small></div></td>
+                <td><div class="return-source"><b data-return-source-title>Machine 1 · GGV-001</b><span data-return-source-detail>Westfield Parramatta<br>North route carry stock</span></div></td>
+                <td class="num"><div class="rstepper" data-max="4"><button type="button" data-step="-1" aria-label="Return one fewer Surging Sparks pack">−</button><output aria-live="polite">4</output><button type="button" data-step="1" aria-label="Return one more Surging Sparks pack">+</button></div></td>
+                <td><div class="condition-toggle" aria-label="Surging Sparks condition"><button type="button" data-condition="good" aria-pressed="true">Good</button><button type="button" data-condition="damaged" aria-pressed="false">Damaged</button></div><select class="damage-reason" aria-label="Surging Sparks damage reason"><option>Dented packaging</option><option>Crushed box</option><option>Torn wrapper / seal</option><option>Water damage</option><option>Scuffed / unsellable</option><option>Other</option></select></td>
               </tr>
-              <tr class="is-damaged" data-return-row data-product="Pringles">
-                <td><div class="rproduct"><div class="rthumb th-pr">P</div><div><div class="name">Pringles Original 134g</div><div class="sku">SKU: PR-134</div></div></div></td>
-                <td class="num"><div class="routeqty">6<small>units issued</small></div></td>
-                <td class="num"><div class="routeqty">5<small>units filled</small></div></td>
-                <td><div class="return-source"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta<br>North route carry stock</span></div></td>
-                <td class="num"><div class="rstepper" data-max="1"><button type="button" data-step="-1" aria-label="Return one fewer Pringles">−</button><output aria-live="polite">1</output><button type="button" data-step="1" aria-label="Return one more Pringles">+</button></div></td>
-                <td><div class="condition-toggle" aria-label="Pringles condition"><button type="button" data-condition="good" aria-pressed="false">Good</button><button type="button" data-condition="damaged" aria-pressed="true">Damaged</button></div><select class="damage-reason" aria-label="Pringles damage reason"><option>Crushed</option><option>Opened</option><option>Leaking</option><option>Expired</option><option>Other</option></select></td>
+              <tr class="is-damaged" data-return-row data-product="Destined Rivals">
+                <td><div class="rproduct"><div class="rthumb th-pr">DR</div><div><div class="name">Destined Rivals Booster Pack</div><div class="sku">SKU: PKM-DR-EN</div></div></div></td>
+                <td class="num"><div class="routeqty">12<small>packs issued</small></div></td>
+                <td class="num"><div class="routeqty">10<small>packs stocked</small></div></td>
+                <td><div class="return-source"><b data-return-source-title>Machine 1 · GGV-001</b><span data-return-source-detail>Westfield Parramatta<br>North route carry stock</span></div></td>
+                <td class="num"><div class="rstepper" data-max="2"><button type="button" data-step="-1" aria-label="Return one fewer Destined Rivals pack">−</button><output aria-live="polite">2</output><button type="button" data-step="1" aria-label="Return one more Destined Rivals pack">+</button></div></td>
+                <td><div class="condition-toggle" aria-label="Destined Rivals condition"><button type="button" data-condition="good" aria-pressed="false">Good</button><button type="button" data-condition="damaged" aria-pressed="true">Damaged</button></div><select class="damage-reason" aria-label="Destined Rivals damage reason"><option>Dented packaging</option><option>Crushed box</option><option>Torn wrapper / seal</option><option>Water damage</option><option>Scuffed / unsellable</option><option>Other</option></select></td>
               </tr>
-              <tr data-return-row data-product="Pocky">
-                <td><div class="rproduct"><div class="rthumb th-pk">PC</div><div><div class="name">Pocky Chocolate</div><div class="sku">SKU: JP-PC-2P</div></div></div></td>
-                <td class="num"><div class="routeqty">10<small>units issued</small></div></td>
-                <td class="num"><div class="routeqty">10<small>units filled</small></div></td>
-                <td><div class="return-source"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta<br>North route carry stock</span></div></td>
+              <tr data-return-row data-product="Pokémon Card 151">
+                <td><div class="rproduct"><div class="rthumb th-pk">151</div><div><div class="name">Pokémon Card 151 Booster Pack (JP)</div><div class="sku">SKU: PKM-151-JP</div></div></div></td>
+                <td class="num"><div class="routeqty">12<small>packs issued</small></div></td>
+                <td class="num"><div class="routeqty">12<small>packs stocked</small></div></td>
+                <td><div class="return-source"><b data-return-source-title>Machine 1 · GGV-001</b><span data-return-source-detail>Westfield Parramatta<br>North route carry stock</span></div></td>
                 <td class="num"><span class="rzero">Nothing left over</span></td>
                 <td><span class="rzero">No return</span></td>
               </tr>
-              <tr data-return-row data-product="Smith's">
-                <td><div class="rproduct"><div class="rthumb th-do">S</div><div><div class="name">Smith's Original 170g</div><div class="sku">SKU: SM-170 · swapped in</div></div></div></td>
-                <td class="num"><div class="routeqty">11<small>units issued</small></div></td>
-                <td class="num"><div class="routeqty">11<small>units filled</small></div></td>
-                <td><div class="return-source"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta<br>North route carry stock</span></div></td>
+              <tr data-return-row data-product="Prismatic Evolutions">
+                <td><div class="rproduct"><div class="rthumb th-do">PE</div><div><div class="name">Prismatic Evolutions Booster Bundle</div><div class="sku">SKU: PKM-PE-BB · swapped in</div></div></div></td>
+                <td class="num"><div class="routeqty">6<small>bundles issued</small></div></td>
+                <td class="num"><div class="routeqty">6<small>bundles stocked</small></div></td>
+                <td><div class="return-source"><b data-return-source-title>Machine 1 · GGV-001</b><span data-return-source-detail>Westfield Parramatta<br>North route carry stock</span></div></td>
                 <td class="num"><span class="rzero">Nothing left over</span></td>
                 <td><span class="rzero">No return</span></td>
               </tr>
             </tbody>
           </table>
           <div class="return-review">
-            <div><div class="summary"><b id="return-total">3 units</b> across <b id="return-items">2 products</b> will be recorded from Machine 1.</div><div class="return-breakdown"><span id="return-good">2 good → Warehouse</span><span class="damaged" id="return-damaged">1 damaged → Quarantine</span></div><div class="condition">Damaged items are recorded for audit but never added to sellable warehouse stock.</div></div>
+            <div><div class="summary"><b id="return-total">6 units</b> across <b id="return-items">2 products</b> will be recorded from <b id="return-source-summary">Machine 1 · GGV-001</b>.</div><div class="return-breakdown"><span id="return-good">4 good → Warehouse</span><span class="damaged" id="return-damaged">2 damaged → Quarantine</span></div><div class="condition">Damaged Pokémon products are recorded for audit but never added to sellable stock.</div></div>
             <span class="spacer"></span>
-            <button class="return-confirm" id="confirm-return" type="button">Confirm 3-unit return</button>
+            <button class="return-confirm" id="confirm-return" type="button">Confirm 6-unit return</button>
           </div>
         </div>
         <div class="return-success" role="status" aria-live="polite">
           <div class="success-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div>
           <div>
-            <h3><span id="success-total">3 units</span> processed from Machine 1</h3>
-            <p>Return RET-00518 · North route · recorded by Sam today at 4:42 PM</p>
-            <div class="movement-chips" id="movement-chips"><span>Red Bull +2 Warehouse</span><span>Pringles 1 damaged · Quarantine</span></div>
+            <h3><span id="success-total">6 units</span> processed from <span id="success-route-machine">Machine 1 · GGV-001</span></h3>
+            <p id="success-route-meta">Return RET-00518 · North route · Westfield Parramatta · recorded by Sam today at 4:42 PM</p>
+            <div class="movement-chips" id="movement-chips"><span>Surging Sparks +4 Warehouse</span><span>Destined Rivals 2 damaged · Quarantine</span></div>
           </div>
           <div class="success-actions"><a href="inventory.html#route-returns">View in Inventory</a><button type="button" id="return-more">Return more stock</button></div>
         </div>
       </section>
-      <div class="printcard">
-        <div class="ph"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg><h3>Print preview — GGV-001</h3><span class="note">Slot · item · exact price · amount. One exact price per item — nothing else prints.</span></div>
-        <table class="ptable">
-          <thead><tr><th style="width:70px">Slot</th><th>Item</th><th class="r" style="width:120px">Price</th><th class="r" style="width:90px">Qty</th></tr></thead>
-          <tbody>
-            <tr><td class="ps">1</td><td class="pi">Red Bull Energy Drink 250ml</td><td class="r pp">$4.50</td><td class="r pq">9</td></tr>
-            <tr><td class="ps">2</td><td class="pi">Pringles Original 134g</td><td class="r pp">$3.80</td><td class="r pq">6</td></tr>
-            <tr><td class="ps">3</td><td class="pi">Pocky Chocolate</td><td class="r pp">$3.20</td><td class="r pq">10</td></tr>
-            <tr><td class="ps">4</td><td class="pi">Smith's Original 170g <span style="font-size:10.5px;color:var(--green-txt);font-weight:700">· swapped in</span></td><td class="r pp">$3.50</td><td class="r pq">11</td></tr>
-          </tbody>
-        </table>
+      <div class="print-overlay" id="print-preview" role="dialog" aria-modal="true" aria-labelledby="print-preview-title" aria-hidden="true">
+        <div class="print-shell">
+          <div class="print-tools">
+            <div class="copy"><b id="print-preview-title">Print / PDF preview</b><span>Review the stripped filler sheet before printing or saving as PDF.</span></div>
+            <button type="button" id="close-print-preview">Close</button>
+            <button class="print-now" type="button" id="print-preview-now">Print / Save PDF</button>
+          </div>
+          <div class="printcard">
+            <div class="ph"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg><h3>Print preview — GGV-001</h3><span class="note">Slot · item · exact price · amount. One exact price per item — nothing else prints.</span></div>
+            <table class="ptable">
+              <thead><tr><th style="width:70px">Slot</th><th>Item</th><th class="r" style="width:120px">Price</th><th class="r" style="width:90px">Qty</th></tr></thead>
+              <tbody>
+                <tr><td class="ps">1</td><td class="pi">Surging Sparks Booster Pack</td><td class="r pp">$6.50</td><td class="r pq">21</td></tr>
+                <tr><td class="ps">2</td><td class="pi">Destined Rivals Booster Pack</td><td class="r pp">$7.00</td><td class="r pq">16</td></tr>
+                <tr><td class="ps">3</td><td class="pi">Pokémon Card 151 Booster Pack (JP)</td><td class="r pp">$8.50</td><td class="r pq">12</td></tr>
+                <tr><td class="ps">4</td><td class="pi">Journey Together Booster Bundle <span style="font-size:10.5px;color:var(--green-txt);font-weight:700">· swapped in</span></td><td class="r pp">$44.95</td><td class="r pq">5</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -550,7 +583,7 @@
       <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><div><div class="tt">CONFIRM FILLS</div><div class="ss">Records ✔ / ✘ · auto-deducts inventory</div></div></div>
       <div class="act"><div class="circ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><div><div class="tt">MARK ROUTE COMPLETE</div><div class="ss">All machine fills done</div></div></div>
       <button class="return-action" id="action-return" type="button"><svg viewBox="0 0 24 24"><path d="M20 7H8a4 4 0 0 0-4 4v7"/><path d="M8 3L4 7l4 4"/></svg> Return stock</button>
-      <button class="prbtn"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> Print / PDF</button>
+      <button class="prbtn" id="open-print-preview" type="button" aria-expanded="false" aria-controls="print-preview"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> View print / PDF</button>
       <div class="abspacer"></div>
       <div class="total"><div><div class="lab">TOTAL ESTIMATED ROUTE COST</div><div class="amt">$418.90</div></div><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
     </div>
@@ -562,8 +595,31 @@
   const actionReturn = document.getElementById('action-return');
   const confirmReturn = document.getElementById('confirm-return');
   const returnMore = document.getElementById('return-more');
+  const returnRouteMachine = document.getElementById('return-route-machine');
+  const printPreview = document.getElementById('print-preview');
+  const openPrintPreview = document.getElementById('open-print-preview');
+  const closePrintPreview = document.getElementById('close-print-preview');
+  const printPreviewNow = document.getElementById('print-preview-now');
   const returnRows = [...document.querySelectorAll('[data-return-row]')];
   const returnOutputs = [...document.querySelectorAll('.rstepper output')];
+
+  function setPrintPreview(open){
+    printPreview.classList.toggle('is-open',open);
+    printPreview.setAttribute('aria-hidden',String(!open));
+    openPrintPreview.setAttribute('aria-expanded',String(open));
+    document.body.classList.toggle('print-preview-open',open);
+    if(open) closePrintPreview.focus();
+    else openPrintPreview.focus();
+  }
+
+  function syncReturnSource(){
+    const option=returnRouteMachine.selectedOptions[0];
+    document.querySelectorAll('[data-return-source-title]').forEach(node=>node.textContent=option.dataset.machine);
+    document.querySelectorAll('[data-return-source-detail]').forEach(node=>node.innerHTML=`${option.dataset.location}<br>${option.dataset.route} carry stock`);
+    document.getElementById('return-source-summary').textContent=option.dataset.machine;
+    document.getElementById('success-route-machine').textContent=option.dataset.machine;
+    document.getElementById('success-route-meta').textContent=`Return RET-00518 · ${option.dataset.route} · ${option.dataset.location} · recorded by Sam today at 4:42 PM`;
+  }
 
   function openReturnForm(){
     returnCard.classList.remove('is-complete');
@@ -605,6 +661,16 @@
     }
   });
   actionReturn.addEventListener('click',openReturnForm);
+  returnRouteMachine.addEventListener('change',syncReturnSource);
+  openPrintPreview.addEventListener('click',()=>setPrintPreview(true));
+  closePrintPreview.addEventListener('click',()=>setPrintPreview(false));
+  printPreviewNow.addEventListener('click',()=>window.print());
+  printPreview.addEventListener('click',event=>{
+    if(event.target===printPreview) setPrintPreview(false);
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&printPreview.classList.contains('is-open')) setPrintPreview(false);
+  });
 
   document.querySelectorAll('.rstepper button').forEach(button=>{
     button.addEventListener('click',()=>{
@@ -645,6 +711,7 @@
     updateReturnSummary();
     openReturnForm();
   });
+  syncReturnSource();
   updateReturnSummary();
 </script>
 </body>
