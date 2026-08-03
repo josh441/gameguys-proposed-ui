@@ -52,6 +52,11 @@
   .subtitle{font-size:13px;color:var(--fg2);margin-top:6px}
   .tz{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fg2);font-weight:600}
   .tz svg{width:16px;height:16px;stroke:var(--fg3);fill:none;stroke-width:2}
+  .machine-tabs{display:flex;gap:5px;border-bottom:1px solid var(--line);margin:2px 0 18px}
+  .machine-tabs button{display:inline-flex;align-items:center;gap:7px;border:none;background:none;color:var(--fg3);font:800 13.5px var(--display);padding:11px 14px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px;white-space:nowrap}
+  .machine-tabs button.on{color:var(--blue);border-bottom-color:var(--blue)}
+  .machine-tabs .count{display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:19px;padding:0 6px;border-radius:99px;background:var(--blue-soft);color:var(--blue);font:800 9px var(--font)}
+  .machine-view{display:none}.machine-view.show{display:block}
   .kpis{display:grid;gap:14px;margin-bottom:18px;grid-template-columns:1fr 1fr 1.25fr}
   .kpi{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:16px 18px;box-shadow:0 1px 2px rgba(26,31,57,.04);display:flex;align-items:center;gap:15px}
   .kpi .ic{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
@@ -110,6 +115,7 @@
   .dfoot{display:flex;justify-content:flex-end;align-items:baseline;gap:14px;padding:14px 18px;border-top:1px solid var(--line2)}
   .dfoot .l{font-size:13px;color:var(--fg2);font-weight:600}.dfoot .v{font-family:var(--display);font-weight:800;font-size:22px;color:var(--purple)}
   .actionbar{display:flex;align-items:center;gap:22px;padding:15px 26px;background:linear-gradient(90deg,var(--purple-deep),var(--purple) 55%,var(--purple-2));color:#fff}
+  .actionbar.is-hidden{display:none}
   .act{display:flex;align-items:center;gap:13px}
   .act .circ{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center}
   .act .circ svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2}
@@ -181,6 +187,12 @@
   .par{font-family:var(--display);font-weight:800;font-size:16px;color:var(--fg2)}
   .par .u{display:block;font-size:8.5px;color:var(--fg3);font-weight:700;font-family:var(--font);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
   .price{font-family:var(--display);font-weight:800;font-size:15px}
+  .price-ref{min-width:118px;line-height:1.2}
+  .price-ref .amount{font-family:var(--display);font-weight:900;font-size:16px;color:var(--purple)}
+  .price-ref .sale-meta{display:block;margin-top:3px;font-size:8.5px;font-weight:750;color:var(--fg3);white-space:nowrap}
+  .price-ref .po-cost{display:block;margin-top:4px;padding-top:4px;border-top:1px solid var(--line2);font-size:8.5px;font-weight:700;color:var(--fg2);white-space:nowrap}
+  .price-example{background:linear-gradient(90deg,rgba(124,58,237,.045),rgba(255,255,255,0))}
+  .price-example-badge{display:inline-flex;margin-left:5px;padding:3px 5px;border-radius:5px;background:var(--purple-soft);color:var(--purple);font-size:7.5px;font-weight:850;letter-spacing:.03em;text-transform:uppercase;vertical-align:1px}
   .pace{font-size:10.5px;color:var(--fg3);line-height:1.4;font-weight:600}
   .pace b{color:var(--fg2)}
   .pace .hot{color:var(--red)}
@@ -321,6 +333,7 @@
     .side .spacer,.uwrap{display:none}
     .main{height:auto;overflow:visible}
     .content{overflow:visible;padding:14px}
+    .machine-tabs{overflow-x:auto}
     .head{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px}
     h1{font-size:21px}
     .content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
@@ -372,10 +385,15 @@
   <div class="main">
     <div class="content">
       <div class="head">
-        <div><h1>My Machines <span class="pill p-filler">FILLER VIEW</span></h1>
-        <div class="subtitle">Your assigned machines for today. Plan your fills and complete your route.</div></div>
+        <div><h1><span id="machine-page-title">My Machines</span> <span class="pill p-filler">FILLER VIEW</span></h1>
+        <div class="subtitle" id="machine-page-subtitle">Your assigned machines for today. Plan your fills and complete your route.</div></div>
         <div class="tz"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Sydney, Australia (AEST)</div>
       </div>
+      <div class="machine-tabs" role="tablist" aria-label="Filler workspace">
+        <button class="on" type="button" role="tab" aria-selected="true" aria-controls="machine-view-machines" data-machine-view="machines">Machines &amp; Pick List</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="machine-view-returns" data-machine-view="returns">Returns <span class="count">3</span></button>
+      </div>
+      <section class="machine-view show" id="machine-view-machines" role="tabpanel">
       <div class="kpis">
         <div class="kpi"><div class="ic ic-purple"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></div><div class="big">24</div><div><div class="lab">Machines Assigned</div><div class="sub">Across 2 routes</div></div></div>
         <div class="kpi"><div class="ic ic-red"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></div><div class="big" style="color:var(--red)">4</div><div><div class="lab">Urgent Fills Today</div><div class="sub">Need attention</div></div></div>
@@ -404,12 +422,12 @@
         </div>
         <div class="pltoolbar">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-          <span>You can only change <b>product</b> (swap when out of stock) and <b>quantity</b> — everything else is locked. Covers ~90% of runs, so it's usually 1–2 tweaks, then print. <b>Sales/wk</b> &amp; <b>days left</b> are on-screen only — they don't print.</span>
+          <span>You can only change <b>product</b> (swap when out of stock) and <b>quantity</b> — everything else is locked. <b>Last sold</b> comes from the most recent successful Nayax sale for the same SKU; a clearly labelled similar product is used only when there is no exact match. <b>Sales/wk</b> &amp; <b>days left</b> are on-screen only.</span>
           <span class="sp"></span>
           <span class="toggle"><span class="sw"></span> Only show what I still need</span>
         </div>
         <table class="dtable work">
-          <thead><tr><th>Slot</th><th>Group</th><th>Product</th><th>In machine</th><th>PAR</th><th>Qty to add</th><th>Price</th><th>Pace <span class="scrtag">screen only</span></th><th>Fill?</th></tr></thead>
+          <thead><tr><th>Slot</th><th>Group</th><th>Product</th><th>In machine</th><th>PAR</th><th>Qty to add</th><th>Last sold <span class="scrtag">Nayax</span></th><th>Pace <span class="scrtag">screen only</span></th><th>Fill?</th></tr></thead>
           <tbody>
             <tr>
               <td><span class="slot">1</span></td>
@@ -418,7 +436,7 @@
               <td><div class="stk">3</div></td>
               <td><div class="par">24<span class="u">capacity</span></div></td>
               <td><div class="stepper"><button>−</button><span class="val">21</span><button>+</button></div></td>
-              <td><div class="price">$6.50</div></td>
+              <td><div class="price-ref"><div class="amount">$6.50</div><span class="sale-meta">GGV-012 · 3 Aug · same SKU</span><span class="po-cost">Latest PO cost: $4.20</span></div></td>
               <td><div class="pace"><b class="hot">35 / wk</b><br>~1 day left</div></td>
               <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
             </tr>
@@ -429,18 +447,18 @@
               <td><div class="stk">2</div></td>
               <td><div class="par">18<span class="u">capacity</span></div></td>
               <td><div class="stepper"><button>−</button><span class="val">16</span><button>+</button></div></td>
-              <td><div class="price">$7.00</div></td>
+              <td><div class="price-ref"><div class="amount">$7.00</div><span class="sale-meta">GGV-018 · 3 Aug · same SKU</span><span class="po-cost">Latest PO cost: $4.55</span></div></td>
               <td><div class="pace"><b>22 / wk</b><br>~1 day left</div></td>
               <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
             </tr>
-            <tr>
+            <tr class="price-example">
               <td><span class="slot">3</span></td>
               <td><span class="grp">POKÉMON JP</span></td>
-              <td><div class="prod"><div class="thumb2 th-pk">151</div><div><div class="pname">Pokémon Card 151 Booster Pack (JP) <span class="custom">Imported</span></div><div class="sku">SKU: PKM-151-JP</div></div></div></td>
+              <td><div class="prod"><div class="thumb2 th-pk">151</div><div><div class="pname">Pokémon Card 151 Booster Pack (JP) <span class="custom">Imported</span><span class="price-example-badge">Price example</span></div><div class="sku">SKU: PKM-151-JP</div></div></div></td>
               <td><div class="stk">0</div></td>
               <td><div class="par">12<span class="u">capacity</span></div></td>
               <td><div class="stepper"><button>−</button><span class="val">12</span><button>+</button></div></td>
-              <td><div class="price">$8.50</div></td>
+              <td><div class="price-ref"><div class="amount">$8.50</div><span class="sale-meta">GGV-007 · 2 Aug · same SKU</span><span class="po-cost">Latest PO cost: $5.99</span></div></td>
               <td><div class="pace"><b>14 / wk</b><br>empty now</div></td>
               <td><div class="checkx"><button class="yes on" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
             </tr>
@@ -462,7 +480,7 @@
               <td><div class="stk">1</div></td>
               <td><div class="par">6<span class="u">capacity</span></div></td>
               <td><div class="stepper" style="opacity:.4"><button>−</button><span class="val">5</span><button>+</button></div></td>
-              <td><div class="price" style="color:var(--fg3)">—</div></td>
+              <td><div class="price-ref"><div class="amount">$44.95</div><span class="sale-meta">Similar bundle · GGV-001 · 1 Aug</span><span class="po-cost">No exact SKU sale · PO cost $39.50</span></div></td>
               <td><div class="pace"><b>5 / wk</b><br>~1 day left</div></td>
               <td><div class="checkx"><button class="yes" title="Filled"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-11"/></svg></button><button class="no on" title="Out of stock"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></td>
             </tr>
@@ -475,9 +493,11 @@
           <button class="addbtn2">Add row</button>
           <span class="hint">product + qty only</span>
         </div>
-        <div class="nayaxnote"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg></div><div class="tx"><b>Brand-new product not in the catalogue yet?</b> Set it up on Nayax as usual — it syncs back here and the office matches it to inventory &amp; cost.</div></div>
+        <div class="nayaxnote"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg></div><div class="tx"><b>Nayax price reference:</b> each row shows the latest successful sale, plus the machine and sale date. The latest PO cost is separate context—not the customer price. Brand-new items without an exact sale use a clearly labelled similar product until Nayax history is available.</div></div>
         <div class="dfoot"><span class="l" style="margin-right:auto">4 items · ordered by slot · generated on demand</span><span class="l">Locked to product + quantity edits</span></div>
       </div>
+      </section>
+      <section class="machine-view" id="machine-view-returns" role="tabpanel" hidden>
       <section class="return-card" id="warehouse-return" aria-labelledby="return-title">
         <div class="return-intro">
           <div class="return-icon"><svg viewBox="0 0 24 24"><path d="M20 7H8a4 4 0 0 0-4 4v7"/><path d="M8 3L4 7l4 4"/><path d="M4 18h16"/><path d="M17 15l3 3-3 3"/></svg></div>
@@ -553,8 +573,9 @@
             <p id="success-route-meta">Return RET-00518 · North route · Westfield Parramatta · recorded by Sam today at 4:42 PM</p>
             <div class="movement-chips" id="movement-chips"><span>Surging Sparks +4 Warehouse</span><span>Destined Rivals 2 damaged · Quarantine</span></div>
           </div>
-          <div class="success-actions"><a href="inventory.html#route-returns">View in Inventory</a><button type="button" id="return-more">Return more stock</button></div>
+          <div class="success-actions"><a href="inventory.html#stock-history">View in stock history</a><button type="button" id="return-more">Return more stock</button></div>
         </div>
+      </section>
       </section>
       <div class="print-overlay" id="print-preview" role="dialog" aria-modal="true" aria-labelledby="print-preview-title" aria-hidden="true">
         <div class="print-shell">
@@ -602,6 +623,31 @@
   const printPreviewNow = document.getElementById('print-preview-now');
   const returnRows = [...document.querySelectorAll('[data-return-row]')];
   const returnOutputs = [...document.querySelectorAll('.rstepper output')];
+  const machineTabs = [...document.querySelectorAll('[data-machine-view]')];
+  const machineViews = [...document.querySelectorAll('.machine-view')];
+  const actionBar = document.querySelector('.actionbar');
+
+  function setMachineView(name,{updateHash=true}={}){
+    const isReturns=name==='returns';
+    machineTabs.forEach(tab=>{
+      const active=tab.dataset.machineView===name;
+      tab.classList.toggle('on',active);
+      tab.setAttribute('aria-selected',String(active));
+    });
+    machineViews.forEach(view=>{
+      const active=view.id===`machine-view-${name}`;
+      view.classList.toggle('show',active);
+      view.hidden=!active;
+    });
+    actionBar.classList.toggle('is-hidden',isReturns);
+    document.getElementById('machine-page-title').textContent=isReturns?'Returns':'My Machines';
+    document.getElementById('machine-page-subtitle').textContent=isReturns
+      ? 'Record unused products from completed routes and send damaged stock to Quarantine.'
+      : 'Your assigned machines for today. Plan your fills and complete your route.';
+    if(updateHash) history.replaceState(null,'',isReturns?'#returns':location.pathname);
+  }
+
+  machineTabs.forEach(tab=>tab.addEventListener('click',()=>setMachineView(tab.dataset.machineView)));
 
   function setPrintPreview(open){
     printPreview.classList.toggle('is-open',open);
@@ -660,7 +706,10 @@
       openReturnForm();
     }
   });
-  actionReturn.addEventListener('click',openReturnForm);
+  actionReturn.addEventListener('click',()=>{
+    setMachineView('returns');
+    openReturnForm();
+  });
   returnRouteMachine.addEventListener('change',syncReturnSource);
   openPrintPreview.addEventListener('click',()=>setPrintPreview(true));
   closePrintPreview.addEventListener('click',()=>setPrintPreview(false));
@@ -713,6 +762,12 @@
   });
   syncReturnSource();
   updateReturnSummary();
+  if(location.hash==='#returns'||location.hash==='#warehouse-return'){
+    setMachineView('returns',{updateHash:false});
+    if(location.hash==='#warehouse-return') openReturnForm();
+  }else{
+    setMachineView('machines',{updateHash:false});
+  }
 </script>
 </body>
 </html>

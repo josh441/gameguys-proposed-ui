@@ -112,9 +112,9 @@ flowchart LR
   O --> O4[Forecast]
   I --> I1[Stock Overview]
   I --> I2[POs & Invoices]
-  I --> I3[Route Returns audit]
-  M --> M1[On-demand pick lists]
-  M --> M2[After-run stock return]
+  I --> I3[Stock History]
+  M --> M1[Machines & Pick List]
+  M --> M2[Returns]
   R --> R1[Suppliers]
   R --> R2[Task Management]
       </pre>
@@ -130,7 +130,8 @@ flowchart TD
   B --> C[Generate / regenerate route pick list on demand]
   C --> D[Use last 7 days of sales + slot PAR]
   D --> E[Order rows by slot number]
-  E --> F{Need a change?}
+  E --> PRICE[Show latest Nayax sold price + machine/date]
+  PRICE --> F{Need a change?}
   F -- No --> I[Keep suggested product + qty]
   F -- Out of stock --> G[Swap product; price + qty auto-update]
   F -- Extra item --> H[Add product + qty row]
@@ -148,7 +149,7 @@ flowchart TD
 
     <div class="card">
       <h3>After-run stock return</h3>
-      <div class="cap">The filler records unused Pokémon stock against the completed route/machine; Inventory receives an audit trail, not a second approval.</div>
+      <div class="cap">The filler uses the separate Returns tab to record unused Pokémon stock against the completed route/machine; Inventory receives an audit trail, not a second approval.</div>
       <pre class="mermaid">
 flowchart TD
   A[Route complete; filler returns to warehouse] --> B[Choose eligible completed route / machine]
@@ -159,7 +160,8 @@ flowchart TD
   E -- Damaged + reason --> G[Quarantine movement only]
   F --> H[Confirm one idempotent return batch]
   G --> H
-  H --> I[Inventory Route Returns shows audit]
+  H --> I[Inventory Stock History shows movement]
+  H --> J[Good units appear in Current stock]
       </pre>
     </div>
 

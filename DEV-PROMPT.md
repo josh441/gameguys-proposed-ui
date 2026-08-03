@@ -19,8 +19,8 @@ Start by auditing the production repository and mapping each requested capabilit
 Keep no more than five top-level operational tabs:
 
 - **Ownership** — owner financials, sales, machine/product performance, machine value, and forecast.
-- **Inventory** — receiver stock overview, purchase orders, delivery receiving, and route-return audit.
-- **Machines** — filler-assigned machines, pick lists, route completion, unused-stock returns, and print/PDF.
+- **Inventory** — receiver stock overview, purchase orders, delivery receiving, and unified Stock History.
+- **Machines** — separate **Machines & Pick List** and **Returns** sub-tabs for the filler, plus print/PDF.
 - **Calendar** — Pokémon release calendar and preorder actions.
 - **CRM** — supplier contacts and team task management.
 
@@ -70,16 +70,32 @@ In **Machines**, let the filler return unused Pokémon stock after completing a 
 - Good stock creates a positive movement to **Warehouse · unallocated**.
 - Damaged stock creates a **Quarantine** movement only and never increases sellable inventory.
 - Confirm the batch once with a unique idempotency key and a route-linked return reference.
-- Show the result in `Inventory → Route Returns` as an audit-only view. The receiver must not approve it or move the stock again.
+- Show every return movement in `Inventory → Stock History`, alongside PO receipts, route fills, allocation transfers, adjustments, and other damage movements. The receiver must not approve it or move the stock again.
+- Show good returns immediately in `Inventory → Stock Overview → Current stock` as Warehouse · unallocated.
 
 If production must support good and damaged quantities for the same SKU in one return, model them as separate condition quantities or rows while preserving the single return batch. Confirm this open product decision before finalising the schema.
+
+## Inventory Stock History
+
+Build one newest-first, read-only movement ledger instead of a return-specific Inventory screen:
+
+- Source the ledger from immutable stock movements and join the relevant receipt, route, transfer, adjustment, product, location, and user metadata. Do not create a second return record or approval step just to populate this view.
+- Include PO receipts, route-fill withdrawals, route returns, allocation transfers, stocktake adjustments, and Quarantine/damage movements.
+- Show date/time, movement type, product/SKU, source, destination/allocation, signed quantity, reference, recorded-by user, and resulting balance.
+- Support text search and filters for movement type, stock area/allocation, and whether the movement increased, decreased, or did not affect sellable stock.
+- Open a referenced PO, receipt, route, return batch, or adjustment in its existing detail view when the production app already has that route.
+- Keep confirmed movements immutable. Corrections must add a compensating movement that is also visible in this ledger.
+- Preserve old Inventory return-history deep links by redirecting them to Stock History when practical.
 
 ## Filler pick list and print behavior
 
 - Generate pick lists on demand from the last seven days of sales and the machine planogram/PAR configuration.
 - Order working rows and printed rows by slot number.
 - Allow only product swaps/additions and quantity changes; price, slot, PAR, and source fields remain locked.
-- Use one exact Nayax selling price per row.
+- Show the latest successful Nayax selling price for the exact SKU across the filler-visible machine fleet, including the source machine and sale timestamp.
+- If no exact-SKU sale exists, show a comparable-product price only when it is explicitly labelled as a similar-product fallback; never imply it is an exact match.
+- Keep latest PO unit cost secondary and explicitly labelled. It must never be confused with the selling price. The proposal example is Pokémon Card 151: latest PO cost `$5.99`, last Nayax sale `$8.50` at GGV-007 on 2 August.
+- Use the last-sold Nayax value as the default exact selling-price reference for the row and printout. Keep PO cost and sale-source metadata off the printed sheet.
 - Finalising the route feeds the existing `picklist_final_rows → apply_picklist_withdrawal()` path. Do not create a second deduction.
 - Keep print preview hidden during normal work. **View print / PDF** opens a modal on request.
 - Print only **slot · item · exact price · amount**.
@@ -89,7 +105,7 @@ If production must support good and damaged quantities for the same SKU in one r
 - Stock deducts exactly once at fill finalisation.
 - Confirmed returns and receipts are idempotent and use immutable movement records.
 - Corrections use compensating movements; do not edit confirmed movement history.
-- Nayax remains the selling-price and machine-sales source of truth. Warehouse returns must not alter Nayax sales, prices, or machine stock.
+- Nayax remains the selling-price and machine-sales source of truth. Last-sold lookup must use successful sales, respect filler machine visibility, and expose its source timestamp. Warehouse returns must not alter Nayax sales, prices, or machine stock.
 - Never merge Online-store and Vending-machine balances into an ambiguous “Store” bucket.
 - Never count Quarantine as sellable stock.
 - Never store supplier login credentials; supplier contact details only.
@@ -111,7 +127,7 @@ If production must support good and damaged quantities for the same SKU in one r
 2. Confirm the five open product decisions listed in `HANDOFF.md` where they affect schema or irreversible behavior.
 3. Implement navigation and role visibility without breaking existing deep links.
 4. Implement the optimized Inventory table and PO edit/receiving workflow.
-5. Implement route returns and the Inventory audit view using the existing finalised-run data.
+5. Implement the separate filler Returns tab and unified Inventory Stock History using existing finalised-run and stock-movement data.
 6. Implement the click-only print preview and approved print stylesheet.
 7. Add migrations, server validation, permissions, idempotency, audit metadata, and tests.
 8. Demonstrate the end-to-end stock movements and document any production differences from the proposal.
