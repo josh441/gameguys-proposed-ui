@@ -124,7 +124,7 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
     - Out-of-stock → **swap** a replacement via search/dropdown; the new **price and qty auto-update**.
     - **Add an extra row** (a new set or a hot seller) not on the generated list — product + qty only.
     - Qty is an inline stepper (manual override); everything else is locked.
-- **Printout** — see §3.1b. Stripped to **slot · item · exact price · amount** and nothing else.
+- **Printout** — see §3.1b. Stripped to **slot · item · price to set · last sold (Nayax) · amount**.
 - **Returns sub-tab** — separate from **Machines & Pick List**. After the route is complete and the filler is back at the warehouse,
   show the **item**, editable **count**, explicit source **machine/location/route**, and a **Good /
   Damaged** condition choice. Good stock returns to Warehouse; damaged stock requires a reason and
@@ -163,7 +163,7 @@ flowchart TD
   F -- In stock --> G[Keep or adjust qty with +/- stepper]
   F -- Out of stock --> H[Swap a replacement via search<br/>price + qty auto-update to new item]
   F -- Extra needed --> J[Add a row: new set / hot seller<br/>product + qty only]
-  G --> K[Print / PDF: slot · item · exact price · amount]
+  G --> K[Print / PDF: slot · item · price to set<br/>last sold Nayax price · amount]
   H --> K
   J --> K
   K --> L[Physically fill machine + set prices on Nayax]
@@ -196,8 +196,9 @@ flowchart TD
   The filler selects **View print / PDF** to open a modal preview only when needed.
 - The modal closes with its **Close** action, the backdrop, or `Escape`. **Print / Save PDF** opens
   the browser print dialog; the print stylesheet outputs only the approved sheet.
-- Print/PDF contains **only 4 columns: slot · item name · exact price · amount.** The exact price defaults
-  from the last successful Nayax sale reference; PO cost and the source machine/date stay screen-only.
+- Print/PDF contains **only 5 columns: slot · item name · price to set · last sold (Nayax) · amount.**
+  The two price columns remain separate even when their values match, so the filler can see the sales reference.
+  PO cost and the last-sale source machine/date stay screen-only.
 - **Exactly one selling price per item** (no ranges) — the filler just keys it into Nayax and moves on.
 - Swaps/added rows/qty overrides flow through to the printout; on-screen-only fields (pace,
   group chips, status) are stripped. Implement with a print stylesheet or a dedicated print view.
@@ -337,7 +338,9 @@ flowchart LR
   unit_price, row_type ∈ {generated, swapped, added}, swapped_from_product_id, edited_qty)`.
   This is the *editable working draft*; on "Mark route complete" it feeds the existing
   `picklist_final_rows` (do NOT add a second deduct path — Golden Rule #3).
-- Price snapshot stored on each row at print time so the printout shows one exact price.
+- Store both `price_to_set_snapshot` and `last_sold_price_snapshot` on each row at print time so the
+  printed sheet is stable even if a later Nayax sync changes the product's sale history. Retain the
+  `last_sold_sale_id` for audit/source lookup without printing the machine or timestamp.
 - **Route stock returns** — `route_stock_returns(id, route_id, machine_id, source_location_id,
   filler_id, status, idempotency_key, returned_at)` plus
   `route_stock_return_rows(return_id, product_id, issued_qty, filled_qty, returned_qty, condition,
@@ -469,7 +472,7 @@ create table purchase_order_receipt_rows (
 - No supplier credentials stored — contact details only.
 - Keep owner financials curated (surface Xero essentials, not a full accounting rebuild).
 - Pick list is **slot-ordered**, **generated on demand**, and **edit-locked to product + quantity**.
-- Printout is **slot · item · exact price · amount only** — one price per item, no on-screen-only fields.
+- Printout is **slot · item · price to set · last sold (Nayax) · amount only** — PO cost and sale-source metadata do not print.
 - Damaged route returns and damaged PO receipts always go to Quarantine and never increase sellable stock.
 - Every received good unit is allocated to Online store, Vending machines, or a balanced split before confirmation.
 - Confirmed return batches and PO receipts are idempotent; drafts never move stock.
