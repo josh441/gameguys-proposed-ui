@@ -42,6 +42,7 @@
   .i-mac{background:linear-gradient(140deg,#2f6bff,#1e3a8a)}
   .i-misc{background:linear-gradient(140deg,#f59e0b,#c2410c)}
   .i-crm{background:linear-gradient(140deg,#e11d48,#9f1239)}
+  .i-hand{background:linear-gradient(140deg,#8b5cf6,#0d9488)}
   .i-all{background:rgba(255,255,255,.16)}
   .tt{font-family:var(--display);font-weight:800;font-size:17px}
   .who{font-size:11px;font-weight:700;letter-spacing:.05em;padding:3px 8px;border-radius:7px;color:#fff;display:inline-block;margin-top:4px}
@@ -72,14 +73,21 @@
   </div>
 
   <h1>Proposed UI — 5-tab navigation</h1>
-  <p class="lede">A brand-matched preview of the reorganised dashboard. Each tab below is a live mockup with sample data. Pick a screen to explore.</p>
+  <p class="lede">A brand-matched preview of the reorganised dashboard, with an implementation handoff and live mockups using Pokémon sample data. Pick a screen to explore.</p>
 
   <div class="grid">
     <a class="card" href="board.html">
       <div class="row"><div class="ic" style="background:linear-gradient(140deg,#0f0f1a,#4c1d95)"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 14h7v7H3z"/></svg></div>
         <div><div class="tt">Planning Board</div><span class="who w-all">FOR DEV / AI</span></div></div>
-      <div class="desc">Flow diagrams + a build spec the developer can paste straight into an AI assistant. The "how it works" behind these screens.</div>
+      <div class="desc">Current flow diagrams, a copyable production developer prompt, and the detailed build spec behind these screens.</div>
       <span class="go">Open board <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card" href="handoff.html">
+      <div class="row"><div class="ic i-hand"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h5M10 12h6M10 16h6"/></svg></div>
+        <div><div class="tt">Product &amp; Development Handoff</div><span class="who w-all">PM / DEV</span></div></div>
+      <div class="desc">The agreed return, PO receiving, damage, stock-allocation, and print-preview workflows—plus acceptance criteria and decisions still to confirm.</div>
+      <span class="go">Open handoff <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
 
     <a class="card" href="ownership.html">
@@ -92,14 +100,14 @@
     <a class="card" href="inventory.html">
       <div class="row"><div class="ic i-inv"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg></div>
         <div><div class="tt">Inventory</div><span class="who w-recv">RECEIVER</span></div></div>
-      <div class="desc">On-hand &amp; incoming stock, editable POs, line-by-line delivery receiving, Store/Vending allocation, damaged-stock quarantine, and route-return audit.</div>
+      <div class="desc">Searchable Pokémon stock with 10/25-row views, compact AI scanning, Online store/Vending allocation, optimized PO receiving, damaged-stock quarantine, and route-return audit.</div>
       <span class="go">Open screen <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
 
     <a class="card" href="machines.html">
       <div class="row"><div class="ic i-mac"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></div>
         <div><div class="tt">Machines</div><span class="who w-filler">FILLER</span></div></div>
-      <div class="desc">The filler "My Machines" view — assigned machines, pick lists, and after-run returns with item, count, source location, and Good/Damaged handling.</div>
+      <div class="desc">The filler "My Machines" view — Pokémon pick lists and after-run returns with a route/machine selector, item count, source, and Good/Damaged handling.</div>
       <span class="go">Open screen <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
 

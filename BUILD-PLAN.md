@@ -67,6 +67,9 @@ flowchart LR
 
 ## 2. Screen specs
 
+**Prototype content rule:** use Pokémon TCG products, releases, packaging, and suppliers for all
+sample data so damage, pack/box quantities, and allocation decisions match the hobby business.
+
 ### 2.1 Ownership (owner)
 Curated business view. **Surface Xero data, don't rebuild the P&L.**
 
@@ -82,17 +85,25 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
 
 ### 2.2 Inventory (receiver)
 - **Stock Overview:** current on-hand (live from Nayax + warehouse), incoming stock (synced from
-  Nayax + Shopify) with ETA + status, low/out-of-stock flags, dead/slow-stock aging.
-  **AI stock camera:** recognise product identity or barcode and auto-count on receiving/stocktake.
+  Nayax + Shopify) with ETA + status, low/out-of-stock flags, and an explicit allocation split between
+  **Online store** fulfilment stock and **Vending machine** route stock. Never show these as one
+  ambiguous “Store” bucket. Present current stock as a compact searchable table with language and
+  allocation filters, name/language/on-hand sorting, and a **10 / 25 rows** selector. Do not show a
+  stock-level or health graphic until the business defines the thresholds behind it.
+  **AI stock camera:** a compact **Scan stock** action in the Inventory header opens the scanner on
+  demand; do not reserve a dashboard card for it.
 - **POs & Invoices:** PO list with **View / edit** and **Receive** actions. The edit workspace covers
   supplier, status, order/ETA dates, references, notes, and line-level item, SKU, ordered quantity,
-  pack size, and unit cost. Per-**pack** cost is used for TCG; per-**box**/unit cost is used for blind
-  boxes/snacks. The **AI PDF reader** extracts line items, pack/box counts, and prices from a dropped
+  pack size, and unit cost. Per-**pack**, per-**booster box**, per-**bundle**, or per-**ETB** cost is
+  used for Pokémon TCG products. The **AI PDF reader** extracts line items, pack/box counts, and prices from a dropped
   quote/invoice for review before save.
 - **Receive delivery:** mark off `arrived now` and `damaged` per PO line, show good quantity and any
-  quantity still due, then allocate every good unit to **Store**, **Vending**, or a **split** of both.
+  quantity still due, then allocate every good unit to **Online store**, **Vending machines**, or a **split** of both.
   Damaged units go to **Quarantine** and never increase sellable inventory. Confirming the receipt
   changes the PO to `Partial` when quantities remain due or `Received` when the order is complete.
+  Group each receiving row into only three work areas: **product + PO balance**, **this delivery +
+  damage**, and **good-stock allocation**. Provide **Receive all outstanding** and **Clear this
+  delivery** shortcuts; both must still respect quantity, damage, and allocation validation.
 
 ### 2.3 Machines (filler) — see §3.1 for the flow
 - KPIs: machines assigned, urgent fills, last Nayax sync.
@@ -169,6 +180,10 @@ flowchart TD
 - Everything else (slot, group, price source, PAR) is **locked** — target ≈90% zero/low-touch runs.
 
 #### 3.1b Printout rules
+- The preview is **not fixed below the return workflow** and is hidden during normal Machines work.
+  The filler selects **View print / PDF** to open a modal preview only when needed.
+- The modal closes with its **Close** action, the backdrop, or `Escape`. **Print / Save PDF** opens
+  the browser print dialog; the print stylesheet outputs only the approved sheet.
 - Print/PDF contains **only 4 columns: slot · item name · exact price · amount.**
 - **Exactly one price per item** (no ranges) — the filler just keys it into Nayax and moves on.
 - Swaps/added rows/qty overrides flow through to the printout; on-screen-only fields (pace,
@@ -184,8 +199,9 @@ flowchart TD
   A[Filler completes the route] --> B[Existing finalisation writes negative stock movements]
   B --> C[Filler returns to the warehouse with unused stock]
   C --> D[Open Return unused stock from Machines]
-  D --> E[App shows products issued for the completed route]
-  E --> F[Filler records item, count, and source location]
+  D --> E[Choose completed route / machine from dropdown]
+  E --> F0[App shows products issued for that completed run]
+  F0 --> F[Filler records item, count, and source location]
   F --> G{Good or damaged?}
   G -- Good --> H[Destination: Warehouse]
   G -- Damaged --> Q[Select damage reason<br/>Destination: Quarantine]
@@ -198,7 +214,8 @@ flowchart TD
 ```
 
 **Rules:**
-- Only show the filler’s own completed routes and the products issued on those routes.
+- The route/machine dropdown only shows the filler’s own completed runs that have returnable stock.
+  Selecting a run loads its issued products and updates every row’s machine, venue, and route source.
 - The source machine, location, and route are fixed from the completed run. Quantity is constrained
   to `0..(issued_qty - filled_qty)` per product.
 - Each returned line is marked **Good** or **Damaged**. Good destination is **Warehouse**. Damaged
@@ -253,9 +270,9 @@ flowchart TD
   INC --> RCV[Receiver marks arrived and damaged per line]
   RCV --> GOOD[good_qty = arrived_qty - damaged_qty]
   GOOD --> ALLOC{Allocate good units}
-  ALLOC -- Store --> ST[Store stock movement]
-  ALLOC -- Vending --> VN[Vending stock movement]
-  ALLOC -- Split --> BOTH[Separate Store + Vending movements]
+  ALLOC -- Online store --> ST[Online fulfilment stock movement]
+  ALLOC -- Vending machines --> VN[Vending route stock movement]
+  ALLOC -- Split --> BOTH[Separate Online + Vending movements]
   RCV --> DMG[Damaged qty -> Quarantine movement]
   ST --> STATUS{Anything still due?}
   VN --> STATUS
@@ -267,9 +284,9 @@ flowchart TD
 
 **Receiving rules:**
 - `arrived_qty` includes damaged units; `good_qty = arrived_qty - damaged_qty`.
-- For every row, `store_qty + vending_qty = good_qty`. The UI blocks confirmation until it balances.
+- For every row, `online_store_qty + vending_qty = good_qty`. The UI blocks confirmation until it balances.
 - `remaining_qty = ordered_qty - previously_received_qty - arrived_qty`, never below zero.
-- Damaged units require a damage reason, go to Quarantine, and do not increase Store/Vending stock.
+- Damaged units require a damage reason, go to Quarantine, and do not increase Online-store/Vending stock.
 - Confirmation is idempotent and writes one immutable receipt reference. Drafts do not move stock.
 
 ### 3.5 Task assignment
@@ -315,8 +332,8 @@ flowchart LR
 - **Editable purchase orders and receipts** — reuse existing PO/header and line tables where possible;
   add `purchase_order_receipts(id, purchase_order_id, received_by, status, idempotency_key,
   received_at)` and `purchase_order_receipt_rows(receipt_id, purchase_order_line_id, arrived_qty,
-  damaged_qty, damage_reason, store_qty, vending_qty, remaining_qty)`. Confirming a receipt writes
-  separate Store, Vending, and Quarantine movements. Saving a draft writes no stock movement.
+  damaged_qty, damage_reason, online_store_qty, vending_qty, remaining_qty)`. Confirming a receipt writes
+  separate Online-store, Vending, and Quarantine movements. Saving a draft writes no stock movement.
 
 **Pick-list schema sketch:**
 
@@ -400,11 +417,11 @@ create table purchase_order_receipt_rows (
   arrived_qty            int not null check (arrived_qty >= 0),
   damaged_qty            int not null check (damaged_qty between 0 and arrived_qty),
   damage_reason          text,
-  store_qty              int not null default 0 check (store_qty >= 0),
+  online_store_qty       int not null default 0 check (online_store_qty >= 0),
   vending_qty            int not null default 0 check (vending_qty >= 0),
   remaining_qty          int not null check (remaining_qty >= 0),
   unique (receipt_id, purchase_order_line_id),
-  check (store_qty + vending_qty = arrived_qty - damaged_qty),
+  check (online_store_qty + vending_qty = arrived_qty - damaged_qty),
   check ((damaged_qty = 0 and damage_reason is null) or (damaged_qty > 0 and damage_reason is not null))
 );
 ```
@@ -423,7 +440,7 @@ create table purchase_order_receipt_rows (
    Inventory gets an audit-only Route Returns view.
 4. **Machine Value** — join qty × (cost, selling price); recompute on sale-pull + restock; Ownership sub-tab.
 5. **PO editing and delivery receiving** — editable PO header/lines; line-by-line arrived/damaged
-   counts; Store/Vending/Split allocation; idempotent confirmation; Partial/Received status.
+   counts; Online-store/Vending/Split allocation; idempotent confirmation; Partial/Received status.
 6. **Inventory polish** — surface incoming + AI PDF reader on PO form; scope AI camera (identity/barcode).
 7. **CRM/Calendar** — relocate existing supplier + task + release-calendar features under new tabs.
 
@@ -439,5 +456,5 @@ create table purchase_order_receipt_rows (
 - Pick list is **slot-ordered**, **generated on demand**, and **edit-locked to product + quantity**.
 - Printout is **slot · item · exact price · amount only** — one price per item, no on-screen-only fields.
 - Damaged route returns and damaged PO receipts always go to Quarantine and never increase sellable stock.
-- Every received good unit is allocated to Store, Vending, or a balanced split before confirmation.
+- Every received good unit is allocated to Online store, Vending machines, or a balanced split before confirmation.
 - Confirmed return batches and PO receipts are idempotent; drafts never move stock.
