@@ -15,7 +15,7 @@ The proposal now covers the full stock journey for Pokémon TCG products:
 2. Unused products are returned from a selected completed route/machine.
 3. Good returns go back to unallocated Warehouse stock; damaged returns go to Quarantine.
 4. A receiver can view and edit purchase orders, mark off the delivery, record damage, and allocate every good unit to either the Online store or Vending machines.
-5. Inventory keeps Online-store and Vending-machine stock visibly separate and provides an audit-only view of route returns.
+5. Inventory keeps Online-store and Vending-machine stock visibly separate and provides one running Stock History for all inventory movements, including route returns.
 
 The prototype uses Pokémon products throughout so damage examples—dented packaging, crushed boxes, torn seals, water damage, and scuffing—match the business.
 
@@ -23,15 +23,15 @@ The prototype uses Pokémon products throughout so damage examples—dented pack
 
 | Role | App area | Main jobs |
 |---|---|---|
-| Filler | **Machines** | Generate a pick list, complete a route, return unused stock, view/print a stripped filler sheet |
-| Receiver | **Inventory** | View stock allocation, view/edit POs, receive deliveries, quarantine damaged arrivals, audit route returns |
+| Filler | **Machines** | Use Machines & Pick List for route work, see the latest Nayax sold price, and use the separate Returns tab for unused stock |
+| Receiver | **Inventory** | View stock allocation, edit/receive POs, and review one running Stock History |
 | Owner | **Ownership** | Review accounting, performance, machine value, and forecast |
 | Owner / team | **CRM** | Supplier contacts and assigned tasks |
 | All roles | **Calendar** | Pokémon release schedule and preorder actions |
 
 ## 3. Workflow A — stock unused after a vending run
 
-**App path:** `Machines → Return unused stock`
+**App path:** `Machines → Returns`
 
 1. The filler finishes the route and returns to the warehouse.
 2. They select a completed **route/machine** from the dropdown. Only their completed runs with returnable stock should appear.
@@ -42,9 +42,10 @@ The prototype uses Pokémon products throughout so damage examples—dented pack
 7. The summary previews the total units and destinations before confirmation.
 8. The filler confirms once. The system creates one route-linked return reference.
 9. Good units create a positive movement into **Warehouse · unallocated**. Damaged units create a **Quarantine** movement only and never increase sellable stock.
-10. The receiver can see the completed batch in `Inventory → Route Returns`; this is an audit view and does not trigger another stock movement.
+10. The movement appears in `Inventory → Stock History` alongside receipts, fills, transfers, adjustments, and other damage. This view does not trigger another stock movement.
+11. Good returned units also appear immediately in `Inventory → Stock Overview → Current stock` under Warehouse · unallocated.
 
-**Prototype:** [Open the return flow](machines.html#warehouse-return) · [Open its inventory audit](inventory.html#route-returns)
+**Prototype:** [Open the Returns tab](machines.html#returns) · [Open Stock History](inventory.html#stock-history)
 
 ## 4. Workflow B — view/edit a PO and receive a delivery
 
@@ -80,21 +81,23 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 - **Quarantine** is non-sellable stock and is never included in either allocation.
 - Transfers between allocations must be explicit stock movements; the UI must not silently merge the balances.
 
-## 6. Workflow D — print or save the filler sheet
+## 6. Workflow D — check the last sold price and print the filler sheet
 
 **App path:** `Machines → View print / PDF`
 
-1. The print preview is hidden during normal Machines and Returns work.
-2. Selecting **View print / PDF** opens a modal preview only when requested.
-3. The user can close it with **Close**, the backdrop, or `Escape`.
-4. **Print / Save PDF** opens the browser print dialog.
-5. The printed sheet contains only **slot · item · exact price · amount**. Pace, PAR, stock status, product group, return controls, and other screen-only information are excluded.
+1. Each pick-list row shows the latest successful Nayax sale price for the exact SKU, plus the source machine and sale date.
+2. The latest PO unit cost appears only as secondary, clearly labelled context. For Pokémon Card 151, the example is **$5.99 latest PO cost** and **$8.50 last sold** at GGV-007 on 2 August.
+3. If no exact-SKU sale exists, any comparable-product reference is explicitly marked as **Similar**, never as an exact match.
+4. The print preview is hidden during normal Machines and Returns work.
+5. Selecting **View print / PDF** opens a modal preview only when requested.
+6. The user can close it with **Close**, the backdrop, or `Escape`.
+7. **Print / Save PDF** opens the browser print dialog. The printed sheet contains only **slot · item · exact selling price · amount**; PO cost, sale source/date, pace, PAR, stock status, product group, and return controls stay screen-only.
 
 ## 7. Product requirements coverage
 
 | Product-manager requirement | Proposal location | Acceptance signal | Status |
 |---|---|---|---|
-| Stock items back in after a run | Machines → Return unused stock | Completed route/machine can be selected and a return batch confirmed | Included |
+| Stock items back in after a run | Machines → Returns | Completed route/machine can be selected and a return batch confirmed | Included |
 | Show the item | Return line | Pokémon product name and SKU are visible | Included |
 | Enter the count | Return line | Editable count is bounded by unused issued stock | Included |
 | Show where it came from | Route selector + return line | Machine, venue, and route are displayed from the completed run | Included |
@@ -106,6 +109,8 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 | Optimize current-stock browsing | Inventory → Stock Overview | Search, language/allocation filters, sorting, and 10/25 rows | Included |
 | Keep AI scan compact | Inventory header → Scan stock | Scanner opens on demand instead of occupying a content card | Included |
 | Optimize receiving entry | PO → Receive delivery | Three grouped work areas plus receive-all and clear shortcuts | Included |
+| Keep one running stock ledger | Inventory → Stock History | Receipts, fills, transfers, adjustments, damage, and returns share a searchable movement history | Included |
+| Show fillers the last sold price | Machines → Pick List | Latest successful Nayax sale shows price, machine, date, and exact/similar match status | Included |
 | Use hobby-relevant examples | All proposal tabs | Pokémon TCG products, sets, releases, suppliers, and damage reasons | Included |
 | Do not keep print preview under Returns | Machines bottom action | Preview is hidden by default and opens only on click | Included |
 
@@ -119,7 +124,11 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 - For each receipt row, `online_store_qty + vending_qty = arrived_qty − damaged_qty`.
 - Damaged returns and damaged deliveries always require a reason, go to Quarantine, and never increase sellable stock.
 - Nayax remains the source of truth for machine sales and selling prices; a warehouse return does not update a Nayax sale, price, or machine quantity.
-- Inventory Route Returns is audit-only—there is no second approval or duplicate stock movement.
+- Last-sold pricing uses successful Nayax sales for the exact SKU first, includes its machine/timestamp, and clearly labels any similar-product fallback.
+- Latest PO cost is supporting context only and is never presented or printed as the customer selling price.
+- Inventory Stock History is read-only—there is no second approval or duplicate stock movement.
+- Stock History combines receipts, route fills, returns, allocation transfers, adjustments, and Quarantine movements.
+- Good route returns are visible in Current stock as soon as their movement is confirmed.
 - Supplier records contain contact details only; no supplier login credentials are stored.
 
 The proposed tables, constraints, and movement records are specified in [BUILD-PLAN.md](BUILD-PLAN.md#4-data-model-existing--additions).
@@ -161,7 +170,7 @@ The proposed tables, constraints, and movement records are specified in [BUILD-P
 
 - [index.html](index.html) — proposal launcher
 - [machines.html](machines.html) — filler pick list, after-run return, and click-only print preview
-- [inventory.html](inventory.html) — allocation view, editable POs, receiving, and route-return audit
+- [inventory.html](inventory.html) — allocation view, editable POs, receiving, and unified stock history
 - [all-in-one.html](all-in-one.html) — condensed stakeholder walkthrough
 - [BUILD-PLAN.md](BUILD-PLAN.md) — flows, data model, build phases, and non-negotiable rules
 - [DEV-PROMPT.md](DEV-PROMPT.md) — copyable production implementation prompt for the developer or AI coding assistant
@@ -169,4 +178,4 @@ The proposed tables, constraints, and movement records are specified in [BUILD-P
 
 ## 13. Definition of done
 
-The feature is complete when a filler can return unused Pokémon stock from a valid completed route, damaged stock cannot enter a sellable balance, a receiver can edit and receive a PO with a fully balanced Online-store/Vending allocation, every confirmation creates an auditable and idempotent movement, and the resulting balances and references are visible in the correct Inventory views.
+The feature is complete when a filler can return unused Pokémon stock from a valid completed route, damaged stock cannot enter a sellable balance, a receiver can edit and receive a PO with a fully balanced Online-store/Vending allocation, every confirmation creates an auditable and idempotent movement, good returns appear immediately in Current stock, and all resulting references and balances are visible in the unified Stock History.

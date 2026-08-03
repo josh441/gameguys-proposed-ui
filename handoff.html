@@ -162,14 +162,14 @@
         <h2>Clear ownership by role</h2>
         <p class="lead">Operational actions live in the tab used by the person performing the work.</p>
         <div class="roles">
-          <div class="role"><span class="tag">FILLER</span><h3>Machines</h3><p>Pick lists, route completion, unused-stock returns, and the click-only print/PDF preview.</p></div>
-          <div class="role"><span class="tag">RECEIVER</span><h3>Inventory</h3><p>Stock allocation, PO viewing/editing, delivery receiving, damaged quarantine, and return audit.</p></div>
+          <div class="role"><span class="tag">FILLER</span><h3>Machines</h3><p>Machines &amp; Pick List with the latest Nayax sold price, plus a separate Returns tab for unused stock.</p></div>
+          <div class="role"><span class="tag">RECEIVER</span><h3>Inventory</h3><p>Stock allocation, PO receiving, and one running Stock History for every inventory movement.</p></div>
           <div class="role"><span class="tag">OWNER / TEAM</span><h3>Ownership, CRM &amp; Calendar</h3><p>Performance, financials, suppliers, tasks, and Pokémon release planning.</p></div>
         </div>
       </section>
 
       <section class="panel workflow" id="return">
-        <div class="workflow-head"><span class="workflow-icon">↩</span><div><h2>After-run stock return</h2><p>Machines → Return unused stock</p></div></div>
+        <div class="workflow-head"><span class="workflow-icon">↩</span><div><h2>After-run stock return</h2><p>Machines → Returns</p></div></div>
         <div class="steps">
           <div class="step"><span class="num">1</span><b>Select the run</b><span>Choose one of the filler’s completed route/machine combinations.</span></div>
           <div class="step"><span class="num">2</span><b>Load issued items</b><span>Show the Pokémon products and lock their machine, venue, and route source.</span></div>
@@ -177,8 +177,8 @@
           <div class="step"><span class="num">4</span><b>Mark condition</b><span>Good, or Damaged with a required hobby-relevant reason.</span></div>
           <div class="step"><span class="num">5</span><b>Confirm once</b><span>Create one route-linked reference and immutable stock movements.</span></div>
         </div>
-        <div class="result"><b>Result:</b> Good → Warehouse · unallocated &nbsp; | &nbsp; Damaged → Quarantine &nbsp; | &nbsp; Inventory → Route Returns receives the audit trail.</div>
-        <div class="actions"><a class="button primary" href="machines.html#warehouse-return">Open return prototype</a><a class="button" href="inventory.html#route-returns">View Inventory audit</a></div>
+        <div class="result"><b>Result:</b> Good → Warehouse · unallocated and appears in Current stock &nbsp; | &nbsp; Damaged → Quarantine &nbsp; | &nbsp; both appear in Inventory → Stock History.</div>
+        <div class="actions"><a class="button primary" href="machines.html#returns">Open Returns tab</a><a class="button" href="inventory.html#stock-history">View Stock History</a></div>
       </section>
 
       <section class="panel workflow" id="receiving">
@@ -214,8 +214,8 @@
         <span class="section-kicker">Filler printout</span>
         <h2>Preview only when requested</h2>
         <div class="split">
-          <div class="rule-box"><h3>Interaction</h3><ul><li>The preview is hidden by default.</li><li><b>View print / PDF</b> opens it in a modal.</li><li>Close button, backdrop, and Escape dismiss it.</li><li>Print / Save PDF launches the browser print dialog.</li></ul></div>
-          <div class="rule-box"><h3>Printed content</h3><ul><li>Slot</li><li>Item</li><li>One exact price</li><li>Amount</li></ul></div>
+          <div class="rule-box"><h3>Nayax price reference</h3><ul><li>Show the latest successful exact-SKU sale.</li><li>Include source machine and sale date.</li><li>Label similar-product fallbacks.</li><li>Keep latest PO cost secondary.</li></ul></div>
+          <div class="rule-box"><h3>Printed content</h3><ul><li>Slot</li><li>Item</li><li>One exact selling price</li><li>Amount</li></ul></div>
         </div>
       </section>
 
@@ -225,7 +225,7 @@
         <table class="coverage">
           <thead><tr><th>Requirement</th><th>Where to verify</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>Item, count, and source after a run</td><td>Machines → Return unused stock</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Item, count, and source after a run</td><td>Machines → Returns</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Option to mark damaged</td><td>Good/Damaged choice, required reason, Quarantine destination</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Route/machine dropdown</td><td>Start a return → Completed route / machine</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>View and edit purchase orders</td><td>Inventory → Purchase Orders &amp; Invoices → View / edit</td><td><span class="done">✓ Included</span></td></tr>
@@ -234,6 +234,8 @@
             <tr><td>Optimized current-stock browsing</td><td>Search, language/allocation filters, sorting, 10/25 rows</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Compact AI stock scan</td><td>Inventory header → Scan stock</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Optimized receiving entry</td><td>Three grouped work areas + receive-all and clear shortcuts</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>One running stock ledger</td><td>Inventory → Stock History includes receipts, fills, transfers, damage, and returns</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Last sold price for fillers</td><td>Machines → Pick List uses latest Nayax sale with machine/date context</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Pokémon examples</td><td>All proposal tabs and workflows</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Print preview not fixed under Returns</td><td>Machines → View print / PDF</td><td><span class="done">✓ Included</span></td></tr>
           </tbody>

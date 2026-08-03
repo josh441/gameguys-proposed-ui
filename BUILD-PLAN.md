@@ -18,8 +18,8 @@
 2. **Source of truth is split:**
    - **Nayax = sales & price truth.** The app *mirrors* Nayax; fillers price/update on Nayax, we pull.
    - **App = stock truth.** Stock is deducted when a fill is finalised, then reconciled against Nayax sales.
-   - ✅ **Confirmed available from Nayax:** per-machine, per-SKU **last-7-day sales** and **selling price**.
-     This powers pick-list generation (`qty_to_add`), the exact price column, the pace figures, and Machine Value.
+   - ✅ **Confirmed available from Nayax:** per-machine, per-SKU **last-7-day sales**, successful sale history, and **selling price**.
+     This powers pick-list generation (`qty_to_add`), the last-sold price reference, the pace figures, and Machine Value.
 3. **Auto-deduct already works** via the `picklist_final_rows` insert trigger
    (`apply_picklist_withdrawal()`) → creates a negative `stock_movements` row → surfaced in `/reconciliation`.
    **Do NOT add a second deduction path** (e.g. from the filler hub) or stock will double-count.
@@ -29,7 +29,8 @@
 6. **Unused route stock returns through one explicit positive movement.** After a route is completed,
    the filler can return unopened leftovers to Warehouse. The existing fill finalisation remains the
    only negative movement; the confirmed return writes one positive `stock_movements` row per product.
-   The receiver sees the audit trail but does not approve it again or create another movement.
+   The movement appears in the receiver's unified **Stock History**, but the receiver does not approve
+   it again or create another movement. Good returns also appear immediately in Current stock.
 
 ---
 
@@ -51,6 +52,9 @@ flowchart LR
   O --> O4[Forecast]
   I --> I1[Stock Overview]
   I --> I2[POs & Invoices]
+  I --> I3[Stock History]
+  M --> M1[Machines & Pick List]
+  M --> M2[Returns]
   R --> R1[Suppliers]
   R --> R2[Task Management]
 ```
@@ -114,22 +118,24 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
     showing how much is missing per row.
   - **Working view rows are ordered by SLOT number ascending** (1,2,3…), *not* by urgency.
   - **Columns:** slot · product group · product name · current qty in machine · **PAR (capacity/size,
-    shown beside the qty)** · qty to add · **price (exact, single value)** · pace *(sales/wk + days-left,
+    shown beside the qty)** · qty to add · **last sold price from Nayax** with source machine/date · pace *(sales/wk + days-left,
     on-screen only — must NOT print)*.
   - **Editing is restricted to product + quantity only** (≈90% of runs need 0–2 changes):
     - Out-of-stock → **swap** a replacement via search/dropdown; the new **price and qty auto-update**.
     - **Add an extra row** (a new set or a hot seller) not on the generated list — product + qty only.
     - Qty is an inline stepper (manual override); everything else is locked.
 - **Printout** — see §3.1b. Stripped to **slot · item · exact price · amount** and nothing else.
-- **Return unused stock** — after the route is complete and the filler is back at the warehouse,
+- **Returns sub-tab** — separate from **Machines & Pick List**. After the route is complete and the filler is back at the warehouse,
   show the **item**, editable **count**, explicit source **machine/location/route**, and a **Good /
   Damaged** condition choice. Good stock returns to Warehouse; damaged stock requires a reason and
   moves to Quarantine. Confirmation produces one route-linked return reference.
 - Bottom bar: Confirm fills · Mark route complete · Return stock · Print/PDF (bad reception) · total est. cost.
 
-On **Inventory**, add a **Route Returns** sub-view. It is an audit view, not a second receiving action:
-the receiver sees the return reference, filler, route, machine/location source, item, count, condition,
-destination, movement, and resulting warehouse quantity after the filler confirms the return.
+On **Inventory**, use one running **Stock History** sub-view instead of a return-specific screen. It
+shows PO receipts, route-fill withdrawals, allocation transfers, adjustments, damaged movements, and
+route returns in the same newest-first ledger. The receiver can search and filter the ledger by
+movement type and stock area. Good route returns update **Current stock → Warehouse · unallocated**
+immediately and the history row shows the return reference, source, signed quantity, and resulting stock.
 
 ### 2.4 Calendar (all)
 Release calendar grouped by month: product, set code, language, preorder status. "Action needed"
@@ -172,7 +178,13 @@ flowchart TD
   sales per location; `qty_to_add = PAR − current_in_machine` (never negative).
 - **Ordering:** by `slot_number` ascending — the physical layout order, not urgency.
 - **Columns:** slot · group · product · current-in-machine · **PAR (beside qty)** · qty-to-add ·
-  **exact price** · pace *(sales/wk + days-of-cover — screen-only, excluded from print)*.
+  **last successful Nayax sale price** with source machine/date · pace *(sales/wk + days-of-cover — screen-only, excluded from print)*.
+- **Price matching:** use the exact SKU across the filler-visible Nayax machine fleet first. Show the sale
+  machine and timestamp so the filler knows how current the reference is. If there is no exact-SKU sale,
+  a comparable product may be shown only when it is explicitly labelled as a similar-product fallback.
+- **Cost is not price:** the latest PO unit cost may appear as muted secondary context, but it must always be
+  labelled **Latest PO cost** and must never replace or be presented as the customer selling price. Example:
+  Pokémon Card 151 latest PO cost **$5.99**; last successful Nayax sale **$8.50** at GGV-007 on 2 Aug.
 - **Allowed edits (product + qty ONLY):**
   - **Swap** (out of stock): pick a replacement SKU → its **price and qty populate automatically**.
   - **Add row**: search a SKU (new set / hot seller) + qty. No other columns editable.
@@ -184,8 +196,9 @@ flowchart TD
   The filler selects **View print / PDF** to open a modal preview only when needed.
 - The modal closes with its **Close** action, the backdrop, or `Escape`. **Print / Save PDF** opens
   the browser print dialog; the print stylesheet outputs only the approved sheet.
-- Print/PDF contains **only 4 columns: slot · item name · exact price · amount.**
-- **Exactly one price per item** (no ranges) — the filler just keys it into Nayax and moves on.
+- Print/PDF contains **only 4 columns: slot · item name · exact price · amount.** The exact price defaults
+  from the last successful Nayax sale reference; PO cost and the source machine/date stay screen-only.
+- **Exactly one selling price per item** (no ranges) — the filler just keys it into Nayax and moves on.
 - Swaps/added rows/qty overrides flow through to the printout; on-screen-only fields (pace,
   group chips, status) are stripped. Implement with a print stylesheet or a dedicated print view.
 
@@ -198,7 +211,7 @@ through the existing `picklist_final_rows` path (see Golden Rule #3).
 flowchart TD
   A[Filler completes the route] --> B[Existing finalisation writes negative stock movements]
   B --> C[Filler returns to the warehouse with unused stock]
-  C --> D[Open Return unused stock from Machines]
+  C --> D[Open the separate Returns sub-tab in Machines]
   D --> E[Choose completed route / machine from dropdown]
   E --> F0[App shows products issued for that completed run]
   F0 --> F[Filler records item, count, and source location]
@@ -210,7 +223,7 @@ flowchart TD
   K --> L[Create route return batch]
   L --> I[Good qty creates positive warehouse movement]
   L --> X[Damaged qty creates quarantine movement only]
-  L --> J[Inventory Route Returns shows the audit trail]
+  L --> J[Inventory Stock History shows the movement]
 ```
 
 **Rules:**
@@ -226,7 +239,8 @@ flowchart TD
   quarantine/damage movement for damaged returned product. Both link to the return batch, route,
   machine, location, and filler. The negative fill movement is not edited or replayed.
 - The net warehouse change is: `finalised fill withdrawal + confirmed positive return`.
-- The receiver gets an audit-only **Route Returns** view; no second approval or stock movement.
+- The receiver sees the movement in the unified **Stock History**; there is no second approval or stock movement.
+- Good returns are included immediately in **Current stock** under Warehouse · unallocated.
 - Nayax is untouched: no sale, selling-price, or machine-stock update is pushed for a warehouse return.
 - The same return batch can contain good and damaged lines, but their destinations and movements remain separate.
 
@@ -328,7 +342,8 @@ flowchart LR
   filler_id, status, idempotency_key, returned_at)` plus
   `route_stock_return_rows(return_id, product_id, issued_qty, filled_qty, returned_qty, condition,
   damage_reason, destination, stock_movement_id)`. Good rows insert positive Warehouse movements;
-  damaged rows insert Quarantine movements only. Inventory reads the rows for its audit view.
+  damaged rows insert Quarantine movements only. Inventory joins these movements into its running
+  Stock History with receipts, fills, transfers, adjustments, and other damage movements.
 - **Editable purchase orders and receipts** — reuse existing PO/header and line tables where possible;
   add `purchase_order_receipts(id, purchase_order_id, received_by, status, idempotency_key,
   received_at)` and `purchase_order_receipt_rows(receipt_id, purchase_order_line_id, arrived_qty,
@@ -437,7 +452,7 @@ create table purchase_order_receipt_rows (
    Reuse existing final-upload/deduct path — do NOT add a second deduct.
 3. **Route stock returns** — filler records item, count, source machine/location, and Good/Damaged
    condition from a completed route; good stock returns to Warehouse and damaged stock to Quarantine;
-   Inventory gets an audit-only Route Returns view.
+   Inventory includes them in the running Stock History and good returns in Current stock.
 4. **Machine Value** — join qty × (cost, selling price); recompute on sale-pull + restock; Ownership sub-tab.
 5. **PO editing and delivery receiving** — editable PO header/lines; line-by-line arrived/damaged
    counts; Online-store/Vending/Split allocation; idempotent confirmation; Partial/Received status.
