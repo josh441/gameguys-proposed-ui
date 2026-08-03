@@ -91,7 +91,7 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 4. The print preview is hidden during normal Machines and Returns work.
 5. Selecting **View print / PDF** opens a modal preview only when requested.
 6. The user can close it with **Close**, the backdrop, or `Escape`.
-7. **Print / Save PDF** opens the browser print dialog. The printed sheet contains only **slot · item · exact selling price · amount**; PO cost, sale source/date, pace, PAR, stock status, product group, and return controls stay screen-only.
+7. **Print / Save PDF** opens the browser print dialog. The printed sheet contains **slot · item · price to set · last sold (Nayax) · amount**. The last-sold value is the latest successful sale for the same SKU; PO cost, sale source/date, pace, PAR, stock status, product group, and return controls stay screen-only.
 
 ## 7. Product requirements coverage
 
@@ -111,6 +111,7 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 | Optimize receiving entry | PO → Receive delivery | Three grouped work areas plus receive-all and clear shortcuts | Included |
 | Keep one running stock ledger | Inventory → Stock History | Receipts, fills, transfers, adjustments, damage, and returns share a searchable movement history | Included |
 | Show fillers the last sold price | Machines → Pick List | Latest successful Nayax sale shows price, machine, date, and exact/similar match status | Included |
+| Include last sold on the printout | Machines → View print / PDF | Printed rows show both Price to set and Last sold (Nayax) | Included |
 | Use hobby-relevant examples | All proposal tabs | Pokémon TCG products, sets, releases, suppliers, and damage reasons | Included |
 | Do not keep print preview under Returns | Machines bottom action | Preview is hidden by default and opens only on click | Included |
 
@@ -161,7 +162,7 @@ The proposed tables, constraints, and movement records are specified in [BUILD-P
 - [ ] Write separate immutable movements for Warehouse, Online store, Vending machines, and Quarantine.
 - [ ] Enforce all quantity and allocation constraints on both client and server.
 - [ ] Add audit metadata: user, timestamp, route, machine, location, PO/receipt/return reference, and reason.
-- [ ] Keep the print preview closed by default and print only the four approved columns.
+- [ ] Keep the print preview closed by default and print only the five approved columns, including Last sold (Nayax).
 - [ ] Test full, partial, damaged, mixed-allocation, retry, and concurrent-update cases.
 - [ ] Verify mobile/tablet layouts for warehouse and route use.
 - [ ] Obtain product sign-off on the five decisions above before backend implementation is considered complete.

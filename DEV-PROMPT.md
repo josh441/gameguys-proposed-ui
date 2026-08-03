@@ -95,10 +95,10 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
 - Show the latest successful Nayax selling price for the exact SKU across the filler-visible machine fleet, including the source machine and sale timestamp.
 - If no exact-SKU sale exists, show a comparable-product price only when it is explicitly labelled as a similar-product fallback; never imply it is an exact match.
 - Keep latest PO unit cost secondary and explicitly labelled. It must never be confused with the selling price. The proposal example is Pokémon Card 151: latest PO cost `$5.99`, last Nayax sale `$8.50` at GGV-007 on 2 August.
-- Use the last-sold Nayax value as the default exact selling-price reference for the row and printout. Keep PO cost and sale-source metadata off the printed sheet.
+- Use the last-sold Nayax value as the default exact selling-price reference. Snapshot and print both `price to set` and `last sold (Nayax)` as separate columns, even when the values match. Keep PO cost and sale-source machine/timestamp off the printed sheet.
 - Finalising the route feeds the existing `picklist_final_rows → apply_picklist_withdrawal()` path. Do not create a second deduction.
 - Keep print preview hidden during normal work. **View print / PDF** opens a modal on request.
-- Print only **slot · item · exact price · amount**.
+- Print only **slot · item · price to set · last sold (Nayax) · amount**.
 
 ## Non-negotiable stock safeguards
 
