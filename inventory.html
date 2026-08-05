@@ -57,7 +57,8 @@
   .syncchip{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--green-txt);background:var(--green-soft);padding:8px 12px;border-radius:10px}
   .syncchip svg{width:15px;height:15px;stroke:var(--green-txt);fill:none;stroke-width:2}
   .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:6px 0 20px}
-  .subtabs button{border:none;background:none;font-family:var(--display);font-weight:800;font-size:13.5px;color:var(--fg3);padding:11px 14px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px}
+  .subtabs button,.subtabs a{border:none;background:none;font-family:var(--display);font-weight:800;font-size:13.5px;color:var(--fg3);padding:11px 14px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px;text-decoration:none;display:inline-block;white-space:nowrap}
+  .subtabs a:hover{color:var(--fg2)}
   .subtabs button.on{color:var(--teal);border-bottom-color:var(--teal)}
   .view{display:none}.view.show{display:block}
   .kpis{display:grid;gap:13px;margin-bottom:18px}
@@ -327,6 +328,7 @@
 
       <div class="subtabs">
         <button class="on" data-v="stock">Stock Overview</button>
+        <a href="purchasing-flow.html">Purchasing</a>
         <button data-v="po">Purchase Orders &amp; Invoices</button>
         <button data-v="history">Stock History</button>
       </div>
@@ -674,6 +676,9 @@
   document.querySelectorAll('.subtabs button').forEach(b=>b.addEventListener('click',()=>{
     showInventoryView(b.dataset.v);
   }));
+  const hashView=()=>showInventoryView((location.hash||'').replace('#',''));
+  hashView();
+  window.addEventListener('hashchange',hashView);
 
   const poWorkspace = document.getElementById('po-workspace');
   const poTitle = document.getElementById('po-workspace-title');

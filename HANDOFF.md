@@ -1,6 +1,6 @@
 # Game Guys Operations Proposal — Product & Development Handoff
 
-**Prepared:** 31 July 2026 · **Revised:** 3 August 2026
+**Prepared:** 31 July 2026 · **Revised:** 5 August 2026
 
 **Status:** Ready for product review; interactive front-end proposal, not production-connected
 
@@ -11,11 +11,12 @@
 
 The proposal now covers the full stock journey for Pokémon TCG products:
 
-1. A filler prepares and completes a vending-machine run.
-2. Unused products are returned from a selected completed route/machine.
-3. Good returns go back to unallocated Warehouse stock; damaged returns go to Quarantine.
-4. A receiver can view and edit purchase orders, mark off the delivery, record damage, and allocate every good unit to either the Online store or Vending machines.
-5. Inventory keeps Online-store and Vending-machine stock visibly separate and provides one running Stock History for all inventory movements, including route returns.
+1. A buyer moves from a netted buy list through supplier availability, release calls, approval, ordering, tracking, and receiving inside Inventory.
+2. A filler prepares and completes a vending-machine run.
+3. Unused products are returned from a selected completed route/machine.
+4. Good returns go back to unallocated Warehouse stock; damaged returns go to Quarantine.
+5. A receiver can view and edit purchase orders, mark off the delivery, record damage, and allocate every good unit to either the Online store or Vending machines.
+6. Inventory keeps Online-store and Vending-machine stock visibly separate and provides one running Stock History for all inventory movements, including route returns.
 
 The prototype uses Pokémon products throughout so damage examples—dented packaging, crushed boxes, torn seals, water damage, and scuffing—match the business.
 
@@ -24,7 +25,7 @@ The prototype uses Pokémon products throughout so damage examples—dented pack
 | Role | App area | Main jobs |
 |---|---|---|
 | Filler | **Machines** | Use Machines & Pick List for route work, see the latest Nayax sold price, and use the separate Returns tab for unused stock |
-| Receiver | **Inventory** | View stock allocation, edit/receive POs, and review one running Stock History |
+| Buyer / Receiver | **Inventory** | Run Purchasing, view stock allocation, edit/receive POs, and review one running Stock History |
 | Owner | **Ownership** | Review accounting, performance, machine value, and forecast |
 | Owner / team | **CRM** | Supplier contacts and assigned tasks |
 | All roles | **Calendar** | Pokémon release schedule and preorder actions |
@@ -66,6 +67,19 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 
 **Prototype:** [Open PO editing](inventory.html#po-1042) · [Open receiving](inventory.html#receive-po-1042)
 
+## 4a. Workflow B2 — purchase stock end to end
+
+**App path:** `Inventory → Purchasing`
+
+1. Start from a buy list net of stock on hand and open orders.
+2. Request supplier availability; capture prices, available quantities, MOQ, validity, and ranked substitutions.
+3. For unreleased Pokémon sets, compare expected demand, selling price, margin, deposit, and a named comparable before choosing Commit, Watch, or Pass.
+4. Approve from one decision card. Approval creates the `Approved` state; it does not skip to `Ordered`.
+5. Generate/send the supplier order, record how and when it was sent, and track ETA or carrier exceptions in one incoming-stock view.
+6. Receive arrived, good, damaged, and still-due quantities; allocate good stock to Online or Vending, quarantine damage, and post landed costs.
+
+**Prototype:** [Open integrated Purchasing](purchasing-flow.html) · [Production audit and build sequence](PURCHASING-STREAMLINE.md)
+
 ## 5. Workflow C — understand stock allocation
 
 **App path:** `Inventory → Stock Overview`
@@ -91,7 +105,7 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 4. The print preview is hidden during normal Machines and Returns work.
 5. Selecting **View print / PDF** opens a modal preview only when requested.
 6. The user can close it with **Close**, the backdrop, or `Escape`.
-7. **Print / Save PDF** opens the browser print dialog. The printed sheet contains **slot · item · price to set · last sold (Nayax) · amount**. The last-sold value is the latest successful sale for the same SKU; PO cost, sale source/date, pace, PAR, stock status, product group, and return controls stay screen-only.
+7. **Print / Save PDF** opens the browser print dialog. The printed sheet contains **slot · item · price to set · last sold (Nayax) · amount · notes**. Notes is blank for handwriting during the route. The last-sold value is the latest successful sale for the same SKU; PO cost, sale source/date, pace, PAR, stock status, product group, and return controls stay screen-only.
 
 ## 7. Product requirements coverage
 
@@ -103,6 +117,7 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 | Show where it came from | Route selector + return line | Machine, venue, and route are displayed from the completed run | Included |
 | Mark a return damaged | Return line | Good/Damaged choice, required reason, Quarantine destination | Included |
 | View and edit POs | Inventory → Purchase Orders & Invoices | Header and line fields can be changed and saved | Included |
+| Integrate purchasing end to end | Inventory → Purchasing | Six-stage workspace connects buy signals, supplier reality, release calls, approval, send/tracking, and receiving | Included |
 | Mark off what arrived | PO → Receive delivery | Arrived, damaged, good, and still-due quantities are shown per line | Included |
 | Mark stock for store or vending | Receiving allocation | Online store, Vending machines, or balanced split is required | Included |
 | Distinguish store and vending inventory | Inventory → Stock Overview | Separate KPIs, allocation labels, locations, and balances | Included |
@@ -112,6 +127,7 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 | Keep one running stock ledger | Inventory → Stock History | Receipts, fills, transfers, adjustments, damage, and returns share a searchable movement history | Included |
 | Show fillers the last sold price | Machines → Pick List | Latest successful Nayax sale shows price, machine, date, and exact/similar match status | Included |
 | Include last sold on the printout | Machines → View print / PDF | Printed rows show both Price to set and Last sold (Nayax) | Included |
+| Include notes on the printout | Machines → View print / PDF | Each printed product row has a blank Notes field for handwriting | Included |
 | Use hobby-relevant examples | All proposal tabs | Pokémon TCG products, sets, releases, suppliers, and damage reasons | Included |
 | Do not keep print preview under Returns | Machines bottom action | Preview is hidden by default and opens only on click | Included |
 
@@ -162,7 +178,7 @@ The proposed tables, constraints, and movement records are specified in [BUILD-P
 - [ ] Write separate immutable movements for Warehouse, Online store, Vending machines, and Quarantine.
 - [ ] Enforce all quantity and allocation constraints on both client and server.
 - [ ] Add audit metadata: user, timestamp, route, machine, location, PO/receipt/return reference, and reason.
-- [ ] Keep the print preview closed by default and print only the five approved columns, including Last sold (Nayax).
+- [ ] Keep the print preview closed by default and print only the six approved columns, including Last sold (Nayax) and a blank Notes field.
 - [ ] Test full, partial, damaged, mixed-allocation, retry, and concurrent-update cases.
 - [ ] Verify mobile/tablet layouts for warehouse and route use.
 - [ ] Obtain product sign-off on the five decisions above before backend implementation is considered complete.

@@ -19,7 +19,7 @@ Start by auditing the production repository and mapping each requested capabilit
 Keep no more than five top-level operational tabs:
 
 - **Ownership** — owner financials, sales, machine/product performance, machine value, and forecast.
-- **Inventory** — receiver stock overview, purchase orders, delivery receiving, and unified Stock History.
+- **Inventory** — receiver stock overview, integrated Purchasing, purchase orders, delivery receiving, and unified Stock History.
 - **Machines** — separate **Machines & Pick List** and **Returns** sub-tabs for the filler, plus print/PDF.
 - **Calendar** — Pokémon release calendar and preorder actions.
 - **CRM** — supplier contacts and team task management.
@@ -58,6 +58,19 @@ Receiving rules:
 - Saving a draft moves no stock.
 - Confirmation is atomic and idempotent, creates one immutable receipt reference, and sets the PO to `Partial` or `Received` from the remaining quantities.
 
+## Integrated purchasing workflow
+
+Build Purchasing as an **Inventory sub-view**, not as a sixth top-level tab or a disconnected tool. Use one compact six-stage workspace so buyers can progress without moving between unrelated screens:
+
+1. **Buy list** — show pool-aware suggestions net of on-hand and already-on-order quantities; suppress covered SKUs and record buy/snooze outcomes.
+2. **Supplier availability** — create supplier requests, read PDF/photo/pasted replies through the existing extractor, match supplier aliases, and show price, MOQ, validity, available quantity, and ranked alternates.
+3. **Release calls** — support never-sold Pokémon releases with named comparables, expected sell price, projected margin, deposit, demand evidence, and a recorded commit/watch/pass decision.
+4. **Approval** — present quote, landed-cost estimate, margin, supplier performance, and cash guardrail on one card. Enforce a real state machine: `Draft → Approved → Ordered`; approval must never silently mark a PO Ordered.
+5. **Send and in transit** — generate the supplier output, record channel/recipient/sender/reference, prefill ETA, register or re-register tracking, and prioritize carrier ETA and exception alerts.
+6. **Receiving and cost** — feed the existing receiving workflow, keep good Online/Vending allocation and damage/Quarantine explicit, post fees through a retry-safe ledger, and calculate landed cost in AUD.
+
+Reuse the working production purchasing board, PO resolver, pool netting, supplier aliases, document extraction, consensus pricing, upcoming releases, receiving, and AfterShip integration. Follow `PURCHASING-STREAMLINE.md` for the audited production map, schema extensions, defects, sequencing, and decisions. Keep `Purchase Orders & Invoices` as the operational PO list/detail/history surface while Purchasing owns the buying lifecycle.
+
 ## After-run route returns
 
 In **Machines**, let the filler return unused Pokémon stock after completing a run:
@@ -95,10 +108,10 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
 - Show the latest successful Nayax selling price for the exact SKU across the filler-visible machine fleet, including the source machine and sale timestamp.
 - If no exact-SKU sale exists, show a comparable-product price only when it is explicitly labelled as a similar-product fallback; never imply it is an exact match.
 - Keep latest PO unit cost secondary and explicitly labelled. It must never be confused with the selling price. The proposal example is Pokémon Card 151: latest PO cost `$5.99`, last Nayax sale `$8.50` at GGV-007 on 2 August.
-- Use the last-sold Nayax value as the default exact selling-price reference. Snapshot and print both `price to set` and `last sold (Nayax)` as separate columns, even when the values match. Keep PO cost and sale-source machine/timestamp off the printed sheet.
+- Use the last-sold Nayax value as the default exact selling-price reference. Snapshot and print both `price to set` and `last sold (Nayax)` as separate columns, even when the values match. Add a blank `notes` column sized for handwriting during the route. Keep PO cost and sale-source machine/timestamp off the printed sheet.
 - Finalising the route feeds the existing `picklist_final_rows → apply_picklist_withdrawal()` path. Do not create a second deduction.
 - Keep print preview hidden during normal work. **View print / PDF** opens a modal on request.
-- Print only **slot · item · price to set · last sold (Nayax) · amount**.
+- Print only **slot · item · price to set · last sold (Nayax) · amount · notes**.
 
 ## Non-negotiable stock safeguards
 
@@ -126,12 +139,13 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
 1. Audit the production repository and map reusable functionality.
 2. Confirm the five open product decisions listed in `HANDOFF.md` where they affect schema or irreversible behavior.
 3. Implement navigation and role visibility without breaking existing deep links.
-4. Implement the optimized Inventory table and PO edit/receiving workflow.
-5. Implement the separate filler Returns tab and unified Inventory Stock History using existing finalised-run and stock-movement data.
-6. Implement the click-only print preview and approved print stylesheet.
-7. Add migrations, server validation, permissions, idempotency, audit metadata, and tests.
-8. Demonstrate the end-to-end stock movements and document any production differences from the proposal.
+4. Integrate the six-stage Purchasing workspace inside Inventory using the existing production purchasing paths.
+5. Implement the optimized Inventory table and PO edit/receiving workflow.
+6. Implement the separate filler Returns tab and unified Inventory Stock History using existing finalised-run and stock-movement data.
+7. Implement the click-only six-column print preview and approved print stylesheet.
+8. Add migrations, server validation, permissions, idempotency, audit metadata, and tests.
+9. Demonstrate the end-to-end purchasing and stock movements and document any production differences from the proposal.
 
 ## Definition of done
 
-The work is done when a filler can complete a run and return unused Pokémon stock from the correct route/machine; damaged stock cannot enter a sellable balance; a receiver can efficiently browse current stock and receive a PO with a fully balanced Online-store/Vending allocation; every confirmation is authorized, auditable, atomic, and idempotent; and the resulting references and balances appear in the correct Inventory views without duplicate deductions.
+The work is done when a buyer can move from a netted buy signal through supplier reality, release decisions, approval, send/tracking, and receipt in one Inventory workflow; a filler can complete a run and return unused Pokémon stock from the correct route/machine; damaged stock cannot enter a sellable balance; a receiver can efficiently browse current stock and receive a PO with a fully balanced Online-store/Vending allocation; the filler printout has the six approved columns including blank Notes; every confirmation is authorized, auditable, atomic, and idempotent; and the resulting references and balances appear in the correct Inventory views without duplicate deductions.

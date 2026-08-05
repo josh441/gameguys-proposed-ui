@@ -3,748 +3,732 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Game Guys Operations — Proposed purchasing flow</title>
+<title>Purchasing · Game Guys Operations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --purple:#6d28d9;--purple-2:#7c3aed;--purple-deep:#4c1d95;--indigo:#3b1d8f;
-    --purple-soft:#f3efff;--purple-line:#e7ddfb;--blue:#2563eb;--blue-soft:#e8f0ff;
-    --bg:#f4f2fb;--surface:#fff;--line:#e7e9ef;--line2:#eef0f4;--fg:#1a1f39;--fg2:#5d6379;--fg3:#9a9fb2;
-    --teal:#0d9488;--green:#16a34a;--green-soft:#dcfce7;--amber:#f59e0b;--amber-soft:#fdf3e0;
-    --red:#e11d48;--red-soft:#ffe4e9;--teal-soft:#d7f5f1;
+    --purple-soft:#f3efff;--purple-line:#e7ddfb;
+    --blue:#2563eb;--blue-soft:#e8f0ff;
+    --bg:#eef0f5;--surface:#fff;--line:#e7e9ef;--line2:#eef0f4;
+    --fg:#1a1f39;--fg2:#5d6379;--fg3:#9a9fb2;
+    --green:#22c55e;--green-txt:#16a34a;--green-soft:#dcfce7;
+    --amber:#f59e0b;--amber-soft:#fdf3e0;--red:#ef4444;--red-soft:#fdeceb;
+    --teal:#0d9488;--teal-soft:#d9f5f1;
     --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     --display:"Montserrat","Inter",-apple-system,"Segoe UI",sans-serif;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased}
-  h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;margin:0}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.disp{font-family:var(--display);letter-spacing:-.01em;margin:0}
+  .app{display:grid;grid-template-columns:216px 1fr;height:100vh;overflow:hidden}
+  .side{background:linear-gradient(165deg,var(--indigo),var(--purple-deep) 55%,var(--purple));color:#fff;display:flex;flex-direction:column;padding:20px 14px}
+  .logo{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0 16px}
+  .logo .mark{width:50px;height:50px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+  .logo .mark span{font-family:var(--display);font-weight:900;font-size:25px;color:var(--purple-deep)}
+  .logo .mark i{position:absolute;top:6px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
+  .logo .nm{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.02em}
+  .logo .sb{font-size:9px;font-weight:700;letter-spacing:.26em;color:#c9bdf2}
+  .tabhint{font-size:9px;font-weight:800;letter-spacing:.16em;color:#b3a6e6;padding:4px 12px 6px;text-transform:uppercase}
+  .nav{display:flex;flex-direction:column;gap:4px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:11px;color:#d8d0f5;text-decoration:none;font-size:13.5px;font-weight:600}
+  .nav a svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;opacity:.9}
+  .nav a.active{background:rgba(255,255,255,.15);color:#fff}
+  .nav a.active svg{color:#8ab4ff;opacity:1}
+  .nav a.sub{margin-left:16px;padding:8px 13px;font-size:12.5px;border-radius:9px}
+  .nav a.sub .dsh{width:19px;display:flex;justify-content:center;opacity:.55;flex:0 0 auto}
+  .side .spacer{flex:1}
+  .uwrap{border-top:1px solid rgba(255,255,255,.14);padding-top:12px}
+  .user{display:flex;align-items:center;gap:10px;padding:6px}
+  .user .av{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:12px}
+  .user .who{font-weight:700;font-size:13px}
+  .user .role{font-size:11px;color:#bcb2e6}
+  .user .cv{margin-left:auto;opacity:.7}
+  .main{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  .content{flex:1;overflow:auto;padding:22px 26px 40px}
+  .head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+  h1{font-size:27px;font-weight:800;display:flex;align-items:center;gap:12px}
+  .pill{color:#fff;font-size:10px;font-weight:800;letter-spacing:.05em;padding:5px 10px;border-radius:8px;font-family:var(--font)}
+  .p-buy{background:var(--purple-2)}
+  .subtitle{font-size:13px;color:var(--fg2);margin-top:6px}
+  .head-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .syncchip{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--green-txt);background:var(--green-soft);padding:8px 12px;border-radius:10px}
+  .syncchip svg{width:15px;height:15px;stroke:var(--green-txt);fill:none;stroke-width:2}
+  .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:6px 0 18px;overflow-x:auto}
+  .subtabs a,.subtabs button{border:none;background:none;font-family:var(--display);font-weight:800;font-size:13.5px;color:var(--fg3);padding:11px 14px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px;text-decoration:none;white-space:nowrap;display:inline-block}
+  .subtabs a:hover{color:var(--fg2)}
+  .subtabs .on{color:var(--teal);border-bottom-color:var(--teal)}
+  .view{display:none}
+  .view.show{display:block}
 
-  /* ---- header, matched to board.html ---- */
-  .top{background:linear-gradient(150deg,#2a1264,#1b1140 60%,#160e33);color:#fff;padding:34px 30px 30px}
-  .top .wrap{max-width:1180px;margin:0 auto;padding:0}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-  .mark{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.3)}
-  .mark span{font-family:var(--display);font-weight:900;font-size:22px;color:var(--purple-deep)}
-  .mark i{position:absolute;top:6px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
-  .brand .nm{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.05}
-  .brand .sb{font-size:9px;font-weight:700;letter-spacing:.26em;color:#c9bdf2}
-  .top h1{font-size:30px;font-weight:900;margin-bottom:8px}
-  .top p{color:#d8d2f0;font-size:14px;max-width:760px;line-height:1.55;margin:0}
-  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
-  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13px;padding:11px 16px;border-radius:11px;text-decoration:none;cursor:pointer;border:none;font-family:var(--font)}
-  .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
-  .btn-p{background:#fff;color:var(--purple-deep)}
-  .btn-o{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3)}
+  /* stage rail — third level, purple so it reads below the teal sub-tabs */
+  .srail{display:flex;gap:5px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px;margin-bottom:18px;overflow-x:auto;box-shadow:0 1px 2px rgba(26,31,57,.04)}
+  .srail button{flex:1;min-width:138px;display:flex;align-items:center;gap:9px;border:none;background:none;border-radius:10px;padding:9px 11px;cursor:pointer;text-align:left;font-family:var(--font)}
+  .srail button:hover{background:#f7f6fc}
+  .srail .n{width:22px;height:22px;border-radius:7px;background:#eef0f4;color:var(--fg3);font-family:var(--display);font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .srail .t{font-family:var(--display);font-weight:800;font-size:12.5px;color:var(--fg2);white-space:nowrap}
+  .srail button.on{background:var(--purple-soft)}
+  .srail button.on .n{background:var(--purple);color:#fff}
+  .srail button.on .t{color:var(--purple)}
+  .srail button:focus-visible{outline:2px solid var(--purple);outline-offset:1px}
 
-  .wrap{max-width:1180px;margin:0 auto;padding:26px 30px 60px}
-  .howto{background:var(--purple-soft);border:1px solid var(--purple-line);border-radius:14px;padding:16px 18px;margin-bottom:24px;font-size:13px;color:var(--fg2);line-height:1.6}
-  .howto b{color:var(--purple)}
-  .sec-title{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin:30px 0 12px}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(26,31,57,.05);margin-bottom:18px}
-  .card h3{font-size:16px;font-weight:800;margin-bottom:4px}
-  .card .cap{font-size:12.5px;color:var(--fg3);margin-bottom:16px;line-height:1.5}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  @media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+  .kpis{display:grid;gap:13px;margin-bottom:18px}
+  .k3{grid-template-columns:repeat(3,1fr)}
+  .k4{grid-template-columns:repeat(4,1fr)}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:15px 16px;box-shadow:0 1px 2px rgba(26,31,57,.04)}
+  .kpi .l{font-size:10.5px;color:var(--fg2);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .kpi .v{font-family:var(--display);font-size:24px;font-weight:800;margin-top:8px}
+  .kpi .d{font-size:11px;margin-top:5px;font-weight:600}
+  .muted{color:var(--fg3)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 1px 2px rgba(26,31,57,.04);margin-bottom:16px}
+  .card h3{font-size:14px;font-weight:800;margin-bottom:4px}
+  .card .cap{font-size:11.5px;color:var(--fg3);margin-bottom:14px}
+  .card.tight{margin-bottom:0}
+  .card.p0{padding:0}
+  .card.p0 .ph{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 6px;gap:12px;flex-wrap:wrap}
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px}
+  .grid2b{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse}
+  thead th{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--fg3);text-align:left;padding:9px 12px;background:#faf9fe}
+  tbody td{padding:11px 12px;border-top:1px solid var(--line2);font-size:13px;vertical-align:middle}
+  .num{text-align:right;font-family:var(--display);font-weight:700}
+  tbody tr.grp td{background:#faf9fe;font-family:var(--display);font-weight:800;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--fg2);padding:7px 12px}
+  tbody tr.altrow td{background:var(--purple-soft)}
+  tbody tr.flag td{background:var(--red-soft)}
+  .badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px}
+  .b-green{background:var(--green-soft);color:var(--green-txt)}
+  .b-amber{background:var(--amber-soft);color:var(--amber)}
+  .b-blue{background:var(--blue-soft);color:var(--blue)}
+  .b-red{background:var(--red-soft);color:var(--red)}
+  .b-purple{background:var(--purple-soft);color:var(--purple)}
+  .b-teal{background:var(--teal-soft);color:var(--teal)}
+  .sub2{font-size:11px;color:var(--fg3);margin-top:2px}
+  .po-id{font-family:var(--display);font-weight:800;color:var(--purple)}
+  .aichip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--purple);background:var(--purple-soft);padding:6px 11px;border-radius:9px}
+  .btn-secondary,.btn-primary,.btn-teal{border:1px solid var(--line);background:#fff;color:var(--fg2);font:800 11.5px var(--font);padding:9px 12px;border-radius:9px;cursor:pointer}
+  .btn-primary{background:var(--purple);border-color:var(--purple);color:#fff}
+  .btn-teal{background:var(--teal);border-color:var(--teal);color:#fff}
+  .btn-teal:disabled,.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .btn-link{border:none;background:none;color:var(--fg3);font:800 11.5px var(--font);padding:9px 6px;cursor:pointer}
+  .btn-link:hover{color:var(--fg2)}
 
-  /* ---- stage strip ---- */
-  .stages{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-bottom:26px}
-  @media(max-width:1000px){.stages{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:600px){.stages{grid-template-columns:repeat(2,1fr)}}
-  .stage{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:12px 13px;cursor:pointer;
-    text-align:left;font:inherit;color:inherit;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background .15s ease}
-  .stage:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(26,31,57,.09)}
-  .stage .n{font-family:var(--display);font-size:11px;font-weight:800;color:var(--fg3);letter-spacing:.06em}
-  .stage .t{font-family:var(--display);font-weight:800;font-size:13.5px;margin-top:3px;line-height:1.2}
-  .stage .d{font-size:11px;color:var(--fg3);margin-top:3px;line-height:1.35}
-  .stage[aria-selected="true"]{background:var(--purple-soft);border-color:var(--purple-line)}
-  .stage[aria-selected="true"] .t{color:var(--purple)}
-  .stage[aria-selected="true"] .n{color:var(--purple-2)}
-  .stage:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
-
-  /* ---- kpis ---- */
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-  @media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}}
-  @media(max-width:560px){.kpis{grid-template-columns:1fr}}
-  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 16px}
-  .kpi .l{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg3)}
-  .kpi .v{font-family:var(--display);font-size:24px;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums}
-  .kpi .d{font-size:11.5px;color:var(--fg3);margin-top:4px;line-height:1.4}
-
-  /* ---- tables ---- */
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  thead th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg3);
-    background:#f8f7fc;border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;white-space:nowrap}
-  tbody td{border-bottom:1px solid var(--line2);padding:10px;vertical-align:middle}
-  tbody tr.rowhi td{background:var(--red-soft)}
-  tbody tr.subrow td{background:var(--purple-soft)}
-  tbody tr.grouprow td{background:#f8f7fc;font-family:var(--display);font-weight:800;font-size:10.5px;
-    text-transform:uppercase;letter-spacing:.08em;color:var(--fg2)}
-  .num{text-align:right;font-variant-numeric:tabular-nums}
-  .mono{font-variant-numeric:tabular-nums}
-  .tw{margin:0 -20px;overflow-x:auto}
-  .tw table{min-width:660px}
-  .tw th:first-child,.tw td:first-child{padding-left:20px}
-  .tw th:last-child,.tw td:last-child{padding-right:20px}
-  .prod{font-weight:700}
-  .meta{font-size:11.5px;color:var(--fg3);line-height:1.4}
-
-  /* ---- pills ---- */
-  .b{display:inline-flex;align-items:center;gap:5px;border-radius:7px;padding:3px 8px;font-size:11px;font-weight:700;white-space:nowrap}
-  .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
-  .b-ok{background:var(--green-soft);color:#15803d}
-  .b-warn{background:var(--amber-soft);color:#b45309}
-  .b-bad{background:var(--red-soft);color:#be123c}
-  .b-info{background:var(--blue-soft);color:#1d4ed8}
-  .b-grey{background:#eef0f4;color:var(--fg2)}
-  .b-pur{background:var(--purple-soft);color:var(--purple)}
-  .b-teal{background:var(--teal-soft);color:#0f766e}
-  .tag-new{display:inline-flex;align-items:center;background:var(--purple);color:#fff;border-radius:6px;
-    padding:2px 7px;font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;vertical-align:middle}
-  .tag-old{display:inline-flex;align-items:center;background:#eef0f4;color:var(--fg2);border-radius:6px;
-    padding:2px 7px;font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;vertical-align:middle}
-
-  /* ---- in-card buttons ---- */
-  .ib{font-family:var(--font);font-size:12px;font-weight:700;border-radius:9px;padding:6px 11px;cursor:pointer;
-    border:1px solid transparent;display:inline-flex;align-items:center;gap:6px;transition:background .15s ease,box-shadow .15s ease}
-  .ib-p{background:var(--purple);color:#fff}
-  .ib-p:hover{background:var(--purple-2)}
-  .ib-s{background:#fff;color:var(--fg);border-color:var(--line)}
-  .ib-s:hover{background:#f6f5fb}
-  .ib-g{background:transparent;color:var(--fg2)}
-  .ib-g:hover{background:#f2f1f8;color:var(--fg)}
-  .ib:disabled{opacity:.65;cursor:default}
-  .ibrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-
-  /* ---- misc ---- */
-  .note{background:#f8f7fc;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--fg2);line-height:1.6}
-  .note b{color:var(--fg)}
-  .note.pur{background:var(--purple-soft);border-color:var(--purple-line)}
-  .note.pur b{color:var(--purple)}
-  .cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .field{margin-bottom:12px}
-  .field label{display:block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg3);margin-bottom:5px}
-  input[type=text],select,textarea{width:100%;font:inherit;font-size:13px;background:#fff;color:var(--fg);
-    border:1px solid var(--line);border-radius:10px;padding:9px 11px}
-  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(109,40,217,.13)}
-  .drop{border:1.5px dashed var(--purple-line);border-radius:12px;background:var(--purple-soft);
-    padding:22px;text-align:center;color:var(--fg2);font-size:12.5px;cursor:pointer;font-weight:600}
+  .field label{display:block;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--fg2);margin-bottom:5px}
+  input[type=text],input[type=date],select,textarea{width:100%;font:inherit;font-size:13px;background:#fff;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-family:var(--font)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(109,40,217,.12)}
+  .drop{border:1.5px dashed var(--purple-line);border-radius:12px;background:var(--purple-soft);padding:20px;text-align:center;color:var(--fg2);font-size:12.5px;cursor:pointer;font-weight:700}
   .drop:hover{background:#ece4ff;border-color:var(--purple)}
-  pre.copy{background:#f8f7fc;border:1px solid var(--line);border-radius:12px;padding:13px;font-size:12px;
-    line-height:1.55;overflow-x:auto;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--fg2)}
-  dl.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px;margin:0}
+  pre.req{background:#faf9fe;border:1px solid var(--line);border-radius:11px;padding:12px;font-size:12px;line-height:1.55;overflow-x:auto;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--fg2)}
+  dl.kv{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:13px;margin:0}
   dl.kv dt{color:var(--fg2)}
-  dl.kv dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+  dl.kv dd{margin:0;font-family:var(--display);font-weight:700;text-align:right}
+  dl.kv dd.tot{color:var(--purple)}
+  dl.kv.pad{border-top:1px solid var(--line2);margin-top:12px;padding-top:12px}
   ul.checks{list-style:none;margin:0;padding:0;font-size:13px}
-  ul.checks li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line2);line-height:1.5}
+  ul.checks li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line2);line-height:1.5}
   ul.checks li:last-child{border-bottom:0}
-  .tick{flex:none;width:19px;height:19px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-    font-size:10.5px;font-weight:800;color:#fff;margin-top:1px;font-family:var(--display)}
+  .tick{flex:none;width:19px;height:19px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#fff;margin-top:1px;font-family:var(--display)}
   .tick.y{background:var(--green)}
   .tick.n{background:var(--amber)}
   .bar{height:6px;border-radius:3px;background:#eef0f4;overflow:hidden;margin-top:6px}
   .bar i{display:block;height:100%;background:var(--purple)}
-  .evi{border-bottom:1px solid var(--line2);padding:10px 0;font-size:13px;line-height:1.5}
+  .tl{list-style:none;margin:0;padding:0;font-size:13px}
+  .tl li{display:flex;gap:11px;padding:0 0 14px;position:relative}
+  .tl li:before{content:"";position:absolute;left:6px;top:16px;bottom:0;width:1px;background:var(--line)}
+  .tl li:last-child{padding-bottom:0}
+  .tl li:last-child:before{display:none}
+  .tl .dot{width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--line);flex:0 0 auto;margin-top:3px;z-index:1}
+  .tl li.done .dot{border-color:var(--teal)}
+  .tl li.now .dot{border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-soft)}
+  .tl .when{font-size:11px;color:var(--fg3);margin-top:2px}
+  .stamp{background:var(--green-soft);border:1px solid #a7e6c3;border-radius:11px;padding:10px 13px;font-size:12.5px;font-weight:700;color:var(--green-txt)}
+  .sublabel{font-family:var(--display);font-weight:800;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--fg3);margin:16px 0 8px}
+  .evi{border-bottom:1px solid var(--line2);padding:9px 0;font-size:13px;line-height:1.5}
   .evi:last-child{border-bottom:0}
-  .evi .src{font-size:11.5px;color:var(--fg3);margin-top:3px}
-  .stamp{background:var(--green-soft);border:1px solid #a7e6c3;border-radius:11px;padding:11px 14px;
-    font-size:13px;font-weight:700;color:#15803d}
-  .sublabel{font-family:var(--display);font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--fg3);margin:18px 0 8px}
+  .evi .src{font-size:11px;color:var(--fg3);margin-top:3px}
+  .cmp{background:var(--purple-soft);border:1px solid var(--purple-line);border-radius:12px;padding:13px 14px;font-size:13px;line-height:1.6;color:var(--fg2)}
+  .cmp b{color:var(--purple)}
+  .tw{overflow-x:auto}
   .hide{display:none}
-  .foot{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--fg3);line-height:1.6}
-  .foot b{color:var(--fg2)}
-  @media(max-width:620px){
-    body{overflow-x:hidden}
-    .top{padding:24px 16px 22px}
-    .top h1{font-size:22px;overflow-wrap:break-word}
-    .top p{font-size:13px}
-    .wrap{padding:20px 16px 50px}
-    .cta{gap:9px}
-    .btn{font-size:12.5px;padding:10px 13px}
-    .card{padding:16px}
-    .tw{margin:0 -16px}
-    .tw th:first-child,.tw td:first-child{padding-left:16px}
-    .tw th:last-child,.tw td:last-child{padding-right:16px}
+
+  @media (max-width:860px){
+    html,body{height:auto;overflow-y:auto}
+    .app{display:flex;flex-direction:column;height:auto;overflow:visible}
+    .side{flex-direction:row;align-items:center;gap:10px;padding:9px 12px;overflow-x:auto;position:sticky;top:0;z-index:30}
+    .logo{flex-direction:row;align-items:center;gap:8px;padding:0;flex:0 0 auto}
+    .logo .mark{width:32px;height:32px;box-shadow:none}.logo .mark span{font-size:16px}
+    .logo .nm{font-size:12.5px}.logo .sb,.tabhint{display:none}
+    .nav{flex-direction:row;gap:6px;flex:0 0 auto}
+    .nav a{padding:8px 11px;font-size:12.5px;white-space:nowrap;border-radius:9px;gap:8px}
+    .nav a svg{width:16px;height:16px}
+    .nav a.sub{margin-left:0;padding:8px 11px}
+    .nav a.sub .dsh{display:none}
+    .side .spacer,.uwrap{display:none}
+    .main{height:auto;overflow:visible}
+    .content{overflow:visible;padding:14px}
+    .head{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px}
+    h1{font-size:21px}
+    .content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+    .k4{grid-template-columns:repeat(2,1fr)}
+    .grid2,.grid2b{grid-template-columns:1fr}
+    .head-actions{justify-content:flex-start}
+  }
+  @media (max-width:520px){
+    .k3,.k4,.form-grid{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><div class="mark"><span>G</span><i></i></div><div class="nm">GAME GUYS</div><div class="sb">OPERATIONS</div></div>
+    <div class="tabhint">Navigation</div>
+    <nav class="nav">
+      <a href="ownership.html"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg> Ownership</a>
+      <a href="inventory.html" class="active"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v8l9 4 9-4V8"/></svg> Inventory</a>
+      <a href="purchasing-flow.html" class="sub active"><span class="dsh"><svg viewBox="0 0 24 24" width="19" height="19"><path d="M3 4h2l1.9 8.1a1.6 1.6 0 0 0 1.6 1.3h6.1a1.6 1.6 0 0 0 1.6-1.2L18 7H5.5"/><circle cx="9" cy="17.5" r="1.3"/><circle cx="15" cy="17.5" r="1.3"/></svg></span> Purchasing</a>
+      <a href="machines.html"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg> Machines</a>
+      <a href="miscellaneous.html"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Calendar</a>
+      <a href="crm.html"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/></svg> CRM</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="uwrap"><div class="user"><div class="av">GG</div><div><div class="who">Game Guys</div><div class="role">Owner · Admin</div></div>
+      <svg class="cv" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div>
+  </aside>
 
-<div class="top">
-  <div class="wrap">
-    <div class="brand">
-      <div class="mark"><span>G</span><i></i></div>
-      <div><div class="nm">GAME GUYS</div><div class="sb">OPERATIONS</div></div>
-    </div>
-    <h1>Proposed purchasing flow — approval to arrival</h1>
-    <p>A streamlined purchasing process for the live operations app, built around the two decisions that actually take the time: what a supplier has in stock, and what a brand-new release is worth. Click a stage to see it.</p>
-    <div class="cta">
-      <a class="btn btn-p" href="PURCHASING-STREAMLINE.md" target="_blank"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h5M10 12h6M10 16h6"/></svg> Open the full proposal</a>
-      <a class="btn btn-o" href="https://github.com/josh441/gameguys-proposed-ui/blob/main/PURCHASING-STREAMLINE.md" target="_blank"><svg viewBox="0 0 24 24"><path d="M9 18c-4.5 1.5-4.5-2.5-6-3m12 5v-3.5a3 3 0 0 0-.9-2.5c3-.3 5-1.6 5-6a4.7 4.7 0 0 0-1.3-3.3 4.4 4.4 0 0 0-.1-3.3s-1.4-.4-4.5 1.7a11 11 0 0 0-5.8 0C6.3 1 4.9 1.4 4.9 1.4a4.4 4.4 0 0 0-.1 3.3A4.7 4.7 0 0 0 3.5 8c0 4.4 2 5.7 5 6a3 3 0 0 0-.9 2.4V20"/></svg> Read on GitHub</a>
-      <a class="btn btn-o" href="handoff.html"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h5M10 12h6M10 16h6"/></svg> Stock handoff</a>
-      <a class="btn btn-o" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg> Back to prototype</a>
-    </div>
-  </div>
-</div>
-
-<div class="wrap">
-
-  <div class="howto">
-    <b>Scope note:</b> the other screens in this prototype propose a reorganised 5-tab navigation. This page is different. It proposes changes to the <b>purchasing module already running in production</b>, based on a direct read of that codebase and the current SOPs. Sample data throughout, so the numbers are illustrative. The full write-up, including the current-state map, data model, defect list and build sequence, is in the proposal linked above.
-  </div>
-
-  <div class="stages" role="tablist" aria-label="Purchasing stages">
-    <button class="stage" role="tab" aria-selected="true" data-p="p1"><span class="n">01</span><div class="t">Buy list</div><div class="d">One surface, netted</div></button>
-    <button class="stage" role="tab" aria-selected="false" data-p="p2"><span class="n">02</span><div class="t">Availability</div><div class="d">What suppliers have</div></button>
-    <button class="stage" role="tab" aria-selected="false" data-p="p3"><span class="n">03</span><div class="t">Release call</div><div class="d">No history, comparables</div></button>
-    <button class="stage" role="tab" aria-selected="false" data-p="p4"><span class="n">04</span><div class="t">Approval</div><div class="d">One card, one minute</div></button>
-    <button class="stage" role="tab" aria-selected="false" data-p="p5"><span class="n">05</span><div class="t">Send and track</div><div class="d">Real ETA, real alerts</div></button>
-    <button class="stage" role="tab" aria-selected="false" data-p="p6"><span class="n">06</span><div class="t">Record</div><div class="d">Landed cost that adds up</div></button>
-  </div>
-
-  <!-- ================= 01 BUY LIST ================= -->
-  <section id="p1">
-    <div class="sec-title">Stage 01 · Buy list</div>
-    <div class="card">
-      <h3>Everything worth buying this round, in one place</h3>
-      <div class="cap">Already net of what is on order and what is sitting uncracked in the warehouse. Offer state comes from stage 02, so supplier availability is visible before a PO exists.</div>
-
-      <div class="kpis">
-        <div class="kpi"><div class="l">Safe to spend</div><div class="v">$18,240</div><div class="d">Cash 46,900 less floor 20,000 less committed</div></div>
-        <div class="kpi"><div class="l">Committed, unpaid</div><div class="v">$8,660</div><div class="d">6 POs, every status past draft</div></div>
-        <div class="kpi"><div class="l">Suggestions</div><div class="v">24</div><div class="d">18 restock, 4 preorder, 2 trial</div></div>
-        <div class="kpi"><div class="l">Offers on file</div><div class="v">3</div><div class="d">Kanazawa, Osaka TCG, AU Distro</div></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="cardhead">
-        <div>
-          <h3>This round <span class="meta" style="font-weight:400">· 24 suggestions, showing 8</span></h3>
-          <div class="meta">Snoozed rows are suppressed here and on every other surface. One view, <b class="mono">v_buy_signals</b>, feeds all of them.</div>
-        </div>
-        <div class="ibrow">
-          <button class="ib ib-s">Filter: needs decision</button>
-          <button class="ib ib-p">Request availability (3 selected)</button>
+  <div class="main">
+    <div class="content">
+      <div class="head">
+        <div><h1>Purchasing <span class="pill p-buy">PURCHASING VIEW</span></h1>
+        <div class="subtitle">What to buy, what suppliers have, and what is on its way — netted against stock on hand and orders already placed.</div></div>
+        <div class="head-actions">
+          <button class="btn-primary" type="button">Request availability</button>
+          <div class="syncchip"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/></svg> Synced · 8:32 AM</div>
         </div>
       </div>
-      <div class="tw">
-        <table>
-          <thead><tr>
-            <th>Product</th><th>Type</th><th class="num">Suggested</th><th class="num">On order</th>
-            <th>Why</th><th>Supplier offer <span class="tag-new">new</span></th><th>Outcome</th>
-          </tr></thead>
-          <tbody>
-            <tr>
-              <td><div class="prod">Surging Sparks Booster Box</div><div class="meta">PKM-SURG-JP · JP</div></td>
-              <td><span class="b b-grey">restock</span></td>
-              <td class="num">6</td><td class="num">0</td>
-              <td class="meta">4.2 packs/wk, 5 days cover</td>
-              <td><span class="b b-ok"><span class="dot"></span>In stock, 8</span><div class="meta">JPY 4,900 · Kanazawa · to 12 Aug</div></td>
-              <td><div class="ibrow"><button class="ib ib-p">Add to PO</button><button class="ib ib-g">Pass</button></div></td>
-            </tr>
-            <tr>
-              <td><div class="prod">Terastal Festival ex Box</div><div class="meta">PKM-TERA-JP · JP</div></td>
-              <td><span class="b b-grey">restock</span></td>
-              <td class="num">4</td><td class="num">2</td>
-              <td class="meta">3.1 packs/wk, netted 2 on order</td>
-              <td><span class="b b-warn"><span class="dot"></span>Limited, 2</span><div class="meta">JPY 5,400 · Osaka TCG · to 08 Aug</div></td>
-              <td><div class="ibrow"><button class="ib ib-p">Add to PO</button><button class="ib ib-g">Pass</button></div></td>
-            </tr>
-            <tr>
-              <td><div class="prod">151 Booster Box</div><div class="meta">PKM-151-JP · JP</div></td>
-              <td><span class="b b-grey">restock</span></td>
-              <td class="num">8</td><td class="num">0</td>
-              <td class="meta">6.8 packs/wk, top seller</td>
-              <td><span class="b b-bad"><span class="dot"></span>Out at all 3</span><div class="meta">Last offered 22 Jul</div></td>
-              <td><button class="ib ib-s" id="altbtn">3 alternates</button></td>
-            </tr>
-            <tr class="subrow hide" data-alt><td colspan="7" style="padding:0 20px">
-              <div class="sublabel" style="margin-top:14px">Ranked alternates for 151 Booster Box <span class="tag-new">new</span></div>
-              <div style="border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-bottom:14px">
+
+      <div class="subtabs">
+        <a href="inventory.html">Stock Overview</a>
+        <button class="on" type="button">Purchasing</button>
+        <a href="inventory.html#po">Purchase Orders &amp; Invoices</a>
+        <a href="inventory.html#history">Stock History</a>
+      </div>
+
+      <div class="srail" role="tablist" aria-label="Purchasing stages">
+        <button class="on" role="tab" aria-selected="true" data-s="s1"><span class="n">1</span><span class="t">Buy list</span></button>
+        <button role="tab" aria-selected="false" data-s="s2"><span class="n">2</span><span class="t">Availability</span></button>
+        <button role="tab" aria-selected="false" data-s="s3"><span class="n">3</span><span class="t">Release calls</span></button>
+        <button role="tab" aria-selected="false" data-s="s4"><span class="n">4</span><span class="t">Approval</span></button>
+        <button role="tab" aria-selected="false" data-s="s5"><span class="n">5</span><span class="t">In transit</span></button>
+        <button role="tab" aria-selected="false" data-s="s6"><span class="n">6</span><span class="t">Receiving</span></button>
+      </div>
+
+      <!-- ================= 1 · BUY LIST ================= -->
+      <section class="view show" id="v-s1">
+        <div class="kpis k4">
+          <div class="kpi"><div class="l">Buy suggestions</div><div class="v">18</div><div class="d muted">14 restock · 4 preorder</div></div>
+          <div class="kpi"><div class="l">Committed spend</div><div class="v">$24,180</div><div class="d muted">not yet received</div></div>
+          <div class="kpi"><div class="l">Open POs</div><div class="v">7</div><div class="d muted">3 awaiting delivery</div></div>
+          <div class="kpi"><div class="l">Supplier offers on file</div><div class="v" style="color:var(--purple)">3</div><div class="d muted">TCG Direct · PokéJapan · Cardboard</div></div>
+        </div>
+
+        <div class="card tight p0">
+          <div class="ph">
+            <div><h3 style="margin:0">This buying round</h3><div class="cap" style="margin:4px 0 0">Suggested quantities are net of stock on hand and units already on order. Recommended 90-day spend $168,000.</div></div>
+            <span class="aichip">✦ 8 of 18 shown</span>
+          </div>
+          <div class="tw">
+          <table>
+            <thead><tr>
+              <th>Product</th><th>Language</th><th class="num">On hand</th><th class="num">On order</th>
+              <th class="num">Pace</th><th class="num">Suggested</th><th>Supplier offer</th><th>Action</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td><b>Journey Together Booster Pack</b><div class="sub2">PKM-JT-EN</div></td>
+                <td>English</td><td class="num">0</td><td class="num">0</td><td class="num">18 / wk</td><td class="num">144</td>
+                <td><span class="badge b-green">In stock · 12 boxes</span><div class="sub2">$4.35 / pack · TCG Direct</div></td>
+                <td><div class="btn-row"><button class="btn-primary" type="button">Add to PO</button></div></td>
+              </tr>
+              <tr>
+                <td><b>Surging Sparks Booster Pack</b><div class="sub2">PKM-SS-EN</div></td>
+                <td>English</td><td class="num">520</td><td class="num">240</td><td class="num">35 / wk</td><td class="num">216</td>
+                <td><span class="badge b-green">In stock · 18 boxes</span><div class="sub2">$4.20 / pack · TCG Direct</div></td>
+                <td><div class="btn-row"><button class="btn-primary" type="button">Add to PO</button></div></td>
+              </tr>
+              <tr>
+                <td><b>Destined Rivals Booster Pack</b><div class="sub2">PKM-DR-EN</div></td>
+                <td>English</td><td class="num">196</td><td class="num">600</td><td class="num">22 / wk</td><td class="num">0</td>
+                <td><span class="badge b-blue">Covered by PO-1039</span><div class="sub2">Customs · ETA 28 May</div></td>
+                <td><span class="muted" style="font-size:12px">No action needed</span></td>
+              </tr>
+              <tr>
+                <td><b>Terastal Festival ex Booster Pack</b><div class="sub2">PKM-TF-JP</div></td>
+                <td>Japanese</td><td class="num">96</td><td class="num">0</td><td class="num">11 / wk</td><td class="num">120</td>
+                <td><span class="badge b-red">Out at PokéJapan</span><div class="sub2">Last offered 22 Jul</div></td>
+                <td><button class="btn-secondary" id="altbtn" type="button">3 alternates</button></td>
+              </tr>
+              <tr class="altrow hide" data-alt><td colspan="8" style="padding:2px 12px 14px">
+                <div class="sublabel" style="margin-top:12px">Same language, in stock at PokéJapan Direct</div>
+                <div style="border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff">
+                  <table>
+                    <thead><tr><th>Alternate</th><th class="num">On hand</th><th class="num">Pace</th><th>Offer</th><th class="num">Margin</th><th></th></tr></thead>
+                    <tbody>
+                      <tr><td><b>Battle Partners Booster Pack</b><div class="sub2">PKM-BP-JP · Route staging · North</div></td><td class="num">70</td><td class="num">9 / wk</td><td><span class="badge b-green">8 boxes</span><div class="sub2">$6.40 / pack</div></td><td class="num"><span class="badge b-green">38%</span></td><td><button class="btn-primary" type="button">Substitute</button></td></tr>
+                      <tr><td><b>Mega Brave Booster Pack</b><div class="sub2">PKM-MB-JP · Fulfilment shelf J-06</div></td><td class="num">120</td><td class="num">7 / wk</td><td><span class="badge b-green">12 boxes</span><div class="sub2">$6.80 / pack</div></td><td class="num"><span class="badge b-amber">31%</span></td><td><button class="btn-secondary" type="button">Substitute</button></td></tr>
+                      <tr><td><b>Glory of Team Rocket Booster Pack</b><div class="sub2">PKM-GTR-JP · Route staging · East</div></td><td class="num">48</td><td class="num">12 / wk</td><td><span class="badge b-amber">3 boxes</span><div class="sub2">$6.10 / pack</div></td><td class="num"><span class="badge b-green">40%</span></td><td><button class="btn-secondary" type="button">Substitute</button></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </td></tr>
+              <tr>
+                <td><b>Pokémon Card 151 Booster Pack</b><div class="sub2">PKM-151-JP</div></td>
+                <td>Japanese</td><td class="num">252</td><td class="num">0</td><td class="num">14 / wk</td><td class="num">180</td>
+                <td><span class="badge b-green">In stock · 9 boxes</span><div class="sub2">$5.99 / pack · PokéJapan Direct</div></td>
+                <td><div class="btn-row"><button class="btn-primary" type="button">Add to PO</button></div></td>
+              </tr>
+              <tr>
+                <td><b>Black Bolt Booster Pack</b><div class="sub2">SV11B · not yet released</div></td>
+                <td>English</td><td class="num">80</td><td class="num">0</td><td class="num muted">—</td><td class="num muted">?</td>
+                <td><span class="badge b-amber">Needs preorder</span><div class="sub2">Preorder closes in 4 days</div></td>
+                <td><button class="btn-primary" type="button" data-goto="s3">Open release call</button></td>
+              </tr>
+              <tr>
+                <td><b>Prismatic Evolutions Booster Bundle</b><div class="sub2">PKM-PE-EN</div></td>
+                <td>English</td><td class="num">109</td><td class="num">120</td><td class="num">5 / wk</td><td class="num">0</td>
+                <td><span class="badge b-blue">Covered by PO-1045</span><div class="sub2">In transit · ETA 25 May</div></td>
+                <td><span class="muted" style="font-size:12px">No action needed</span></td>
+              </tr>
+              <tr>
+                <td><b>Heat Wave Arena Booster Pack</b><div class="sub2">PKM-HWA-JP · Returns bench R-02</div></td>
+                <td>Japanese</td><td class="num">38</td><td class="num">0</td><td class="num">2 / wk</td><td class="num">0</td>
+                <td><span class="badge b-purple">Unallocated stock</span><div class="sub2">19 weeks of cover on hand</div></td>
+                <td><button class="btn-secondary" type="button">Snooze 30d</button></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2 · AVAILABILITY ================= -->
+      <section class="view" id="v-s2">
+        <div class="grid2b">
+          <div class="card tight">
+            <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
+              <div><h3>Request availability</h3><div class="cap" style="margin:0">Ask what a supplier has before a PO exists.</div></div>
+              <span class="badge b-purple">3 SKUs selected</span>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="sup">Supplier</label>
+                <select id="sup"><option>PokéJapan Direct</option><option>TCG Direct</option><option>Pokémon Centre AU</option><option>Cardboard Collectibles</option><option>Southern Hobby Distribution</option></select>
+              </div>
+              <div class="field">
+                <label for="ch">Send via</label>
+                <select id="ch"><option>WhatsApp</option><option>Email</option></select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Request</label>
+              <pre class="req">Hi, availability and price please:
+
+  Terastal Festival ex (JP)   want 120
+  Pokemon Card 151 (JP)       want 180
+  Battle Partners (JP)        want 144
+
+Happy to take Mega Brave or Glory of
+Team Rocket if any are out.
+
+Terms on file: NET30.</pre>
+            </div>
+            <div class="btn-row"><button class="btn-primary" type="button">Copy request</button><button class="btn-secondary" type="button">Supplier PDF</button></div>
+          </div>
+
+          <div class="card tight">
+            <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
+              <div><h3>Log the reply</h3><div class="cap" style="margin:0">Same PDF reader used on supplier quotes and invoices.</div></div>
+              <span class="aichip">✦ AI-read</span>
+            </div>
+            <div class="drop" id="drop">Drop the reply — PDF, a photo of a price list, or pasted text</div>
+            <div id="extract" class="hide">
+              <div class="sublabel">Read 4 lines · PokéJapan Direct · prices held to 12 Aug</div>
+              <div class="tw" style="border:1px solid var(--line);border-radius:12px;overflow:hidden">
                 <table>
-                  <thead><tr><th>Alternate</th><th>Relation</th><th class="num">Velocity</th><th>Offer</th><th class="num">Proj. margin</th><th></th></tr></thead>
+                  <thead><tr><th>Their line</th><th>Matched SKU</th><th>Available</th><th class="num">Qty</th><th class="num">Cost</th></tr></thead>
                   <tbody>
-                    <tr><td><span class="prod">151 ETB</span><div class="meta">PKM-151-ETB-JP</div></td><td class="meta">same set, other format</td><td class="num">4.4/wk</td><td><span class="b b-ok"><span class="dot"></span>In stock, 6</span></td><td class="num"><span class="b b-ok">41%</span></td><td><button class="ib ib-p">Substitute</button></td></tr>
-                    <tr><td><span class="prod">151 Booster Box, EN</span><div class="meta">PKM-151-EN</div></td><td class="meta">same set, other language</td><td class="num">2.9/wk</td><td><span class="b b-ok"><span class="dot"></span>In stock, 12</span></td><td class="num"><span class="b b-warn">27%</span></td><td><button class="ib ib-s">Substitute</button></td></tr>
-                    <tr><td><span class="prod">Shiny Treasure ex Box</span><div class="meta">PKM-SHTR-JP</div></td><td class="meta">same language, near set</td><td class="num">5.1/wk</td><td><span class="b b-warn"><span class="dot"></span>Limited, 3</span></td><td class="num"><span class="b b-ok">38%</span></td><td><button class="ib ib-s">Substitute</button></td></tr>
+                    <tr><td>テラスタルフェス BOX</td><td><b>PKM-TF-JP</b><div class="sub2">matched on alias</div></td><td><span class="badge b-red">Out</span></td><td class="num">0</td><td class="num muted">—</td></tr>
+                    <tr><td>バトルパートナーズ BOX</td><td><b>PKM-BP-JP</b><div class="sub2">matched on alias</div></td><td><span class="badge b-green">In stock</span></td><td class="num">8</td><td class="num">$6.40</td></tr>
+                    <tr><td>ポケカ 151 BOX</td><td><b>PKM-151-JP</b><div class="sub2">matched on alias</div></td><td><span class="badge b-green">In stock</span></td><td class="num">9</td><td class="num">$5.99</td></tr>
+                    <tr class="flag"><td>熱風のアリーナ 4BOX セット</td><td><span class="badge b-amber">No match</span><div class="sub2">closest: PKM-HWA-JP</div></td><td><span class="badge b-green">In stock</span></td><td class="num">4</td><td class="num">$7.30</td></tr>
                   </tbody>
                 </table>
               </div>
-              <div class="note pur" style="margin-bottom:14px"><b>Why this matters.</b> Today this pivot happens in WhatsApp and the app never learns about it. Recording the substitution here feeds supplier fill rate, stops 151 resurfacing at full rank next week, and teaches the ranking which swaps actually get accepted.</div>
-            </td></tr>
-            <tr>
-              <td><div class="prod">Mega Evolution Booster Box</div><div class="meta">Not yet in catalog · JP</div></td>
-              <td><span class="b b-pur">preorder</span></td>
-              <td class="num">?</td><td class="num">0</td>
-              <td class="meta">Releases 18 Sep, inside window</td>
-              <td><span class="b b-info"><span class="dot"></span>Preorder open</span><div class="meta">Allocation to be confirmed · Kanazawa</div></td>
-              <td><button class="ib ib-p" data-goto="p3">Open release call</button></td>
-            </tr>
-            <tr>
-              <td><div class="prod">One Piece OP-11 Box</div><div class="meta">OP-11-JP · JP</div></td>
-              <td><span class="b b-teal">trial</span></td>
-              <td class="num">2</td><td class="num">0</td>
-              <td class="meta">No history, comparable OP-09</td>
-              <td><span class="b b-ok"><span class="dot"></span>In stock, 20</span><div class="meta">JPY 6,100 · Osaka TCG</div></td>
-              <td><div class="ibrow"><button class="ib ib-p">Add to PO</button><button class="ib ib-g">Pass</button></div></td>
-            </tr>
-            <tr>
-              <td><div class="prod">Crimson Haze Box</div><div class="meta">PKM-CRIM-JP · JP</div></td>
-              <td><span class="b b-grey">restock</span></td>
-              <td class="num">0</td><td class="num">4</td>
-              <td class="meta">Covered by 4 on order, PO-2026-0188</td>
-              <td><span class="b b-grey">not requested</span></td>
-              <td><span class="meta">No action needed</span></td>
-            </tr>
-            <tr>
-              <td><div class="prod">Paldean Fates ETB</div><div class="meta">PKM-PALD-ETB-EN · EN</div></td>
-              <td><span class="b b-grey">restock</span></td>
-              <td class="num">3</td><td class="num">0</td>
-              <td class="meta">1.8 packs/wk</td>
-              <td><span class="b b-grey">not requested</span></td>
-              <td><button class="ib ib-s">Snooze 30d</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <h3>What changes</h3>
-        <div class="cap">Four adjustments, no new screens.</div>
-        <ul class="checks">
-          <li><span class="tick y">+</span><div><b>One engine.</b> Lead-time cover folds into this query and the separate auto-PO page stops writing POs, so the quantity reviewed is the quantity ordered. Today it writes the un-adjusted baseline instead.</div></li>
-          <li><span class="tick y">+</span><div><b>Snoozes respected.</b> A row deferred with a reason no longer reappears here. The board currently ignores them.</div></li>
-          <li><span class="tick y">+</span><div><b>Truncation visible.</b> "24 suggestions, showing 8" instead of silently cutting the list at 10.</div></li>
-          <li><span class="tick y">+</span><div><b>Every row ends with an outcome.</b> Ordered, passed, unavailable and substituted, or snoozed. Nothing leaves the round undecided.</div></li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Reused as is <span class="tag-old">no rebuild</span></h3>
-        <div class="cap">Already built and working in production.</div>
-        <ul class="checks">
-          <li><span class="tick y">✓</span><div>Pool-aware netting against on-order quantity and uncracked boxes</div></li>
-          <li><span class="tick y">✓</span><div>Promote sheet, including the new-product path with packs per box</div></li>
-          <li><span class="tick y">✓</span><div>One draft PO basket per supplier per buy type</div></li>
-          <li><span class="tick y">✓</span><div>Cash guardrail: safe to spend, committed, pipeline</div></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 02 AVAILABILITY ================= -->
-  <section id="p2" class="hide">
-    <div class="sec-title">Stage 02 · Availability check <span class="tag-new" style="margin-left:6px">new</span></div>
-
-    <div class="card">
-      <h3>The only genuinely new capability here, and the smallest</h3>
-      <div class="cap">Ask what they have, capture the reply as structured data, let the buy list show it. Two tables plus one intake screen. Nothing in the current schema represents supplier availability, minimum order quantity, price validity, or a substitute relationship.</div>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <div class="cardhead"><h3 style="margin:0">Ask</h3><span class="b b-pur">3 SKUs selected</span></div>
-        <div class="field">
-          <label for="sup">Supplier</label>
-          <select id="sup"><option>Kanazawa Cards (JP)</option><option>Osaka TCG (JP)</option><option>AU Distro (EN)</option><option>All three</option></select>
+              <div class="btn-row" style="margin-top:13px"><button class="btn-primary" type="button">Save offer</button><button class="btn-secondary" type="button">Match the unread line</button></div>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <label for="ch">Channel</label>
-          <select id="ch"><option>WhatsApp, copy text</option><option>Email, attach PDF</option></select>
+
+        <div class="card tight p0">
+          <div class="ph"><h3 style="margin:0">Offers on file</h3><span class="muted" style="font-size:11.5px">3 live · 1 expired</span></div>
+          <div class="tw">
+          <table>
+            <thead><tr><th>Supplier</th><th>Terms</th><th>Rating</th><th class="num">Lines</th><th class="num">In stock</th><th>Held until</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><b>TCG Direct</b><div class="sub2">Sydney, AU</div></td><td><span class="badge b-amber">COD</span></td><td><span class="badge b-green">★ 4.6</span></td><td class="num">6</td><td class="num">5</td><td>14 Aug</td><td><span class="badge b-green">Live</span></td></tr>
+              <tr><td><b>PokéJapan Direct</b><div class="sub2">Tokyo, Japan</div></td><td><span class="badge b-blue">NET30</span></td><td><span class="badge b-green">★ 4.8</span></td><td class="num">4</td><td class="num">3</td><td>12 Aug</td><td><span class="badge b-green">Live</span></td></tr>
+              <tr><td><b>Cardboard Collectibles</b><div class="sub2">Sydney, AU</div></td><td><span class="badge b-blue">NET14</span></td><td><span class="badge b-amber">★ 4.2</span></td><td class="num">3</td><td class="num">2</td><td>9 Aug</td><td><span class="badge b-green">Live</span></td></tr>
+              <tr><td><b>Pokémon Centre AU</b><div class="sub2">Online</div></td><td><span class="badge b-blue">Prepaid</span></td><td><span class="badge b-green">★ 4.4</span></td><td class="num">2</td><td class="num">0</td><td>28 Jul</td><td><span class="badge b-red">Expired</span></td></tr>
+            </tbody>
+          </table>
+          </div>
         </div>
-        <div class="field">
-          <label>Copyable request</label>
-          <pre class="copy">Hi, availability and price please:
+      </section>
 
-1. 151 Booster Box (JP)        want 8
-2. Surging Sparks Box (JP)     want 6
-3. Terastal Festival ex (JP)   want 4
-
-Also happy to take 151 ETB or Shiny
-Treasure ex if 151 boxes are out.
-
-Prices in JPY, and how long valid?</pre>
+      <!-- ================= 3 · RELEASE CALLS ================= -->
+      <section class="view" id="v-s3">
+        <div class="kpis k4">
+          <div class="kpi"><div class="l">Releases next 30d</div><div class="v">6</div><div class="d muted">2 need a preorder PO</div></div>
+          <div class="kpi"><div class="l">Preordered / covered</div><div class="v" style="color:var(--green-txt)">4</div><div class="d muted">POs in flight</div></div>
+          <div class="kpi"><div class="l">Pre-payments due</div><div class="v" style="color:var(--amber)">2</div><div class="d muted">$8,400 scheduled</div></div>
+          <div class="kpi"><div class="l">Tracked total</div><div class="v">31</div><div class="d muted">next 12 months</div></div>
         </div>
-        <div class="ibrow"><button class="ib ib-p">Copy text</button><button class="ib ib-s">Supplier PDF version</button></div>
-        <div class="note" style="margin-top:13px">Same A4 layout as the supplier PDF that already exists, with the cost column replaced by "qty available / your price". Alternates are named in the request, so the pivot is pre-authorised.</div>
-      </div>
 
-      <div class="card">
-        <div class="cardhead"><h3 style="margin:0">Capture the reply</h3><span class="b b-info">AI extract, then review</span></div>
-        <div class="drop" id="drop">Drop the reply here: PDF, photo of a price list, or paste the WhatsApp text</div>
-        <div id="extract" class="hide" style="margin-top:15px">
-          <div class="sublabel" style="margin-top:0">Extracted, 4 lines · Kanazawa Cards · valid to 12 Aug</div>
-          <div class="tw" style="margin:0">
-            <table style="min-width:520px">
-              <thead><tr><th>Their name</th><th>Mapped SKU</th><th>Avail</th><th class="num">Qty</th><th class="num">Cost</th><th class="num">MOQ</th></tr></thead>
+        <div class="card">
+          <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <div>
+              <h3>Black Bolt · SV11B</h3>
+              <div class="cap" style="margin:0">Releases 20 Jun · English · preorder closes in 4 days · no sales history</div>
+            </div>
+            <div class="btn-row"><span class="badge b-amber">Needs preorder</span></div>
+          </div>
+
+          <div class="grid2" style="margin-bottom:0">
+            <div>
+              <div class="sublabel" style="margin-top:0">Comparable, sets the quantity</div>
+              <div class="cmp">
+                <b>Surging Sparks Booster Pack (EN)</b> · same language, same format<br>
+                Selling <b>35 / wk</b> at $6.50 a pack · <b>41% margin</b> · $8,240 in the last period · latest PO cost $4.20.
+                <div class="btn-row" style="margin-top:10px"><button class="btn-secondary" type="button">Change comparable</button><button class="btn-link" type="button">See 3 others</button></div>
+              </div>
+
+              <div class="sublabel">Quantity</div>
+              <dl class="kv">
+                <dt>Comparable pace, first 4 weeks</dt><dd>140 packs</dd>
+                <dt>Machines carrying EN boosters</dt><dd>24 of 24</dd>
+                <dt>Suggested commitment</dt><dd>288 packs</dd>
+                <dt>Opening split</dt><dd>even, no velocity yet</dd>
+              </dl>
+              <div class="form-grid" style="margin-top:14px">
+                <div class="field"><label for="tq">Commit, packs</label><input id="tq" type="text" value="288"></div>
+                <div class="field"><label for="tsup">Supplier</label><select id="tsup"><option>TCG Direct</option><option>Pokémon Centre AU</option><option>Cardboard Collectibles</option></select></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="sublabel" style="margin-top:0">Economics</div>
+              <dl class="kv">
+                <dt>Expected sell price</dt><dd>$6.50 / pack</dd>
+                <dt>Expected cost</dt><dd>$4.20 / pack</dd>
+                <dt>Projected margin</dt><dd><span class="badge b-green">35%</span></dd>
+                <dt>Full commitment</dt><dd>$1,210</dd>
+                <dt>Pre-payment due</dt><dd class="tot">$4,200</dd>
+              </dl>
+
+              <div class="sublabel">Demand signals</div>
+              <div class="evi">
+                <div>Preorder allocation tightening across AU distributors.</div>
+                <div class="src">Calendar · flagged on the release</div>
+              </div>
+              <div class="evi">
+                <div>Black Bolt already sells 80 packs through Route staging · Campus as an EN booster line.</div>
+                <div class="src">Inventory · PKM-BB-EN</div>
+              </div>
+              <div class="evi">
+                <div>Securing Black Bolt and Prismatic together protects roughly $18k of projected Q3 sales.</div>
+                <div class="src">Calendar · action needed</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--line);margin-top:16px;padding-top:14px">
+            <div class="btn-row">
+              <button class="btn-primary" id="commitbtn" type="button">Commit 288 packs</button>
+              <button class="btn-secondary" type="button">Watch, revisit 18 Aug</button>
+              <button class="btn-link" type="button">Pass, with a reason</button>
+            </div>
+            <div id="committed" class="stamp hide" style="margin-top:13px">Committed · 288 packs · added to a draft PO for TCG Direct · release now shows ✓ Preordered on the calendar</div>
+          </div>
+        </div>
+
+        <div class="card tight p0">
+          <div class="ph"><h3 style="margin:0">Releases without secured stock</h3><span class="muted" style="font-size:11.5px">3 open</span></div>
+          <div class="tw">
+          <table>
+            <thead><tr><th>Release</th><th>Code</th><th>Date</th><th>Language</th><th class="num">Pre-payment</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td><b>Black Bolt</b><div class="sub2">Preorder closes in 4 days</div></td><td>SV11B</td><td>20 Jun</td><td><span class="badge b-blue">EN</span></td><td class="num">$4,200</td><td><span class="badge b-amber">Needs preorder</span></td><td><button class="btn-primary" type="button">Open</button></td></tr>
+              <tr><td><b>Prismatic Evolutions</b><div class="sub2">Allocation tightening</div></td><td>SV11</td><td>11 Jul</td><td><span class="badge b-blue">EN</span></td><td class="num">$4,200</td><td><span class="badge b-amber">Needs preorder</span></td><td><button class="btn-secondary" type="button">Open</button></td></tr>
+              <tr><td><b>Mega Evolution</b><div class="sub2">Confirm interest before Jul</div></td><td>ME01</td><td>14 Aug</td><td><span class="badge b-blue">EN</span></td><td class="num muted">TBD</td><td><span class="badge b-amber">Watching</span></td><td><button class="btn-secondary" type="button">Open</button></td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4 · APPROVAL ================= -->
+      <section class="view" id="v-s4">
+        <div class="grid2">
+          <div class="card tight p0">
+            <div class="ph">
+              <div><h3 style="margin:0"><span class="po-id">PO-1046</span> · TCG Direct</h3><div class="cap" style="margin:4px 0 0">Booster box · drafted from the buy list today at 9:12 AM</div></div>
+              <span class="badge b-purple">Draft</span>
+            </div>
+            <div class="tw">
+            <table>
+              <thead><tr><th>Item</th><th>SKU</th><th class="num">Qty</th><th class="num">Unit cost</th><th class="num">Retail</th><th class="num">Margin</th></tr></thead>
               <tbody>
-                <tr><td>ポケカ 151 BOX</td><td><span class="prod">PKM-151-JP</span><div class="meta">via alias, learned</div></td><td><span class="b b-bad">out</span></td><td class="num">0</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
-                <tr><td>151 ETB</td><td><span class="prod">PKM-151-ETB-JP</span><div class="meta">via alias</div></td><td><span class="b b-ok">in stock</span></td><td class="num">6</td><td class="num">5,200</td><td class="num">2</td></tr>
-                <tr><td>Surging Sparks BOX</td><td><span class="prod">PKM-SURG-JP</span><div class="meta">via alias</div></td><td><span class="b b-ok">in stock</span></td><td class="num">8</td><td class="num">4,900</td><td class="num">1</td></tr>
-                <tr class="rowhi"><td>Black Bolt sample set</td><td><span class="b b-warn">no match</span><div class="meta">closest: PKM-BLKB-JP</div></td><td><span class="b b-ok">in stock</span></td><td class="num">4</td><td class="num">7,300</td><td class="num">1</td></tr>
+                <tr><td><b>Surging Sparks (EN)</b><div class="sub2">6 boxes · 36 packs / box</div></td><td>PKM-SS-EN</td><td class="num">216</td><td class="num">$4.20</td><td class="num">$6.50</td><td class="num"><span class="badge b-green">35%</span></td></tr>
+                <tr><td><b>Destined Rivals (EN)</b><div class="sub2">4 boxes · 36 packs / box</div></td><td>PKM-DR-EN</td><td class="num">144</td><td class="num">$4.55</td><td class="num">$7.00</td><td class="num"><span class="badge b-green">35%</span></td></tr>
+                <tr><td><b>Journey Together (EN)</b><div class="sub2">4 boxes · 36 packs / box</div></td><td>PKM-JT-EN</td><td class="num">144</td><td class="num">$4.35</td><td class="num">$6.75</td><td class="num"><span class="badge b-green">36%</span></td></tr>
               </tbody>
             </table>
-          </div>
-          <div class="note" style="margin:13px 0"><b>Unmapped lines are kept, not dropped.</b> Confirm the match once and the supplier alias table learns it, exactly the way PO line extraction already learns supplier names.</div>
-          <div class="ibrow"><button class="ib ib-p">Save offer</button><button class="ib ib-s">Map the unmatched line</button></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>What an offer unlocks</h3>
-      <div class="cap">Built on the document extractor and the alias table that already exist.</div>
-      <div class="grid3">
-        <div>
-          <div class="sublabel" style="margin-top:0">On the buy list</div>
-          <div class="meta">An availability chip per suggestion, the best-price supplier when more than one replied, and ranked alternates when the exact SKU is out.</div>
-        </div>
-        <div>
-          <div class="sublabel" style="margin-top:0">On the PO</div>
-          <div class="meta">Line costs prefilled from the accepted offer instead of a default cost, so a promoted line is never a zero-cost placeholder.</div>
-        </div>
-        <div>
-          <div class="sublabel" style="margin-top:0">Over time</div>
-          <div class="meta">Supplier fill rate from promised versus allocated versus received, which is the scorecard two code comments already reference and no table implements.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 03 RELEASE CALL ================= -->
-  <section id="p3" class="hide">
-    <div class="sec-title">Stage 03 · Release call <span class="tag-new" style="margin-left:6px">new</span></div>
-
-    <div class="card">
-      <div class="cardhead">
-        <div>
-          <h3>Mega Evolution Booster Box · JP</h3>
-          <div class="meta">Releases 18 Sep 2026 · 45 days out · source: pokemon.co.jp announcement</div>
-        </div>
-        <div class="ibrow">
-          <span class="b b-warn"><span class="dot"></span>Needs preorder</span>
-          <span class="b b-grey">no sales history</span>
-        </div>
-      </div>
-
-      <div class="grid2">
-        <div>
-          <div class="sublabel" style="margin-top:0">Comparable, drives the quantity</div>
-          <div class="note pur">
-            <b>Surging Sparks Booster Box, JP</b> · same language, same set type, same format<br>
-            First 28 days after landing: <b class="mono">118 packs</b> across 19 machines, <b class="mono">6.2 packs/wk</b> at peak, sold through in 31 days.
-            <div class="ibrow" style="margin-top:10px"><button class="ib ib-s">Change comparable</button><button class="ib ib-g">See 3 others</button></div>
+            </div>
+            <div style="padding:14px 18px 18px">
+              <dl class="kv">
+                <dt>Goods</dt><dd>$2,188.80</dd>
+                <dt>Freight</dt><dd>$180.00</dd>
+                <dt>Import duty &amp; GST</dt><dd>$219.00</dd>
+                <dt>Total</dt><dd class="tot">$2,587.80</dd>
+                <dt>Blended margin on this PO</dt><dd>35%</dd>
+              </dl>
+            </div>
           </div>
 
-          <div class="sublabel">Target quantity</div>
-          <dl class="kv">
-            <dt>Comparable sell-through, 28d</dt><dd>118 packs</dd>
-            <dt>Machines live now versus then</dt><dd>22 vs 19</dd>
-            <dt>Suggested target</dt><dd>136 packs, 5 boxes</dd>
-            <dt>Machine split preview</dt><dd>even, no velocity yet</dd>
-          </dl>
-          <div class="field" style="margin-top:14px">
-            <label for="tq">Commit quantity, packs</label>
-            <input id="tq" type="text" value="136">
-          </div>
-          <div class="note">A new SKU is currently invisible to the reorder maths in four separate ways, including being classified as dead stock while it sits in machines waiting to go on sale. Comparables are the way around having no history.</div>
-        </div>
-
-        <div>
-          <div class="sublabel" style="margin-top:0">Economics</div>
-          <dl class="kv">
-            <dt>Expected sell price, per pack</dt><dd>$12.50 <span class="b b-warn" style="margin-left:4px">unverified</span></dd>
-            <dt>Range across sources</dt><dd>$11.00 to $14.00</dd>
-            <dt>Expected landed cost, per pack</dt><dd>$7.10</dd>
-            <dt>Freight and duty estimate</dt><dd>included, 11%</dd>
-            <dt>Projected margin</dt><dd><span class="b b-ok">43%</span></dd>
-            <dt>Cash at risk, deposit</dt><dd>$1,940 due 22 Aug</dd>
-          </dl>
-          <div class="note" style="margin-top:13px"><b>Where the price comes from.</b> The consensus pricing engine's never-sold branch: trust-weighted across independent source families, corroborated across distinct AU shops, marked <b>unverified</b> when thin rather than discarded. Already built, and currently not connected to purchasing at all.</div>
-
-          <div class="sublabel">Demand evidence, stored</div>
-          <div class="evi">
-            <div>Pre-orders across 4 AU retailers sold out within 48 hours of listing.</div>
-            <div class="src">3 sources · confidence high · captured 4 Aug</div>
-          </div>
-          <div class="evi">
-            <div>Set includes 2 chase cards flagged as tournament-relevant in AU meta discussion.</div>
-            <div class="src">2 sources · confidence medium</div>
-          </div>
-          <div class="evi">
-            <div>JP print run described as standard, no reprint announcement.</div>
-            <div class="src">1 source · confidence low</div>
-          </div>
-        </div>
-      </div>
-
-      <div style="border-top:1px solid var(--line);margin-top:18px;padding-top:16px">
-        <div class="ibrow">
-          <button class="ib ib-p" id="commitbtn">Commit, 136 packs</button>
-          <button class="ib ib-s">Watch, revisit 25 Aug</button>
-          <button class="ib ib-s">Pass, with reason</button>
-          <span class="meta" style="margin-left:auto">A pass expires and comes back with its reason attached, like a snooze. It does not vanish.</span>
-        </div>
-        <div id="committed" class="stamp hide" style="margin-top:13px">Committed · 136 packs · linked to draft PO for Kanazawa Cards · release marked Preordered and removed from Suggested</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>The bug this closes</h3>
-      <div class="meta">Promoting a release from the board never writes the release-to-PO link, while the Suggested lane's deduplication reads exactly that table. A release already preordered reappears in Suggested forever, and the calendar never shows Preordered, Paid or Allocated. It needs the release id carried through the promote payload, then the insert.</div>
-    </div>
-  </section>
-
-  <!-- ================= 04 APPROVAL ================= -->
-  <section id="p4" class="hide">
-    <div class="sec-title">Stage 04 · Approval</div>
-
-    <div class="grid2">
-      <div class="card">
-        <div class="cardhead">
           <div>
-            <h3>PO-2026-0194 · Kanazawa Cards</h3>
-            <div class="meta">Restock · JPY · drafted by purchasing, 4 Aug 09:12</div>
+            <div class="card tight" style="margin-bottom:16px">
+              <h3>Before approving</h3>
+              <div class="cap">Everything the decision needs, on one card.</div>
+              <ul class="checks">
+                <li><span class="tick y">✓</span><div><b>Supplier quote read</b><div class="sub2">tcgdirect_quote_0804.pdf · 3 of 3 lines matched</div></div></li>
+                <li><span class="tick y">✓</span><div><b>Freight and duty included</b><div class="sub2">$399.00 across 504 packs</div></div></li>
+                <li><span class="tick y">✓</span><div><b>Within committed spend</b><div class="sub2">$24,180 committed → $26,767.80 after this<div class="bar"><i style="width:16%"></i></div></div></div></li>
+                <li><span class="tick n">!</span><div><b>Terms are COD</b><div class="sub2">TCG Direct · payment on delivery, not NET30</div></div></li>
+              </ul>
+              <div class="btn-row" style="margin-top:14px">
+                <button class="btn-primary" id="apprbtn" type="button">Approve</button>
+                <button class="btn-secondary" type="button">Hold, with a reason</button>
+              </div>
+              <div id="approved" class="stamp hide" style="margin-top:13px">Approved by Game Guys · today at 2:02 PM · PO-1046 is now Approved and ready to send</div>
+            </div>
+
+            <div class="card tight">
+              <h3>Supplier record</h3>
+              <div class="cap">From CRM · contact details only.</div>
+              <dl class="kv">
+                <dt>Supplier</dt><dd>TCG Direct</dd>
+                <dt>Location</dt><dd>Sydney, AU</dd>
+                <dt>Terms</dt><dd>COD</dd>
+                <dt>Rating</dt><dd>★ 4.6</dd>
+                <dt>Delivered in full, 12 mo</dt><dd>96%</dd>
+              </dl>
+            </div>
           </div>
-          <span class="b b-grey"><span class="dot"></span>draft</span>
         </div>
-        <div class="tw">
-          <table>
-            <thead><tr><th>Line</th><th class="num">Qty</th><th class="num">Landed AUD</th><th class="num">Retail</th><th class="num">Margin</th></tr></thead>
-            <tbody>
-              <tr><td><span class="prod">Surging Sparks Box</span><div class="meta">6 boxes, 180 packs</div></td><td class="num">180</td><td class="num">6.88</td><td class="num">11.50</td><td class="num"><span class="b b-ok">40%</span></td></tr>
-              <tr><td><span class="prod">151 ETB</span><div class="meta">substituted for 151 Box</div></td><td class="num">6</td><td class="num">42.10</td><td class="num">72.00</td><td class="num"><span class="b b-ok">42%</span></td></tr>
-              <tr><td><span class="prod">Terastal Festival ex</span><div class="meta">2 boxes, limited stock</div></td><td class="num">60</td><td class="num">8.40</td><td class="num">11.50</td><td class="num"><span class="b b-warn">27%</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="border-top:1px solid var(--line);margin-top:14px;padding-top:14px">
-          <dl class="kv">
-            <dt>Subtotal, JPY</dt><dd>412,600</dd>
-            <dt>Freight, duty, broker</dt><dd>44,900</dd>
-            <dt>Total, JPY</dt><dd>457,500</dd>
-            <dt>Total, AUD at 0.0102</dt><dd>$4,667</dd>
-            <dt>Projected margin, whole PO</dt><dd><span class="b b-ok">38%</span></dd>
-          </dl>
-        </div>
-        <div class="note" style="margin-top:13px"><b>Freight and duty are inside that total.</b> Today they are not: the totals trigger stores subtotal plus 10% GST and ignores all five landed-cost columns, so approval happens against a number that excludes the import bill.</div>
-      </div>
+      </section>
 
-      <div>
-        <div class="card">
-          <h3>Before you approve</h3>
-          <div class="cap">Everything needed for the decision, on one card.</div>
-          <ul class="checks">
-            <li><span class="tick y">✓</span><div><b>Supplier quote attached</b><div class="meta">proforma_kanazawa_0804.pdf · extracted 4 Aug</div></div></li>
-            <li><span class="tick y">✓</span><div><b>FX rate set</b><div class="meta">0.0102 JPY to AUD, fetched 4 Aug. Not the silent 1.0 default.</div></div></li>
-            <li><span class="tick y">✓</span><div><b>Within safe to spend</b><div class="meta">$4,667 of $18,240 available<div class="bar"><i style="width:26%"></i></div></div></div></li>
-            <li><span class="tick n">!</span><div><b>Supplier fill rate, 12 months</b><div class="meta">Kanazawa 91% allocated, 96% received. Amber, not blocking.</div></div></li>
-          </ul>
-          <div class="ibrow" style="margin-top:15px">
-            <button class="ib ib-p" id="apprbtn">Approve</button>
-            <button class="ib ib-s">Hold, with reason</button>
+      <!-- ================= 5 · IN TRANSIT ================= -->
+      <section class="view" id="v-s5">
+        <div class="grid2b">
+          <div class="card tight">
+            <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
+              <div><h3>Send <span class="po-id">PO-1046</span></h3><div class="cap" style="margin:0">Supplier PDF prints per-line quantities without cost.</div></div>
+              <span class="badge b-blue">Ordered</span>
+            </div>
+            <div class="btn-row" style="margin-bottom:14px"><button class="btn-primary" type="button">Supplier PDF</button><button class="btn-secondary" type="button">Copy as text</button></div>
+            <div class="form-grid">
+              <div class="field"><label for="sc">Sent via</label><select id="sc"><option>WhatsApp</option><option>Email</option></select></div>
+              <div class="field"><label for="sr">Supplier reference</label><input id="sr" type="text" value="TCG-AU-58502"></div>
+            </div>
+            <div class="field"><label for="eta">Expected delivery</label><input id="eta" type="date" value="2026-08-12"><div class="sub2">Prefilled from TCG Direct's usual 8 days.</div></div>
+            <button class="btn-primary" id="sendbtn" type="button">Record send</button>
+            <div id="sent" class="stamp hide" style="margin-top:13px">Sent via WhatsApp to TCG Direct · today at 2:06 PM · ref TCG-AU-58502</div>
           </div>
-          <div id="approved" class="stamp hide" style="margin-top:13px">Approved by josh@rakish.com · 4 Aug 14:02 · recorded in approved_by, not only the activity log</div>
+
+          <div class="card tight">
+            <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+              <div><h3><span class="po-id">PO-1042</span> · TCG Direct</h3><div class="cap" style="margin:0">240 units · ref TCG-AU-58491</div></div>
+              <span class="badge b-blue">In transit</span>
+            </div>
+            <ul class="tl">
+              <li class="done"><span class="dot"></span><div><b>Ordered</b><div class="when">18 May · approved and sent same day</div></div></li>
+              <li class="done"><span class="dot"></span><div><b>Picked up by carrier</b><div class="when">20 May · tracking registered</div></div></li>
+              <li class="done"><span class="dot"></span><div><b>Cleared origin</b><div class="when">22 May</div></div></li>
+              <li class="now"><span class="dot"></span><div><b>Out for delivery</b><div class="when">Expected 26 May · ready to receive</div></div></li>
+              <li><span class="dot"></span><div><b class="muted">Received</b><div class="when">Not yet recorded</div></div></li>
+            </ul>
+            <div class="btn-row" style="margin-top:14px"><button class="btn-teal" type="button" data-goto="s6">Receive this PO</button></div>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Two fixes worth more than the card</h3>
-          <ul class="checks">
-            <li><span class="tick n">1</span><div><b>Approval can currently be skipped.</b> The status setter validates the target status but never reads the current one, so draft to ordered goes straight through and never reaches the admin-only gate. A real transition table closes it.</div></li>
-            <li><span class="tick n">2</span><div><b>Nobody is recorded as the approver.</b> There is no approved_by column, so identity survives only in the activity log. A separate approver column is hardcoded to a name on the create form and stays editable elsewhere, reconciled against nothing.</div></li>
-          </ul>
-          <div class="note pur" style="margin-top:12px"><b>Optional, owner's call.</b> Standing authority: named supplier, restock only, under a set amount, auto-approved with a daily digest that can be reversed. Default off. It is the only real fix for single-approver latency, and it is a policy choice rather than a build task.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 05 SEND AND TRACK ================= -->
-  <section id="p5" class="hide">
-    <div class="sec-title">Stage 05 · Send and track</div>
-
-    <div class="grid2">
-      <div class="card">
-        <div class="cardhead"><h3 style="margin:0">Send PO-2026-0194</h3><span class="b b-info"><span class="dot"></span>approved</span></div>
-        <div class="note pur" style="margin-bottom:15px"><b>The supplier PDF already exists.</b> A print-ready A4 route with per-line landed cost excluded. It is linked from nowhere, so nobody can reach it, though the SOP already tells staff it is a header button. Adding the link is the cheapest fix in the whole proposal, with one decision first: the totals block does print import duty, customs broker and quarantine, which the file comment and the SOP both claim it strips.</div>
-        <div class="ibrow" style="margin-bottom:15px">
-          <button class="ib ib-p">Supplier PDF</button>
-          <button class="ib ib-s">Copy as text</button>
-        </div>
-        <div class="grid2" style="gap:14px">
-          <div class="field"><label for="sc">Sent via</label><select id="sc"><option>WhatsApp</option><option>Email</option><option>Other</option></select></div>
-          <div class="field"><label for="st">Sent to</label><input id="st" type="text" value="Kenji, Kanazawa Cards"></div>
-        </div>
-        <div class="field"><label for="eta">Expected arrival</label><input id="eta" type="text" value="18 Aug 2026"><div class="meta" style="margin-top:5px">Prefilled from supplier lead time, 14 days, still editable. Today it is typed from scratch every time, and the dashboard's overdue count depends entirely on it.</div></div>
-        <button class="ib ib-p" id="sendbtn">Record send and mark ordered</button>
-        <div id="sent" class="stamp hide" style="margin-top:13px">Sent via WhatsApp to Kenji · 4 Aug 14:06 by josh@rakish.com · original send date preserved on any re-send</div>
-      </div>
-
-      <div class="card">
-        <h3>Why arrivals are unreliable today</h3>
-        <div class="cap">Four separate causes, all cheap to fix.</div>
-        <ul class="checks">
-          <li><span class="tick n">1</span><div><b>The real ETA drives nothing.</b> The carrier webhook writes an ETA on every update and the PO detail page shows it. Nothing else uses it: not the board lanes, not the late calculation, not the dashboard, and not as a fallback when the typed date is missing.</div></li>
-          <li><span class="tick n">2</span><div><b>Late tracking is never registered.</b> Registration fires only on the transition to ordered. A tracking number added afterwards, including from the receive page, never gets a status or an ETA. Changing a tracking number blocks re-registration permanently.</div></li>
-          <li><span class="tick n">3</span><div><b>The late badge skips paid POs.</b> Overdue requires payment to be empty, but payment is a hard gate before receiving, so nearly every PO actually in transit is already paid and shows no badge.</div></li>
-          <li><span class="tick n">4</span><div><b>Exceptions notify nobody.</b> The webhook writes the exception tag. There is no branch on it and no message goes anywhere.</div></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="cardhead">
-        <div><h3 style="margin:0">Arrivals</h3><div class="meta">One view, one definition of late, paid POs included. Replaces four competing definitions across four screens.</div></div>
-        <div class="ibrow"><span class="b b-bad"><span class="dot"></span>1 exception</span><span class="b b-warn"><span class="dot"></span>2 late</span><span class="b b-ok"><span class="dot"></span>4 on time</span></div>
-      </div>
-      <div class="tw">
-        <table>
-          <thead><tr><th>PO</th><th>Supplier</th><th>Contents</th><th>ETA</th><th class="num">Days late</th><th>State</th><th></th></tr></thead>
-          <tbody>
-            <tr class="grouprow"><td colspan="7">This week</td></tr>
-            <tr class="rowhi">
-              <td><span class="prod">PO-2026-0181</span><div class="meta">paid 18 Jul</div></td><td>Osaka TCG</td><td class="meta">3 SKUs, 240 packs</td>
-              <td>05 Aug <span class="b b-info" style="margin-left:4px">carrier</span></td><td class="num">6</td>
-              <td><span class="b b-bad"><span class="dot"></span>Exception, held at customs</span></td>
-              <td><button class="ib ib-s">Chase</button></td>
-            </tr>
-            <tr>
-              <td><span class="prod">PO-2026-0186</span><div class="meta">paid 24 Jul</div></td><td>Kanazawa</td><td class="meta">2 SKUs, 120 packs</td>
-              <td>06 Aug <span class="b b-info" style="margin-left:4px">carrier</span></td><td class="num">0</td>
-              <td><span class="b b-ok"><span class="dot"></span>Out for delivery</span></td>
-              <td><button class="ib ib-p">Receive</button></td>
-            </tr>
-            <tr>
-              <td><span class="prod">PO-2026-0188</span><div class="meta">paid 28 Jul</div></td><td>AU Distro</td><td class="meta">4 boxes Crimson Haze</td>
-              <td>08 Aug <span class="b b-grey" style="margin-left:4px">typed</span></td><td class="num">0</td>
-              <td><span class="b b-warn"><span class="dot"></span>No tracking registered</span></td>
-              <td><button class="ib ib-s">Add tracking</button></td>
-            </tr>
-            <tr class="grouprow"><td colspan="7">Next week</td></tr>
-            <tr>
-              <td><span class="prod">PO-2026-0190</span><div class="meta">paid 1 Aug</div></td><td>Kanazawa</td><td class="meta">6 SKUs, 310 packs</td>
-              <td>12 Aug <span class="b b-info" style="margin-left:4px">carrier</span></td><td class="num">0</td>
-              <td><span class="b b-info"><span class="dot"></span>In transit</span></td><td></td>
-            </tr>
-            <tr>
-              <td><span class="prod">PO-2026-0194</span><div class="meta">unpaid</div></td><td>Kanazawa</td><td class="meta">3 SKUs, 246 packs</td>
-              <td>18 Aug <span class="b b-grey" style="margin-left:4px">lead time</span></td><td class="num">0</td>
-              <td><span class="b b-pur"><span class="dot"></span>Ordered, awaiting payment</span></td><td></td>
-            </tr>
-            <tr class="grouprow"><td colspan="7">Deposits due</td></tr>
-            <tr>
-              <td><span class="prod">Mega Evolution</span><div class="meta">preorder, releases 18 Sep</div></td><td>Kanazawa</td><td class="meta">136 packs committed</td>
-              <td>22 Aug <span class="b b-grey" style="margin-left:4px">deposit</span></td><td class="num">0</td>
-              <td><span class="b b-warn"><span class="dot"></span>$1,940 deposit due</span></td>
-              <td><button class="ib ib-s">Mark paid</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note" style="margin-top:15px"><b>Alerts.</b> Slack message plus a notification row on an exception or expiry tag, and on an ETA slipping past the promised date. Daily arrivals digest on the cron pattern already in place. The data is already arriving; nothing consumes it yet.</div>
-    </div>
-  </section>
-
-  <!-- ================= 06 RECORD ================= -->
-  <section id="p6" class="hide">
-    <div class="sec-title">Stage 06 · Record</div>
-
-    <div class="card">
-      <h3>Receiving already works well. Cost does not.</h3>
-      <div class="cap">Freight and duty never reach the stored total, the AUD total only refreshes at payment, a resubmitted courier bill inflates landed cost permanently, and a JPY purchase books stock at a JPY unit cost.</div>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <div class="cardhead"><h3 style="margin:0">Receive PO-2026-0186</h3><span class="b b-warn"><span class="dot"></span>partial</span></div>
-        <div class="tw">
+        <div class="card tight p0">
+          <div class="ph">
+            <div><h3 style="margin:0">Incoming stock</h3><div class="cap" style="margin:4px 0 0">Synced from Nayax + Shopify — for receivers</div></div>
+            <div class="btn-row"><span class="badge b-amber">1 in customs</span><span class="badge b-green">1 ready to receive</span></div>
+          </div>
+          <div class="tw">
           <table>
-            <thead><tr><th>Line</th><th class="num">Ordered</th><th class="num">Confirmed</th><th class="num">Received</th><th class="num">This delivery</th></tr></thead>
+            <thead><tr><th>PO</th><th>Supplier</th><th>Contents</th><th>Status</th><th class="num">Units</th><th class="num">ETA</th><th></th></tr></thead>
             <tbody>
-              <tr><td><span class="prod">Surging Sparks Box</span></td><td class="num">6</td><td class="num">6</td><td class="num">4</td><td class="num">2</td></tr>
-              <tr><td><span class="prod">151 ETB</span></td><td class="num">6</td><td class="num">4</td><td class="num">4</td><td class="num">0</td></tr>
+              <tr class="grp"><td colspan="7">Arriving</td></tr>
+              <tr>
+                <td><span class="po-id">PO-1044</span></td><td>Pokémon Centre AU</td>
+                <td>Journey Together — Elite Trainer Box</td>
+                <td><span class="badge b-green">Arrived</span></td><td class="num">60 boxes</td><td class="num">Ready</td>
+                <td><button class="btn-teal" type="button" data-goto="s6">Receive</button></td>
+              </tr>
+              <tr>
+                <td><span class="po-id">PO-1045</span></td><td>Southern Hobby Distribution</td>
+                <td>Prismatic Evolutions — Booster Bundle</td>
+                <td><span class="badge b-blue">In transit</span></td><td class="num">120 bundles</td><td class="num">25 May</td><td></td>
+              </tr>
+              <tr>
+                <td><span class="po-id">PO-1042</span></td><td>TCG Direct</td>
+                <td>Surging Sparks (EN) — Booster box</td>
+                <td><span class="badge b-blue">In transit</span></td><td class="num">240 units</td><td class="num">26 May</td>
+                <td><button class="btn-secondary" type="button">Track</button></td>
+              </tr>
+              <tr>
+                <td><span class="po-id">PO-1039</span></td><td>PokéJapan Direct</td>
+                <td>Destined Rivals (EN) — Booster box</td>
+                <td><span class="badge b-amber">Customs</span></td><td class="num">600 packs</td><td class="num">28 May</td>
+                <td><button class="btn-secondary" type="button">Chase</button></td>
+              </tr>
+              <tr>
+                <td><span class="po-id">PO-1046</span></td><td>TCG Direct</td>
+                <td>Surging Sparks · Destined Rivals · Journey Together</td>
+                <td><span class="badge b-blue">Ordered</span></td><td class="num">504 packs</td><td class="num">12 Aug</td><td></td>
+              </tr>
+              <tr class="grp"><td colspan="7">Pre-payments due</td></tr>
+              <tr>
+                <td><span class="po-id">SV11B</span></td><td>TCG Direct</td>
+                <td>Black Bolt — preorder, releases 20 Jun</td>
+                <td><span class="badge b-amber">$4,200 due</span></td><td class="num">288 packs</td><td class="num">4 days</td>
+                <td><button class="btn-secondary" type="button">Mark paid</button></td>
+              </tr>
+              <tr>
+                <td><span class="po-id">SV11</span></td><td>Pokémon Centre AU</td>
+                <td>Prismatic Evolutions — preorder, releases 11 Jul</td>
+                <td><span class="badge b-amber">$4,200 due</span></td><td class="num">120 bundles</td><td class="num">11 Jul</td>
+                <td><button class="btn-secondary" type="button">Mark paid</button></td>
+              </tr>
             </tbody>
           </table>
+          </div>
         </div>
-        <ul class="checks" style="margin-top:14px">
-          <li><span class="tick y">✓</span><div>Carrier and tracking on file <span class="meta">both required, matching the server check. Today the badge turns green with either one, then receiving fails.</span></div></li>
-          <li><span class="tick y">✓</span><div>Payment recorded</div></li>
-          <li><span class="tick y">✓</span><div>Delivery photo attached</div></li>
-          <li><span class="tick y">✓</span><div>Short allocation can reach received <span class="meta">status compares against confirmed quantity rather than ordered, so a short line no longer sits partial forever</span></div></li>
-        </ul>
-        <div class="ibrow" style="margin-top:14px"><button class="ib ib-p">Submit receipt</button></div>
-        <div class="note" style="margin-top:13px"><b>Idempotent and atomic.</b> One key per submission, header and lines in one call. Today the one-click receive has no key at all: a second click in sequence is caught by the remaining-quantity guard, but two concurrent requests both read the old received quantity and book the stock twice. Neither path is wrapped in a transaction.</div>
-      </div>
+      </section>
 
-      <div class="card">
-        <div class="cardhead"><h3 style="margin:0">Fee ledger <span class="tag-new">new</span></h3><span class="b b-grey">3 bills</span></div>
-        <div class="tw" style="margin:0">
-          <table style="min-width:0">
-            <thead><tr><th>Bill</th><th>Type</th><th>Date</th><th class="num">AUD</th></tr></thead>
+      <!-- ================= 6 · RECEIVING ================= -->
+      <section class="view" id="v-s6">
+        <div class="grid2">
+          <div class="card tight p0">
+            <div class="ph">
+              <div><h3 style="margin:0">Receive <span class="po-id">PO-1042</span></h3><div class="cap" style="margin:4px 0 0">2 PO lines · 360 units ordered · TCG Direct</div></div>
+              <span class="badge b-blue">In transit</span>
+            </div>
+            <div class="tw">
+            <table>
+              <thead><tr><th>Item</th><th class="num">Ordered</th><th class="num">Arrived</th><th class="num">Damaged</th><th class="num">Good</th><th>Allocate to</th></tr></thead>
+              <tbody>
+                <tr><td><b>Surging Sparks (EN)</b><div class="sub2">PKM-SS-EN</div></td><td class="num">240</td><td class="num">240</td><td class="num">4</td><td class="num">236</td><td><span class="badge b-purple">Split online + vending</span><div class="sub2">60 online · 176 vending</div></td></tr>
+                <tr><td><b>Destined Rivals (EN)</b><div class="sub2">PKM-DR-EN</div></td><td class="num">120</td><td class="num">116</td><td class="num">2</td><td class="num">114</td><td><span class="badge b-blue">Vending machines</span><div class="sub2">114 vending</div></td></tr>
+              </tbody>
+            </table>
+            </div>
+            <div style="padding:14px 18px 18px">
+              <div class="kpis k4" style="margin-bottom:14px;gap:10px">
+                <div class="kpi" style="padding:11px 12px"><div class="l">Good to online</div><div class="v" style="font-size:19px;color:var(--purple)">60</div></div>
+                <div class="kpi" style="padding:11px 12px"><div class="l">Good to vending</div><div class="v" style="font-size:19px;color:var(--blue)">290</div></div>
+                <div class="kpi" style="padding:11px 12px"><div class="l">To quarantine</div><div class="v" style="font-size:19px;color:var(--red)">6</div></div>
+                <div class="kpi" style="padding:11px 12px"><div class="l">Still due</div><div class="v" style="font-size:19px;color:var(--amber)">4</div></div>
+              </div>
+              <button class="btn-teal" id="recvbtn" type="button">Confirm receipt · 350 good + 6 damaged</button>
+              <div id="received" class="stamp hide" style="margin-top:13px">Receipt RCV-00842 confirmed · 60 good to the Online store, 290 to Vending machines, 6 damaged quarantined · PO-1042 is now Partial with 4 units still due</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card tight" style="margin-bottom:16px">
+              <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
+                <div><h3>Import costs</h3><div class="cap" style="margin:0">Logged as each bill lands.</div></div>
+                <span class="badge b-purple">3 bills</span>
+              </div>
+              <div class="tw" style="border:1px solid var(--line);border-radius:11px;overflow:hidden">
+                <table>
+                  <thead><tr><th>Bill</th><th>Type</th><th>Date</th><th class="num">Amount</th></tr></thead>
+                  <tbody>
+                    <tr><td class="sub2" style="margin:0">Freight invoice</td><td>Freight</td><td class="sub2" style="margin:0">28 Jul</td><td class="num">$180.00</td></tr>
+                    <tr><td class="sub2" style="margin:0">Customs entry</td><td>Import duty</td><td class="sub2" style="margin:0">29 Jul</td><td class="num">$146.75</td></tr>
+                    <tr><td class="sub2" style="margin:0">Customs entry</td><td>Import GST</td><td class="sub2" style="margin:0">2 Aug</td><td class="num">$72.25</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="btn-row" style="margin-top:12px"><button class="btn-secondary" type="button">Log another bill</button><button class="btn-link" type="button">None expected</button></div>
+
+              <div class="sublabel">Landed cost, per pack</div>
+              <dl class="kv">
+                <dt>Goods</dt><dd>$3.82</dd>
+                <dt>Freight, apportioned</dt><dd>$0.20</dd>
+                <dt>Duty and GST, apportioned</dt><dd>$0.18</dd>
+                <dt>Landed cost</dt><dd class="tot">$4.20</dd>
+              </dl>
+              <div class="sub2" style="margin-top:8px">Matches the $4.20 latest PO cost shown on the machine pick list.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card tight p0">
+          <div class="ph"><h3 style="margin:0">History for this PO</h3><span class="muted" style="font-size:11.5px">6 events</span></div>
+          <div class="tw">
+          <table>
+            <thead><tr><th>When</th><th>Event</th><th>Who</th><th>Detail</th></tr></thead>
             <tbody>
-              <tr><td class="meta">DHL 4471-8823</td><td>Import GST</td><td class="meta">28 Jul</td><td class="num">312.40</td></tr>
-              <tr><td class="meta">DHL 4471-8824</td><td>Broker fee</td><td class="meta">29 Jul</td><td class="num">88.00</td></tr>
-              <tr><td class="meta">DHL 4472-0119</td><td>Duty</td><td class="meta">2 Aug</td><td class="num">146.75</td></tr>
+              <tr><td class="sub2" style="margin:0">18 May</td><td><span class="badge b-purple">Draft</span></td><td>Game Guys</td><td class="sub2" style="margin:0">2 lines · 360 units · ref TCG-AU-58491</td></tr>
+              <tr><td class="sub2" style="margin:0">18 May</td><td><span class="badge b-blue">Approved</span></td><td>Game Guys</td><td class="sub2" style="margin:0">$3,780 · within committed spend</td></tr>
+              <tr><td class="sub2" style="margin:0">18 May</td><td><span class="badge b-blue">Ordered</span></td><td>Game Guys</td><td class="sub2" style="margin:0">Sent to TCG Direct · expected 26 May</td></tr>
+              <tr><td class="sub2" style="margin:0">20 May</td><td><span class="badge b-blue">In transit</span></td><td>System</td><td class="sub2" style="margin:0">Tracking registered</td></tr>
+              <tr><td class="sub2" style="margin:0">3 Aug</td><td><span class="badge b-green">PO receipt</span></td><td>Riley · Receiver</td><td class="sub2" style="margin:0">RCV-00842 · 350 good · 6 damaged</td></tr>
+              <tr><td class="sub2" style="margin:0">3 Aug</td><td><span class="badge b-amber">Partial</span></td><td>System</td><td class="sub2" style="margin:0">4 units still due from supplier</td></tr>
             </tbody>
           </table>
+          </div>
         </div>
-        <div class="ibrow" style="margin-top:12px"><button class="ib ib-s">Log another bill</button><button class="ib ib-g">No more expected</button></div>
-        <div class="note" style="margin-top:13px"><b>Three problems this replaces.</b> Fees currently accumulate in place with no key, so a retry double-counts. Import GST and duty write to the same cost column, so that distinction survives only in the activity log. And logging the first fee silently switches off the prompt for the other two, which arrive days later.</div>
+      </section>
 
-        <div class="sublabel">Landed cost, per pack</div>
-        <dl class="kv">
-          <dt>Goods, JPY converted</dt><dd>$6.12</dd>
-          <dt>Freight apportioned by value</dt><dd>$0.51</dd>
-          <dt>Duty and GST apportioned</dt><dd>$0.25</dd>
-          <dt>Landed, AUD</dt><dd>$6.88</dd>
-          <dt>Booked to stock at</dt><dd>$6.88 <span class="b b-ok" style="margin-left:4px">AUD</span></dd>
-        </dl>
-        <div class="note" style="margin-top:12px">Today a JPY purchase books stock movements at a JPY unit cost with no freight or duty in it, so margin, stock turn and inventory value are all computed off the wrong number.</div>
-      </div>
     </div>
-
-    <div class="card">
-      <h3>Trail</h3>
-      <div class="cap">One PO, end to end.</div>
-      <div class="tw">
-        <table>
-          <thead><tr><th>When</th><th>Event</th><th>Who</th><th>Detail</th></tr></thead>
-          <tbody>
-            <tr><td class="meta">4 Aug 09:12</td><td><span class="b b-grey">drafted</span></td><td class="meta">purchasing</td><td class="meta">3 lines, 1 substituted from a supplier offer</td></tr>
-            <tr><td class="meta">4 Aug 14:02</td><td><span class="b b-info">approved</span></td><td class="meta">josh@rakish.com</td><td class="meta">approved_by recorded</td></tr>
-            <tr><td class="meta">4 Aug 14:06</td><td><span class="b b-pur">sent</span></td><td class="meta">josh@rakish.com</td><td class="meta">WhatsApp to Kenji, channel recorded</td></tr>
-            <tr><td class="meta">6 Aug 10:41</td><td><span class="b b-teal">confirmed</span></td><td class="meta">purchasing</td><td class="meta">151 ETB short by 2, logged</td></tr>
-            <tr><td class="meta">9 Aug 08:15</td><td><span class="b b-info">in transit</span></td><td class="meta">system</td><td class="meta">carrier ETA 18 Aug</td></tr>
-            <tr><td class="meta">18 Aug 13:20</td><td><span class="b b-ok">received</span></td><td class="meta">warehouse</td><td class="meta">partial, 2 of 6 outstanding</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note" style="margin-top:15px">Four purchasing actions currently write no activity row at all, including the supplier confirmation quantities that are the input to every shortfall decision. The timeline is also capped at 50 events with no pagination, so on a busy PO the approval falls off the end.</div>
-    </div>
-  </section>
-
-  <div class="foot">
-    <b>Game Guys Operations</b> · proposed purchasing flow. Interactive mockup with sample data, no live database.<br>
-    Read alongside <a href="PURCHASING-STREAMLINE.md" style="color:var(--purple)">PURCHASING-STREAMLINE.md</a> for the current-state map, data model, defect list and build sequence.
   </div>
 </div>
 
 <script>
 (function(){
-  var stages = Array.prototype.slice.call(document.querySelectorAll('.stage'));
-  var panels = ['p1','p2','p3','p4','p5','p6'].map(function(id){ return document.getElementById(id); });
+  var rail = Array.prototype.slice.call(document.querySelectorAll('.srail button'));
   function show(id){
-    stages.forEach(function(s){ s.setAttribute('aria-selected', s.dataset.p === id ? 'true' : 'false'); });
-    panels.forEach(function(p){ p.classList.toggle('hide', p.id !== id); });
-    window.scrollTo({top:0, behavior:'smooth'});
+    rail.forEach(function(b){
+      var on = b.dataset.s === id;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.toggle('show', v.id === 'v-' + id); });
+    var c = document.querySelector('.content');
+    if (c) c.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  stages.forEach(function(s){ s.addEventListener('click', function(){ show(s.dataset.p); }); });
+  rail.forEach(function(b){ b.addEventListener('click', function(){ show(b.dataset.s); }); });
   document.querySelectorAll('[data-goto]').forEach(function(b){
     b.addEventListener('click', function(){ show(b.dataset.goto); });
   });
@@ -760,7 +744,7 @@ Prices in JPY, and how long valid?</pre>
   var drop = document.getElementById('drop');
   if (drop) drop.addEventListener('click', function(){
     document.getElementById('extract').classList.remove('hide');
-    drop.textContent = 'kanazawa_stocklist_0804.jpg · extracted in 8 seconds';
+    drop.textContent = 'pokejapan_stocklist_0804.jpg · read in 8 seconds';
   });
 
   function stamp(btnId, stampId, label){
@@ -770,13 +754,12 @@ Prices in JPY, and how long valid?</pre>
       document.getElementById(stampId).classList.remove('hide');
       b.textContent = label;
       b.disabled = true;
-      b.classList.remove('ib-p');
-      b.classList.add('ib-s');
     });
   }
   stamp('apprbtn','approved','Approved');
-  stamp('sendbtn','sent','Ordered');
+  stamp('sendbtn','sent','Send recorded');
   stamp('commitbtn','committed','Committed');
+  stamp('recvbtn','received','Receipt confirmed');
 })();
 </script>
 </body>

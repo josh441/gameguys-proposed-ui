@@ -1,12 +1,12 @@
 # Game Guys Operations Proposal — Project Handover
 
-**Prepared:** 4 August 2026  
-**Status:** Product/UX proposal complete and published; production implementation not started in this repository  
-**Repository:** `josh441/gameguys-proposed-ui`  
-**Live proposal:** <https://josh441.github.io/gameguys-proposed-ui/>  
-**GitHub Pages source:** `main` branch, repository root  
-**Published release verified:** `a770f5d210284fa757dc8d7b1a84f1c633aa448e`  
-**Working branch:** `mobile-responsive` at `ccbed21`
+**Prepared:** 5 August 2026
+**Status:** Integrated purchasing and print-Notes revision ready for product review; publication pending
+**Repository:** `josh441/gameguys-proposed-ui`
+**Live proposal:** <https://josh441.github.io/gameguys-proposed-ui/>
+**GitHub Pages source:** `main` branch, repository root
+**Published release verified:** `d2d38f3` (merged PR #7 purchasing proposal)
+**Working branch:** `purchasing-streamline` at `58dc694`, with the integrated UI revision in the working tree
 
 ## 1. Purpose of this handover
 
@@ -39,36 +39,40 @@ Use these references together:
 
 If an older statement conflicts with the current prototype, the current requirement is:
 
-- the filler printout has **five columns**: `Slot · Item · Price to set · Last sold (Nayax) · Amount`;
+- the filler printout has **six columns**: `Slot · Item · Price to set · Last sold (Nayax) · Amount · Notes`;
 - Returns are a separate sub-tab in Machines;
 - Inventory uses one unified Stock History rather than a separate Route Returns screen.
 
 Known discrepancies in older artifacts at the time of handover:
 
 - The header in `HANDOFF.md` says its latest changes still need publication. That note is stale; the current release is published at commit `a770f5d`.
-- Build phase 2 in `BUILD-PLAN.md` still refers to the older four-column printout. Section 3.1b, the current UI, and this handover contain the approved five-column version.
+- Earlier releases used four- and five-column printouts. Section 3.1b, the current UI, and this handover contain the approved six-column version with a blank handwritten Notes field.
 - The SQL sketch in `BUILD-PLAN.md` shows the earlier `unit_price` field, while the current behavioral requirement also calls for `price_to_set_snapshot`, `last_sold_price_snapshot`, and `last_sold_sale_id`. The production schema must be based on the audited application, not copied from the sketch.
 - The current print-table header says `Qty`; product documentation calls the same value `Amount`. Production should standardize the final label without changing its meaning: quantity to stock.
 
 ## 3. Current release state
 
-The published proposal was verified on 4 August 2026:
+The GitHub Pages baseline was reconciled on 5 August 2026. PR #7 is published; the integrated Inventory navigation and six-column print revision described in this handover are local and still need publication:
 
 | Check | Result |
 |---|---|
 | GitHub Pages status | Built successfully |
-| Published commit | `a770f5d210284fa757dc8d7b1a84f1c633aa448e` |
+| Published commit | `d2d38f3` |
 | Pages source | `main` at `/` |
 | Live Machines page | HTTP 200 |
 | Separate Returns tab | Present |
 | Last sold price in print preview | Present |
 | Live Inventory page | HTTP 200 |
 | Unified Stock History | Present |
+| Published standalone purchasing proposal | Present |
+| Local integrated Inventory purchasing view | Ready; not yet published |
+| Local blank Notes print column | Ready; not yet published |
 
 Relevant merged releases:
 
 - [PR #5 — Refine stock returns and Nayax pricing](https://github.com/josh441/gameguys-proposed-ui/pull/5)
 - [PR #6 — Print Nayax last-sold prices](https://github.com/josh441/gameguys-proposed-ui/pull/6)
+- [PR #7 — Purchasing streamline proposal](https://github.com/josh441/gameguys-proposed-ui/pull/7)
 
 The local file `MERGE-READINESS-AUDIT.md` is currently untracked. It is not part of the published proposal or the release described here.
 
@@ -146,6 +150,7 @@ After confirmation:
 
 Prototype links:
 
+- [Purchasing](purchasing-flow.html)
 - [Returns](machines.html#returns)
 - [Stock History](inventory.html#stock-history)
 
@@ -162,6 +167,7 @@ The approved printed columns are:
 3. Price to set
 4. Last sold (Nayax)
 5. Amount (`Qty` in the current prototype)
+6. Notes (blank, for handwriting during the route)
 
 Print rules:
 
@@ -169,6 +175,7 @@ Print rules:
 - The last-sold value is the latest successful Nayax sale for the same SKU.
 - Latest PO cost does not print.
 - The source machine and sale timestamp do not print.
+- Notes prints as a blank writable field on every product row.
 - Pace, PAR, group, stock status, return controls, and other screen-only fields do not print.
 - The proposal uses an A4 portrait print layout.
 
@@ -435,7 +442,7 @@ The production feature is complete only when:
 
 ## 17. Purchasing streamline (production app)
 
-**Scope note.** Sections 1 to 16 describe the `gameguys-proposed-ui` prototype. This section is different: it summarises a proposal against the **live production application** (`gameguys-saas`, Next.js + Supabase), covering purchasing end to end from approval through ordering, recording and tracking. It was written on 4 August 2026 from a direct read of the production working tree plus `docs/SOP-Purchasing.html`, `docs/SOP-Admin.html`, `docs/USER_GUIDE.md`, `docs/Bottlenecks-Proposal.html` and `docs/SOP-Readiness-Audit.md`.
+**Scope note.** This section summarises a proposal against the **live production application** (`gameguys-saas`, Next.js + Supabase), covering purchasing end to end from buy signal through supplier reality, approval, ordering, tracking, receiving, and landed cost. The audited production detail remains in `PURCHASING-STREAMLINE.md`; its six stages are now represented by the integrated Inventory purchasing prototype in `purchasing-flow.html`. The audit was written on 4 August 2026 from a direct read of the production working tree plus `docs/SOP-Purchasing.html`, `docs/SOP-Admin.html`, `docs/USER_GUIDE.md`, `docs/Bottlenecks-Proposal.html` and `docs/SOP-Readiness-Audit.md`.
 
 The full proposal is [PURCHASING-STREAMLINE.md](PURCHASING-STREAMLINE.md). The interactive version is [purchasing-flow.html](purchasing-flow.html). This section exists so the handover is not silent about it.
 
