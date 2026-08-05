@@ -97,11 +97,13 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
   stock-level or health graphic until the business defines the thresholds behind it.
   **AI stock camera:** a compact **Scan stock** action in the Inventory header opens the scanner on
   demand; do not reserve a dashboard card for it.
-- **Purchasing:** one integrated six-stage workspace: Buy list, Supplier availability, Release calls,
-  Approval, In transit, and Receiving. Keep it inside Inventory and connect it to the existing PO
-  list/detail and receiving surfaces. The buy list is net of on-hand and already-on-order stock;
-  approval never skips directly to Ordered; receipt keeps Online/Vending/Quarantine allocations explicit.
-  See `PURCHASING-STREAMLINE.md` for production reuse, schema, defect, and sequencing details.
+- **Purchasing:** one integrated workspace with no more than three tabs: **Plan**, **Orders**, and
+  **Receive**. Plan contains the buy list, supplier availability, and new-release calls. Orders contains
+  approval, supplier send, tracking, and incoming stock. Receive contains delivery counts, damage,
+  Online/Vending allocation, landed cost, and PO history. Keep it inside Inventory and connect it to
+  the existing PO list/detail and receiving surfaces. The buy list is net of on-hand and already-on-order
+  stock; approval never skips directly to Ordered; receipt keeps Online/Vending/Quarantine allocations
+  explicit. See `PURCHASING-STREAMLINE.md` for production reuse, schema, defect, and sequencing details.
 - **POs & Invoices:** PO list with **View / edit** and **Receive** actions. The edit workspace covers
   supplier, status, order/ETA dates, references, notes, and line-level item, SKU, ordered quantity,
   pack size, and unit cost. Per-**pack**, per-**booster box**, per-**bundle**, or per-**ETB** cost is

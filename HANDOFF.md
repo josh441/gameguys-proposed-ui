@@ -11,7 +11,7 @@
 
 The proposal now covers the full stock journey for Pokémon TCG products:
 
-1. A buyer moves from a netted buy list through supplier availability, release calls, approval, ordering, tracking, and receiving inside Inventory.
+1. A buyer moves through three Inventory tabs—Plan, Orders, and Receive—from a netted buy list through supplier reality, approval, tracking, and stock receipt.
 2. A filler prepares and completes a vending-machine run.
 3. Unused products are returned from a selected completed route/machine.
 4. Good returns go back to unallocated Warehouse stock; damaged returns go to Quarantine.
@@ -71,12 +71,9 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 
 **App path:** `Inventory → Purchasing`
 
-1. Start from a buy list net of stock on hand and open orders.
-2. Request supplier availability; capture prices, available quantities, MOQ, validity, and ranked substitutions.
-3. For unreleased Pokémon sets, compare expected demand, selling price, margin, deposit, and a named comparable before choosing Commit, Watch, or Pass.
-4. Approve from one decision card. Approval creates the `Approved` state; it does not skip to `Ordered`.
-5. Generate/send the supplier order, record how and when it was sent, and track ETA or carrier exceptions in one incoming-stock view.
-6. Receive arrived, good, damaged, and still-due quantities; allocate good stock to Online or Vending, quarantine damage, and post landed costs.
+1. In **Plan**, start from a buy list net of stock on hand and open orders, request supplier availability, and make evidence-based calls on unreleased Pokémon sets.
+2. In **Orders**, approve from one decision card, generate/send the supplier order, and track ETA or carrier exceptions. Approval creates the `Approved` state; it does not skip to `Ordered`.
+3. In **Receive**, record arrived, good, damaged, and still-due quantities; allocate good stock to Online or Vending, quarantine damage, and post landed costs.
 
 **Prototype:** [Open integrated Purchasing](purchasing-flow.html) · [Production audit and build sequence](PURCHASING-STREAMLINE.md)
 
@@ -117,7 +114,7 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 | Show where it came from | Route selector + return line | Machine, venue, and route are displayed from the completed run | Included |
 | Mark a return damaged | Return line | Good/Damaged choice, required reason, Quarantine destination | Included |
 | View and edit POs | Inventory → Purchase Orders & Invoices | Header and line fields can be changed and saved | Included |
-| Integrate purchasing end to end | Inventory → Purchasing | Six-stage workspace connects buy signals, supplier reality, release calls, approval, send/tracking, and receiving | Included |
+| Integrate purchasing end to end | Inventory → Purchasing | Three tabs—Plan, Orders, Receive—connect the complete buying lifecycle | Included |
 | Mark off what arrived | PO → Receive delivery | Arrived, damaged, good, and still-due quantities are shown per line | Included |
 | Mark stock for store or vending | Receiving allocation | Online store, Vending machines, or balanced split is required | Included |
 | Distinguish store and vending inventory | Inventory → Stock Overview | Separate KPIs, allocation labels, locations, and balances | Included |

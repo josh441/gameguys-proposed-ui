@@ -63,16 +63,22 @@
   .view{display:none}
   .view.show{display:block}
 
-  /* stage rail — third level, purple so it reads below the teal sub-tabs */
+  /* three user workspaces — detail stays inside each tab */
   .srail{display:flex;gap:5px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px;margin-bottom:18px;overflow-x:auto;box-shadow:0 1px 2px rgba(26,31,57,.04)}
-  .srail button{flex:1;min-width:138px;display:flex;align-items:center;gap:9px;border:none;background:none;border-radius:10px;padding:9px 11px;cursor:pointer;text-align:left;font-family:var(--font)}
+  .srail button{flex:1;min-width:210px;display:flex;align-items:center;gap:10px;border:none;background:none;border-radius:10px;padding:11px 13px;cursor:pointer;text-align:left;font-family:var(--font)}
   .srail button:hover{background:#f7f6fc}
   .srail .n{width:22px;height:22px;border-radius:7px;background:#eef0f4;color:var(--fg3);font-family:var(--display);font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-  .srail .t{font-family:var(--display);font-weight:800;font-size:12.5px;color:var(--fg2);white-space:nowrap}
+  .srail .tabtext{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .srail .t{font-family:var(--display);font-weight:800;font-size:13px;color:var(--fg2);white-space:nowrap}
+  .srail .d{font-size:10.5px;font-weight:600;color:var(--fg3);white-space:nowrap}
   .srail button.on{background:var(--purple-soft)}
   .srail button.on .n{background:var(--purple);color:#fff}
   .srail button.on .t{color:var(--purple)}
   .srail button:focus-visible{outline:2px solid var(--purple);outline-offset:1px}
+  .phasehead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:28px 2px 12px;padding-top:24px;border-top:1px solid var(--line)}
+  .phasehead h2{font-size:17px;margin:0 0 4px}
+  .phasehead p{font-size:12px;color:var(--fg3);margin:0;line-height:1.5}
+  .phasehead .step{font-family:var(--display);font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--purple);background:var(--purple-soft);border-radius:999px;padding:6px 9px;white-space:nowrap}
 
   .kpis{display:grid;gap:13px;margin-bottom:18px}
   .k3{grid-template-columns:repeat(3,1fr)}
@@ -207,7 +213,7 @@
         <div><h1>Purchasing <span class="pill p-buy">PURCHASING VIEW</span></h1>
         <div class="subtitle">What to buy, what suppliers have, and what is on its way — netted against stock on hand and orders already placed.</div></div>
         <div class="head-actions">
-          <button class="btn-primary" type="button">Request availability</button>
+          <button class="btn-primary" type="button" data-goto="plan" data-target="availability">Request availability</button>
           <div class="syncchip"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/></svg> Synced · 8:32 AM</div>
         </div>
       </div>
@@ -219,17 +225,14 @@
         <a href="inventory.html#history">Stock History</a>
       </div>
 
-      <div class="srail" role="tablist" aria-label="Purchasing stages">
-        <button class="on" role="tab" aria-selected="true" data-s="s1"><span class="n">1</span><span class="t">Buy list</span></button>
-        <button role="tab" aria-selected="false" data-s="s2"><span class="n">2</span><span class="t">Availability</span></button>
-        <button role="tab" aria-selected="false" data-s="s3"><span class="n">3</span><span class="t">Release calls</span></button>
-        <button role="tab" aria-selected="false" data-s="s4"><span class="n">4</span><span class="t">Approval</span></button>
-        <button role="tab" aria-selected="false" data-s="s5"><span class="n">5</span><span class="t">In transit</span></button>
-        <button role="tab" aria-selected="false" data-s="s6"><span class="n">6</span><span class="t">Receiving</span></button>
+      <div class="srail" role="tablist" aria-label="Purchasing workspaces">
+        <button class="on" role="tab" aria-selected="true" aria-controls="v-plan" data-s="plan"><span class="n">1</span><span class="tabtext"><span class="t">Plan</span><span class="d">Buy list · suppliers · releases</span></span></button>
+        <button role="tab" aria-selected="false" aria-controls="v-orders" data-s="orders"><span class="n">2</span><span class="tabtext"><span class="t">Orders</span><span class="d">Approve · send · track</span></span></button>
+        <button role="tab" aria-selected="false" aria-controls="v-receive" data-s="receive"><span class="n">3</span><span class="tabtext"><span class="t">Receive</span><span class="d">Arrivals · damage · landed cost</span></span></button>
       </div>
 
-      <!-- ================= 1 · BUY LIST ================= -->
-      <section class="view show" id="v-s1">
+      <!-- ================= PLAN ================= -->
+      <section class="view show" id="v-plan">
         <div class="kpis k4">
           <div class="kpi"><div class="l">Buy suggestions</div><div class="v">18</div><div class="d muted">14 restock · 4 preorder</div></div>
           <div class="kpi"><div class="l">Committed spend</div><div class="v">$24,180</div><div class="d muted">not yet received</div></div>
@@ -296,7 +299,7 @@
                 <td><b>Black Bolt Booster Pack</b><div class="sub2">SV11B · not yet released</div></td>
                 <td>English</td><td class="num">80</td><td class="num">0</td><td class="num muted">—</td><td class="num muted">?</td>
                 <td><span class="badge b-amber">Needs preorder</span><div class="sub2">Preorder closes in 4 days</div></td>
-                <td><button class="btn-primary" type="button" data-goto="s3">Open release call</button></td>
+                <td><button class="btn-primary" type="button" data-goto="plan" data-target="release-calls">Open release call</button></td>
               </tr>
               <tr>
                 <td><b>Prismatic Evolutions Booster Bundle</b><div class="sub2">PKM-PE-EN</div></td>
@@ -314,10 +317,7 @@
           </table>
           </div>
         </div>
-      </section>
-
-      <!-- ================= 2 · AVAILABILITY ================= -->
-      <section class="view" id="v-s2">
+        <div class="phasehead" id="availability"><div><h2>Supplier availability</h2><p>Ask what is actually available before building the order.</p></div><span class="step">PLAN · 2</span></div>
         <div class="grid2b">
           <div class="card tight">
             <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
@@ -388,10 +388,7 @@ Terms on file: NET30.</pre>
           </table>
           </div>
         </div>
-      </section>
-
-      <!-- ================= 3 · RELEASE CALLS ================= -->
-      <section class="view" id="v-s3">
+        <div class="phasehead" id="release-calls"><div><h2>New-release decisions</h2><p>Use comparable sales and margin evidence when the product has no history yet.</p></div><span class="step">PLAN · 3</span></div>
         <div class="kpis k4">
           <div class="kpi"><div class="l">Releases next 30d</div><div class="v">6</div><div class="d muted">2 need a preorder PO</div></div>
           <div class="kpi"><div class="l">Preordered / covered</div><div class="v" style="color:var(--green-txt)">4</div><div class="d muted">POs in flight</div></div>
@@ -481,8 +478,9 @@ Terms on file: NET30.</pre>
         </div>
       </section>
 
-      <!-- ================= 4 · APPROVAL ================= -->
-      <section class="view" id="v-s4">
+      <!-- ================= ORDERS ================= -->
+      <section class="view" id="v-orders">
+        <div class="phasehead" style="margin-top:0;padding-top:0;border-top:0"><div><h2>Approve the order</h2><p>Make the buying decision from one complete cost and supplier summary.</p></div><span class="step">ORDER · 1</span></div>
         <div class="grid2">
           <div class="card tight p0">
             <div class="ph">
@@ -540,10 +538,7 @@ Terms on file: NET30.</pre>
             </div>
           </div>
         </div>
-      </section>
-
-      <!-- ================= 5 · IN TRANSIT ================= -->
-      <section class="view" id="v-s5">
+        <div class="phasehead"><div><h2>Send and track</h2><p>Record the supplier send once, then manage ETA and delivery exceptions.</p></div><span class="step">ORDER · 2</span></div>
         <div class="grid2b">
           <div class="card tight">
             <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
@@ -572,7 +567,7 @@ Terms on file: NET30.</pre>
               <li class="now"><span class="dot"></span><div><b>Out for delivery</b><div class="when">Expected 26 May · ready to receive</div></div></li>
               <li><span class="dot"></span><div><b class="muted">Received</b><div class="when">Not yet recorded</div></div></li>
             </ul>
-            <div class="btn-row" style="margin-top:14px"><button class="btn-teal" type="button" data-goto="s6">Receive this PO</button></div>
+            <div class="btn-row" style="margin-top:14px"><button class="btn-teal" type="button" data-goto="receive">Receive this PO</button></div>
           </div>
         </div>
 
@@ -590,7 +585,7 @@ Terms on file: NET30.</pre>
                 <td><span class="po-id">PO-1044</span></td><td>Pokémon Centre AU</td>
                 <td>Journey Together — Elite Trainer Box</td>
                 <td><span class="badge b-green">Arrived</span></td><td class="num">60 boxes</td><td class="num">Ready</td>
-                <td><button class="btn-teal" type="button" data-goto="s6">Receive</button></td>
+                <td><button class="btn-teal" type="button" data-goto="receive">Receive</button></td>
               </tr>
               <tr>
                 <td><span class="po-id">PO-1045</span></td><td>Southern Hobby Distribution</td>
@@ -633,8 +628,9 @@ Terms on file: NET30.</pre>
         </div>
       </section>
 
-      <!-- ================= 6 · RECEIVING ================= -->
-      <section class="view" id="v-s6">
+      <!-- ================= RECEIVE ================= -->
+      <section class="view" id="v-receive">
+        <div class="phasehead" style="margin-top:0;padding-top:0;border-top:0"><div><h2>Receive and allocate</h2><p>Record one delivery, quarantine damage, and finish landed cost.</p></div><span class="step">RECEIVE</span></div>
         <div class="grid2">
           <div class="card tight p0">
             <div class="ph">
@@ -730,7 +726,15 @@ Terms on file: NET30.</pre>
   }
   rail.forEach(function(b){ b.addEventListener('click', function(){ show(b.dataset.s); }); });
   document.querySelectorAll('[data-goto]').forEach(function(b){
-    b.addEventListener('click', function(){ show(b.dataset.goto); });
+    b.addEventListener('click', function(){
+      show(b.dataset.goto);
+      if (b.dataset.target) {
+        window.setTimeout(function(){
+          var target = document.getElementById(b.dataset.target);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 20);
+      }
+    });
   });
 
   var altbtn = document.getElementById('altbtn');

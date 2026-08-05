@@ -60,14 +60,11 @@ Receiving rules:
 
 ## Integrated purchasing workflow
 
-Build Purchasing as an **Inventory sub-view**, not as a sixth top-level tab or a disconnected tool. Use one compact six-stage workspace so buyers can progress without moving between unrelated screens:
+Build Purchasing as an **Inventory sub-view**, not as a sixth top-level tab or a disconnected tool. Limit its primary navigation to three work tabs:
 
-1. **Buy list** — show pool-aware suggestions net of on-hand and already-on-order quantities; suppress covered SKUs and record buy/snooze outcomes.
-2. **Supplier availability** — create supplier requests, read PDF/photo/pasted replies through the existing extractor, match supplier aliases, and show price, MOQ, validity, available quantity, and ranked alternates.
-3. **Release calls** — support never-sold Pokémon releases with named comparables, expected sell price, projected margin, deposit, demand evidence, and a recorded commit/watch/pass decision.
-4. **Approval** — present quote, landed-cost estimate, margin, supplier performance, and cash guardrail on one card. Enforce a real state machine: `Draft → Approved → Ordered`; approval must never silently mark a PO Ordered.
-5. **Send and in transit** — generate the supplier output, record channel/recipient/sender/reference, prefill ETA, register or re-register tracking, and prioritize carrier ETA and exception alerts.
-6. **Receiving and cost** — feed the existing receiving workflow, keep good Online/Vending allocation and damage/Quarantine explicit, post fees through a retry-safe ledger, and calculate landed cost in AUD.
+1. **Plan** — combine the pool-aware buy list, supplier availability, and new-release calls. Suggestions are net of on-hand and already-on-order quantities. Supplier replies show price, MOQ, validity, available quantity, and ranked alternates. Never-sold releases use named comparables, expected selling price, margin, deposit, and a commit/watch/pass decision.
+2. **Orders** — combine approval, supplier send, tracking, and incoming stock. Present quote, landed-cost estimate, margin, supplier performance, and cash guardrail on one approval card. Enforce `Draft → Approved → Ordered`; approval never silently marks a PO Ordered. Record the send and use carrier ETA and exception alerts thereafter.
+3. **Receive** — combine delivery counts, good/damaged quantities, Online/Vending allocation, Quarantine, retry-safe fees, landed cost in AUD, and PO history.
 
 Reuse the working production purchasing board, PO resolver, pool netting, supplier aliases, document extraction, consensus pricing, upcoming releases, receiving, and AfterShip integration. Follow `PURCHASING-STREAMLINE.md` for the audited production map, schema extensions, defects, sequencing, and decisions. Keep `Purchase Orders & Invoices` as the operational PO list/detail/history surface while Purchasing owns the buying lifecycle.
 
@@ -139,7 +136,7 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
 1. Audit the production repository and map reusable functionality.
 2. Confirm the five open product decisions listed in `HANDOFF.md` where they affect schema or irreversible behavior.
 3. Implement navigation and role visibility without breaking existing deep links.
-4. Integrate the six-stage Purchasing workspace inside Inventory using the existing production purchasing paths.
+4. Integrate the three-tab Purchasing workspace inside Inventory using the existing production purchasing paths.
 5. Implement the optimized Inventory table and PO edit/receiving workflow.
 6. Implement the separate filler Returns tab and unified Inventory Stock History using existing finalised-run and stock-movement data.
 7. Implement the click-only six-column print preview and approved print stylesheet.

@@ -34,7 +34,7 @@ Use these references together:
 | [HANDOFF.md](HANDOFF.md) | Product acceptance criteria, edge cases, and open decisions |
 | [handoff.html](handoff.html) | Shareable visual summary of the product handoff |
 | [PURCHASING-STREAMLINE.md](PURCHASING-STREAMLINE.md) | Purchasing proposal for the **production** app: current-state map, target flow, data model, fix list, build sequence (summarised in section 17) |
-| [purchasing-flow.html](purchasing-flow.html) | Clickable mockup of the proposed purchasing flow, stages 01 to 06 |
+| [purchasing-flow.html](purchasing-flow.html) | Clickable purchasing mockup with three work tabs: Plan, Orders, and Receive |
 | This file | Current release, scope, implementation boundary, and operational handover |
 
 If an older statement conflicts with the current prototype, the current requirement is:
@@ -442,7 +442,7 @@ The production feature is complete only when:
 
 ## 17. Purchasing streamline (production app)
 
-**Scope note.** This section summarises a proposal against the **live production application** (`gameguys-saas`, Next.js + Supabase), covering purchasing end to end from buy signal through supplier reality, approval, ordering, tracking, receiving, and landed cost. The audited production detail remains in `PURCHASING-STREAMLINE.md`; its six stages are now represented by the integrated Inventory purchasing prototype in `purchasing-flow.html`. The audit was written on 4 August 2026 from a direct read of the production working tree plus `docs/SOP-Purchasing.html`, `docs/SOP-Admin.html`, `docs/USER_GUIDE.md`, `docs/Bottlenecks-Proposal.html` and `docs/SOP-Readiness-Audit.md`.
+**Scope note.** This section summarises a proposal against the **live production application** (`gameguys-saas`, Next.js + Supabase), covering purchasing end to end from buy signal through supplier reality, approval, ordering, tracking, receiving, and landed cost. The audited production detail remains in `PURCHASING-STREAMLINE.md`; its six underlying lifecycle steps are grouped into three user-facing tabs—Plan, Orders, and Receive—in `purchasing-flow.html`. The audit was written on 4 August 2026 from a direct read of the production working tree plus `docs/SOP-Purchasing.html`, `docs/SOP-Admin.html`, `docs/USER_GUIDE.md`, `docs/Bottlenecks-Proposal.html` and `docs/SOP-Readiness-Audit.md`.
 
 The full proposal is [PURCHASING-STREAMLINE.md](PURCHASING-STREAMLINE.md). The interactive version is [purchasing-flow.html](purchasing-flow.html). This section exists so the handover is not silent about it.
 
