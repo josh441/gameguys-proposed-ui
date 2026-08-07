@@ -1,6 +1,6 @@
 # Game Guys Operations Proposal — Product & Development Handoff
 
-**Prepared:** 31 July 2026 · **Revised:** 5 August 2026
+**Prepared:** 31 July 2026 · **Revised:** 7 August 2026
 
 **Status:** Ready for product review; interactive front-end proposal, not production-connected
 
@@ -75,7 +75,7 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 2. In **Orders**, approve from one decision card, generate/send the supplier order, and track ETA or carrier exceptions. Approval creates the `Approved` state; it does not skip to `Ordered`.
 3. In **Receive**, record arrived, good, damaged, and still-due quantities; allocate good stock to Online or Vending, quarantine damage, and post landed costs.
 
-**Prototype:** [Open integrated Purchasing](purchasing-flow.html) · [Production audit and build sequence](PURCHASING-STREAMLINE.md)
+**Prototype:** [Open Inventory → Purchasing](inventory.html#purchasing) · [Production audit and build sequence](PURCHASING-STREAMLINE.md)
 
 ## 5. Workflow C — understand stock allocation
 

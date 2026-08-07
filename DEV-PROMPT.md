@@ -60,13 +60,13 @@ Receiving rules:
 
 ## Integrated purchasing workflow
 
-Build Purchasing as an **Inventory sub-view**, not as a sixth top-level tab or a disconnected tool. Limit its primary navigation to three work tabs:
+Build Purchasing as a **native Inventory sub-view**, not as a sixth top-level tab, separate application route, iframe, or disconnected tool. A user must be able to move among Stock Overview, Purchasing, Purchase Orders & Invoices, and Stock History without leaving the Inventory shell. Limit Purchasing's primary navigation to three work tabs:
 
 1. **Plan** — combine the pool-aware buy list, supplier availability, and new-release calls. Suggestions are net of on-hand and already-on-order quantities. Supplier replies show price, MOQ, validity, available quantity, and ranked alternates. Never-sold releases use named comparables, expected selling price, margin, deposit, and a commit/watch/pass decision.
 2. **Orders** — combine approval, supplier send, tracking, and incoming stock. Present quote, landed-cost estimate, margin, supplier performance, and cash guardrail on one approval card. Enforce `Draft → Approved → Ordered`; approval never silently marks a PO Ordered. Record the send and use carrier ETA and exception alerts thereafter.
 3. **Receive** — combine delivery counts, good/damaged quantities, Online/Vending allocation, Quarantine, retry-safe fees, landed cost in AUD, and PO history.
 
-Reuse the working production purchasing board, PO resolver, pool netting, supplier aliases, document extraction, consensus pricing, upcoming releases, receiving, and AfterShip integration. Follow `PURCHASING-STREAMLINE.md` for the audited production map, schema extensions, defects, sequencing, and decisions. Keep `Purchase Orders & Invoices` as the operational PO list/detail/history surface while Purchasing owns the buying lifecycle.
+Reuse the working production purchasing board, PO resolver, pool netting, supplier aliases, document extraction, consensus pricing, upcoming releases, receiving, and AfterShip integration. Follow `PURCHASING-STREAMLINE.md` for the audited production map, schema extensions, defects, sequencing, and decisions. Keep `Purchase Orders & Invoices` as the operational PO list/detail/history surface while Purchasing owns the buying lifecycle. Preserve existing Purchasing deep links by redirecting them into the Inventory Purchasing state where practical.
 
 ## After-run route returns
 

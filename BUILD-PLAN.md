@@ -104,6 +104,9 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
   the existing PO list/detail and receiving surfaces. The buy list is net of on-hand and already-on-order
   stock; approval never skips directly to Ordered; receipt keeps Online/Vending/Quarantine allocations
   explicit. See `PURCHASING-STREAMLINE.md` for production reuse, schema, defect, and sequencing details.
+  The static proposal embeds its modular purchasing mockup inside `inventory.html#purchasing`; production
+  must render this as native application components within the Inventory route, not as an iframe or
+  separate application shell. Redirect older purchasing deep links into this Inventory state.
 - **POs & Invoices:** PO list with **View / edit** and **Receive** actions. The edit workspace covers
   supplier, status, order/ETA dates, references, notes, and line-level item, SKU, ordered quantity,
   pack size, and unit cost. Per-**pack**, per-**booster box**, per-**bundle**, or per-**ETB** cost is
