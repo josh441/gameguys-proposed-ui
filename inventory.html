@@ -57,9 +57,12 @@
   .syncchip{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--green-txt);background:var(--green-soft);padding:8px 12px;border-radius:10px}
   .syncchip svg{width:15px;height:15px;stroke:var(--green-txt);fill:none;stroke-width:2}
   .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:6px 0 20px}
-  .subtabs button{border:none;background:none;font-family:var(--display);font-weight:800;font-size:13.5px;color:var(--fg3);padding:11px 14px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px}
+  .subtabs button,.subtabs a{border:none;background:none;font-family:var(--display);font-weight:800;font-size:13.5px;color:var(--fg3);padding:11px 14px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px;text-decoration:none;display:inline-block;white-space:nowrap}
+  .subtabs a:hover{color:var(--fg2)}
   .subtabs button.on{color:var(--teal);border-bottom-color:var(--teal)}
   .view{display:none}.view.show{display:block}
+  .purchasing-embed{background:transparent;min-height:760px}
+  .purchasing-frame{display:block;width:100%;min-height:760px;height:1600px;border:0;background:transparent}
   .kpis{display:grid;gap:13px;margin-bottom:18px}
   .k4{grid-template-columns:repeat(4,1fr)}
   .kpi{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:15px 16px;box-shadow:0 1px 2px rgba(26,31,57,.04)}
@@ -327,6 +330,7 @@
 
       <div class="subtabs">
         <button class="on" data-v="stock">Stock Overview</button>
+        <button id="purchasing-tab" data-v="purchasing">Purchasing</button>
         <button data-v="po">Purchase Orders &amp; Invoices</button>
         <button data-v="history">Stock History</button>
       </div>
@@ -391,7 +395,14 @@
         </div>
       </section>
 
-      <!-- ===== 2.b PO & INVOICES ===== -->
+      <!-- ===== 2.b PURCHASING ===== -->
+      <section class="view purchasing-embed" id="v-purchasing" aria-labelledby="purchasing-tab">
+        <iframe class="purchasing-frame" id="purchasing-frame" src="purchasing-flow.html?embed=1" title="Purchasing workflow: Plan, Orders, and Receive">
+          <p><a href="purchasing-flow.html">Open the Purchasing workflow</a></p>
+        </iframe>
+      </section>
+
+      <!-- ===== 2.c PO & INVOICES ===== -->
       <section class="view" id="v-po">
         <div class="kpis k4">
           <div class="kpi"><div class="l">Open POs</div><div class="v">7</div><div class="d muted">3 awaiting delivery</div></div>
@@ -673,7 +684,18 @@
   }
   document.querySelectorAll('.subtabs button').forEach(b=>b.addEventListener('click',()=>{
     showInventoryView(b.dataset.v);
+    history.replaceState(null,'',`#${b.dataset.v}`);
   }));
+  const hashView=()=>showInventoryView((location.hash||'').replace('#',''));
+  hashView();
+  window.addEventListener('hashchange',hashView);
+
+  const purchasingFrame=document.getElementById('purchasing-frame');
+  window.addEventListener('message',event=>{
+    if(event.source!==purchasingFrame.contentWindow||!event.data||event.data.type!=='gameguys:purchasing-height')return;
+    const nextHeight=Math.max(760,Math.min(10000,Number(event.data.height)||760));
+    purchasingFrame.style.height=`${Math.ceil(nextHeight)}px`;
+  });
 
   const poWorkspace = document.getElementById('po-workspace');
   const poTitle = document.getElementById('po-workspace-title');

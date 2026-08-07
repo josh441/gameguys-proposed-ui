@@ -51,8 +51,9 @@ flowchart LR
   O --> O3[Machine & Product Stats]
   O --> O4[Forecast]
   I --> I1[Stock Overview]
-  I --> I2[POs & Invoices]
-  I --> I3[Stock History]
+  I --> I2[Purchasing]
+  I --> I3[POs & Invoices]
+  I --> I4[Stock History]
   M --> M1[Machines & Pick List]
   M --> M2[Returns]
   R --> R1[Suppliers]
@@ -96,6 +97,16 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
   stock-level or health graphic until the business defines the thresholds behind it.
   **AI stock camera:** a compact **Scan stock** action in the Inventory header opens the scanner on
   demand; do not reserve a dashboard card for it.
+- **Purchasing:** one integrated workspace with no more than three tabs: **Plan**, **Orders**, and
+  **Receive**. Plan contains the buy list, supplier availability, and new-release calls. Orders contains
+  approval, supplier send, tracking, and incoming stock. Receive contains delivery counts, damage,
+  Online/Vending allocation, landed cost, and PO history. Keep it inside Inventory and connect it to
+  the existing PO list/detail and receiving surfaces. The buy list is net of on-hand and already-on-order
+  stock; approval never skips directly to Ordered; receipt keeps Online/Vending/Quarantine allocations
+  explicit. See `PURCHASING-STREAMLINE.md` for production reuse, schema, defect, and sequencing details.
+  The static proposal embeds its modular purchasing mockup inside `inventory.html#purchasing`; production
+  must render this as native application components within the Inventory route, not as an iframe or
+  separate application shell. Redirect older purchasing deep links into this Inventory state.
 - **POs & Invoices:** PO list with **View / edit** and **Receive** actions. The edit workspace covers
   supplier, status, order/ETA dates, references, notes, and line-level item, SKU, ordered quantity,
   pack size, and unit cost. Per-**pack**, per-**booster box**, per-**bundle**, or per-**ETB** cost is
@@ -124,7 +135,7 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
     - Out-of-stock → **swap** a replacement via search/dropdown; the new **price and qty auto-update**.
     - **Add an extra row** (a new set or a hot seller) not on the generated list — product + qty only.
     - Qty is an inline stepper (manual override); everything else is locked.
-- **Printout** — see §3.1b. Stripped to **slot · item · price to set · last sold (Nayax) · amount**.
+- **Printout** — see §3.1b. Stripped to **slot · item · price to set · last sold (Nayax) · amount · notes**.
 - **Returns sub-tab** — separate from **Machines & Pick List**. After the route is complete and the filler is back at the warehouse,
   show the **item**, editable **count**, explicit source **machine/location/route**, and a **Good /
   Damaged** condition choice. Good stock returns to Warehouse; damaged stock requires a reason and
@@ -196,9 +207,9 @@ flowchart TD
   The filler selects **View print / PDF** to open a modal preview only when needed.
 - The modal closes with its **Close** action, the backdrop, or `Escape`. **Print / Save PDF** opens
   the browser print dialog; the print stylesheet outputs only the approved sheet.
-- Print/PDF contains **only 5 columns: slot · item name · price to set · last sold (Nayax) · amount.**
+- Print/PDF contains **only 6 columns: slot · item name · price to set · last sold (Nayax) · amount · notes.**
   The two price columns remain separate even when their values match, so the filler can see the sales reference.
-  PO cost and the last-sale source machine/date stay screen-only.
+  Notes is blank for handwriting during the route. PO cost and the last-sale source machine/date stay screen-only.
 - **Exactly one selling price per item** (no ranges) — the filler just keys it into Nayax and moves on.
 - Swaps/added rows/qty overrides flow through to the printout; on-screen-only fields (pace,
   group chips, status) are stripped. Implement with a print stylesheet or a dedicated print view.

@@ -118,13 +118,13 @@
     <div class="hero-inner">
       <div>
         <span class="eyebrow"><i></i> Product-to-development handoff</span>
-        <h1>Stock returns and receiving, from run to shelf.</h1>
-        <p>The final proposal for returning unused Pokémon stock, receiving purchase orders, handling damage, and keeping Online-store and Vending-machine inventory distinct.</p>
+        <h1>Purchasing and stock operations, from buy signal to shelf.</h1>
+        <p>The integrated proposal for buying Pokémon stock, receiving purchase orders, returning unused route stock, handling damage, and keeping Online-store and Vending-machine inventory distinct.</p>
       </div>
       <aside class="status-card">
         <span class="label">Handoff status</span>
         <h2>Ready for product review</h2>
-        <div class="status-row"><span>Updated</span><b>3 August 2026</b></div>
+        <div class="status-row"><span>Updated</span><b>7 August 2026</b></div>
         <div class="status-row"><span>Prototype</span><b>Interactive, static data</b></div>
         <div class="status-row"><span>Backend</span><b>Specified, not connected</b></div>
       </aside>
@@ -136,6 +136,7 @@
       <b>On this page</b>
       <a href="#outcome">Outcome</a>
       <a href="#roles">App ownership</a>
+      <a href="#purchasing">Purchasing flow</a>
       <a href="#return">After-run return</a>
       <a href="#receiving">PO receiving</a>
       <a href="#allocation">Stock allocation</a>
@@ -149,7 +150,7 @@
       <section class="panel" id="outcome">
         <span class="section-kicker">What is now covered</span>
         <h2>One traceable stock journey</h2>
-        <p class="lead">The proposal joins the filler’s after-run return to the receiver’s inventory and PO workflows without creating duplicate stock movements.</p>
+        <p class="lead">The proposal joins purchasing, PO receiving, and the filler’s after-run return without creating parallel or duplicate stock movements.</p>
         <div class="outcome-grid">
           <div class="outcome"><span class="n">1</span><b>Return by completed run</b><span>Select the route/machine, record the item and count, and retain the source.</span></div>
           <div class="outcome"><span class="n">2</span><b>Separate damaged stock</b><span>Good products go to Warehouse; damaged products require a reason and go to Quarantine.</span></div>
@@ -163,9 +164,23 @@
         <p class="lead">Operational actions live in the tab used by the person performing the work.</p>
         <div class="roles">
           <div class="role"><span class="tag">FILLER</span><h3>Machines</h3><p>Machines &amp; Pick List with the latest Nayax sold price, plus a separate Returns tab for unused stock.</p></div>
-          <div class="role"><span class="tag">RECEIVER</span><h3>Inventory</h3><p>Stock allocation, PO receiving, and one running Stock History for every inventory movement.</p></div>
+          <div class="role"><span class="tag">BUYER / RECEIVER</span><h3>Inventory</h3><p>Integrated Purchasing, stock allocation, PO receiving, and one running Stock History for every inventory movement.</p></div>
           <div class="role"><span class="tag">OWNER / TEAM</span><h3>Ownership, CRM &amp; Calendar</h3><p>Performance, financials, suppliers, tasks, and Pokémon release planning.</p></div>
         </div>
+      </section>
+
+      <section class="panel workflow" id="purchasing">
+        <div class="workflow-head"><span class="workflow-icon">PO</span><div><h2>Integrated purchasing</h2><p>Inventory → Purchasing · three tabs, with the detailed decisions kept inside them</p></div></div>
+        <div class="steps">
+          <div class="step"><span class="num">1</span><b>Buy list</b><span>Use suggestions net of stock on hand and quantities already ordered.</span></div>
+          <div class="step"><span class="num">2</span><b>Supplier availability</b><span>Capture prices, available quantity, MOQ, validity, and ranked substitutions.</span></div>
+          <div class="step"><span class="num">3</span><b>Release calls</b><span>Use comparables, expected sell price, margin, deposit, and demand evidence for new sets.</span></div>
+          <div class="step"><span class="num">4</span><b>Approve</b><span>Review the quote, landed cost, margin, supplier performance, and cash guardrail.</span></div>
+          <div class="step"><span class="num">5</span><b>Send and track</b><span>Record the send, supplier reference, ETA, tracking, and delivery exceptions.</span></div>
+          <div class="step"><span class="num">6</span><b>Receive and cost</b><span>Allocate good stock, quarantine damage, and finish landed cost in AUD.</span></div>
+        </div>
+        <div class="result"><b>State rule:</b> Draft → Approved → Ordered → Partial / Received. Approval never skips directly to Ordered.</div>
+        <div class="actions"><a class="button primary" href="inventory.html#purchasing">Open Inventory → Purchasing</a><a class="button" href="PURCHASING-STREAMLINE.md">Open developer specification</a></div>
       </section>
 
       <section class="panel workflow" id="return">
@@ -215,7 +230,7 @@
         <h2>Preview only when requested</h2>
         <div class="split">
           <div class="rule-box"><h3>Nayax price reference</h3><ul><li>Show the latest successful exact-SKU sale.</li><li>Include source machine and sale date.</li><li>Label similar-product fallbacks.</li><li>Keep latest PO cost secondary.</li></ul></div>
-          <div class="rule-box"><h3>Printed content</h3><ul><li>Slot</li><li>Item</li><li>Price to set</li><li>Last sold (Nayax)</li><li>Amount</li></ul></div>
+          <div class="rule-box"><h3>Printed content</h3><ul><li>Slot</li><li>Item</li><li>Price to set</li><li>Last sold (Nayax)</li><li>Amount</li><li>Notes — prints blank, written on by hand</li></ul></div>
         </div>
       </section>
 
@@ -235,8 +250,10 @@
             <tr><td>Compact AI stock scan</td><td>Inventory header → Scan stock</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Optimized receiving entry</td><td>Three grouped work areas + receive-all and clear shortcuts</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>One running stock ledger</td><td>Inventory → Stock History includes receipts, fills, transfers, damage, and returns</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Integrated purchasing lifecycle</td><td>Inventory → Purchasing connects the full lifecycle in Plan, Orders, and Receive</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Last sold price for fillers</td><td>Machines → Pick List uses latest Nayax sale with machine/date context</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Last sold price on printout</td><td>View print / PDF shows Price to set and Last sold (Nayax)</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Handwritten notes on the route sheet</td><td>View print / PDF prints a blank Notes column per slot</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Pokémon examples</td><td>All proposal tabs and workflows</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Print preview not fixed under Returns</td><td>Machines → View print / PDF</td><td><span class="done">✓ Included</span></td></tr>
           </tbody>
