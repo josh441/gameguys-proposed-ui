@@ -153,7 +153,7 @@
         <p class="lead">The proposal joins purchasing, PO receiving, and the filler’s after-run return without creating parallel or duplicate stock movements.</p>
         <div class="outcome-grid">
           <div class="outcome"><span class="n">1</span><b>Return by completed run</b><span>Select the route/machine, record the item and count, and retain the source.</span></div>
-          <div class="outcome"><span class="n">2</span><b>Separate damaged stock</b><span>Good products go to Warehouse; damaged products require a reason and go to Quarantine.</span></div>
+          <div class="outcome"><span class="n">2</span><b>Quarantine every return</b><span>Good and swapped products wait in Returns quarantine; damaged products go to Damage quarantine.</span></div>
           <div class="outcome"><span class="n">3</span><b>Allocate every arrival</b><span>Each good PO unit is assigned to Online store, Vending machines, or a balanced split.</span></div>
         </div>
       </section>
@@ -170,14 +170,14 @@
       </section>
 
       <section class="panel workflow" id="purchasing">
-        <div class="workflow-head"><span class="workflow-icon">PO</span><div><h2>Integrated purchasing</h2><p>Inventory → Purchasing · three tabs, with the detailed decisions kept inside them</p></div></div>
+        <div class="workflow-head"><span class="workflow-icon">PO</span><div><h2>Integrated purchasing</h2><p>Inventory → Purchasing · Buy stock, Incoming, and Receive</p></div></div>
         <div class="steps">
-          <div class="step"><span class="num">1</span><b>Buy list</b><span>Use suggestions net of stock on hand and quantities already ordered.</span></div>
-          <div class="step"><span class="num">2</span><b>Supplier availability</b><span>Capture prices, available quantity, MOQ, validity, and ranked substitutions.</span></div>
-          <div class="step"><span class="num">3</span><b>Release calls</b><span>Use comparables, expected sell price, margin, deposit, and demand evidence for new sets.</span></div>
-          <div class="step"><span class="num">4</span><b>Approve</b><span>Review the quote, landed cost, margin, supplier performance, and cash guardrail.</span></div>
-          <div class="step"><span class="num">5</span><b>Send and track</b><span>Record the send, supplier reference, ETA, tracking, and delivery exceptions.</span></div>
-          <div class="step"><span class="num">6</span><b>Receive and cost</b><span>Allocate good stock, quarantine damage, and finish landed cost in AUD.</span></div>
+          <div class="step"><span class="num">1</span><b>Buy stock</b><span>Review suggestions grouped by main Pokémon set and product format.</span></div>
+          <div class="step"><span class="num">2</span><b>Set quantities</b><span>Override any suggestion or add an unsuggested product manually.</span></div>
+          <div class="step"><span class="num">3</span><b>Check supplier</b><span>Optionally check current stock; no standing terms or offers ledger is assumed.</span></div>
+          <div class="step"><span class="num">4</span><b>Create draft PO</b><span>Use Purchase Orders &amp; Invoices for formal editing, approval, and sending.</span></div>
+          <div class="step"><span class="num">5</span><b>Incoming</b><span>Keep every PO on the way visible in its own permanent tab.</span></div>
+          <div class="step"><span class="num">6</span><b>Receive</b><span>Count arrivals, allocate good stock, quarantine damage, and finish landed cost.</span></div>
         </div>
         <div class="result"><b>State rule:</b> Draft → Approved → Ordered → Partial / Received. Approval never skips directly to Ordered.</div>
         <div class="actions"><a class="button primary" href="inventory.html#purchasing">Open Inventory → Purchasing</a><a class="button" href="PURCHASING-STREAMLINE.md">Open developer specification</a></div>
@@ -192,7 +192,7 @@
           <div class="step"><span class="num">4</span><b>Mark condition</b><span>Good, or Damaged with a required hobby-relevant reason.</span></div>
           <div class="step"><span class="num">5</span><b>Confirm once</b><span>Create one route-linked reference and immutable stock movements.</span></div>
         </div>
-        <div class="result"><b>Result:</b> Good → Warehouse · unallocated and appears in Current stock &nbsp; | &nbsp; Damaged → Quarantine &nbsp; | &nbsp; both appear in Inventory → Stock History.</div>
+        <div class="result"><b>Result:</b> Good/swapped → Returns quarantine &nbsp; | &nbsp; Damaged → Damage quarantine &nbsp; | &nbsp; reviewed good stock is later reassigned to Online or Vending with a separate movement.</div>
         <div class="actions"><a class="button primary" href="machines.html#returns">Open Returns tab</a><a class="button" href="inventory.html#stock-history">View Stock History</a></div>
       </section>
 
@@ -203,7 +203,7 @@
           <div class="step"><span class="num">2</span><b>Mark arrivals</b><span>Use the grouped delivery controls, or receive all outstanding; arrived includes damaged.</span></div>
           <div class="step"><span class="num">3</span><b>Calculate good</b><span>Good = arrived − damaged. Show the quantity still due.</span></div>
           <div class="step"><span class="num">4</span><b>Allocate good</b><span>Online store, Vending machines, or an exact split of both.</span></div>
-          <div class="step"><span class="num">5</span><b>Confirm receipt</b><span>Write channel and Quarantine movements; set the PO Partial or Received.</span></div>
+          <div class="step"><span class="num">5</span><b>Confirm receipt</b><span>Write channel and Damage-quarantine movements; set the PO Partial or Received.</span></div>
         </div>
         <div class="result"><b>Required balance:</b> Online-store quantity + Vending quantity = Arrived now − Damaged. Confirmation stays blocked until it balances.</div>
         <div class="actions"><a class="button primary" href="inventory.html#receive-po-1042">Open receiving prototype</a><a class="button" href="inventory.html#po-1042">Open PO editing</a></div>
@@ -219,8 +219,8 @@
             <div class="channel vending"><span class="dot"></span><div><b>Vending machines</b><span>Sellable stock allocated to route staging and future fills.</span></div></div>
           </div>
           <div>
-            <div class="channel"><span class="dot"></span><div><b>Warehouse · unallocated</b><span>Good route returns waiting for a deliberate allocation.</span></div></div>
-            <div class="channel quarantine"><span class="dot"></span><div><b>Quarantine</b><span>Damaged, non-sellable stock excluded from every sellable total.</span></div></div>
+            <div class="channel"><span class="dot"></span><div><b>Returns quarantine</b><span>Good and swapped route returns waiting for Online/Vending reassignment.</span></div></div>
+            <div class="channel quarantine"><span class="dot"></span><div><b>Damage quarantine</b><span>Damaged, non-sellable stock excluded from every sellable total.</span></div></div>
           </div>
         </div>
       </section>
@@ -241,7 +241,7 @@
           <thead><tr><th>Requirement</th><th>Where to verify</th><th>Status</th></tr></thead>
           <tbody>
             <tr><td>Item, count, and source after a run</td><td>Machines → Returns</td><td><span class="done">✓ Included</span></td></tr>
-            <tr><td>Option to mark damaged</td><td>Good/Damaged choice, required reason, Quarantine destination</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Quarantine and reassign returns</td><td>Returns quarantine queue with Online/Vending reassignment</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Route/machine dropdown</td><td>Start a return → Completed route / machine</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>View and edit purchase orders</td><td>Inventory → Purchase Orders &amp; Invoices → View / edit</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Mark off arrived quantities</td><td>PO → Receive delivery, line by line</td><td><span class="done">✓ Included</span></td></tr>
@@ -250,7 +250,9 @@
             <tr><td>Compact AI stock scan</td><td>Inventory header → Scan stock</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Optimized receiving entry</td><td>Three grouped work areas + receive-all and clear shortcuts</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>One running stock ledger</td><td>Inventory → Stock History includes receipts, fills, transfers, damage, and returns</td><td><span class="done">✓ Included</span></td></tr>
-            <tr><td>Integrated purchasing lifecycle</td><td>Inventory → Purchasing connects the full lifecycle in Plan, Orders, and Receive</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Integrated purchasing lifecycle</td><td>Inventory → Purchasing uses Buy stock, Incoming, and Receive</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Grouped products and manual stock</td><td>Main set cards with child formats and Add stock manually</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Incoming stays visible</td><td>Incoming stock has its own permanent Purchasing tab</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Last sold price for fillers</td><td>Machines → Pick List uses latest Nayax sale with machine/date context</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Last sold price on printout</td><td>View print / PDF shows Price to set and Last sold (Nayax)</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Handwritten notes on the route sheet</td><td>View print / PDF prints a blank Notes column per slot</td><td><span class="done">✓ Included</span></td></tr>
@@ -262,15 +264,14 @@
 
       <section class="panel" id="decisions">
         <span class="section-kicker">Before backend sign-off</span>
-        <h2>Five product decisions remain open</h2>
+        <h2>Four product decisions remain open</h2>
         <div class="decision-list">
           <div class="decision"><div><b>Mixed condition on one SKU</b><span>Can one returned SKU be split into good and damaged quantities, or should staff add two lines?</span></div></div>
-          <div class="decision"><div><b>Allocation of good returns</b><span>Keep route returns unallocated until a warehouse task, or allocate them during the return?</span></div></div>
           <div class="decision"><div><b>Return eligibility window</b><span>How long does a completed run remain selectable, and can it have multiple return batches?</span></div></div>
-          <div class="decision"><div><b>Physical locations</b><span>Confirm real shelf, route-staging, and Quarantine location codes.</span></div></div>
+          <div class="decision"><div><b>Physical locations</b><span>Confirm real shelf, route-staging, Returns-quarantine, and Damage-quarantine location codes.</span></div></div>
           <div class="decision"><div><b>Correction permissions</b><span>Confirm who may correct a confirmed receipt/return through compensating movements.</span></div></div>
         </div>
-        <div class="callout"><b>Current prototype decision:</b> a returned row has one condition. Good route returns land in Warehouse · unallocated. These are safe proposal defaults, but production behavior should be confirmed.</div>
+        <div class="callout"><b>Current product decision:</b> all route returns enter quarantine first. A warehouse user later reassigns reviewed good stock to Online store or Vending machines.</div>
       </section>
 
       <section class="panel" id="delivery">

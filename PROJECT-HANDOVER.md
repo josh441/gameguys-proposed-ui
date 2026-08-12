@@ -1,7 +1,7 @@
 # Game Guys Operations Proposal — Project Handover
 
-**Prepared:** 7 August 2026
-**Status:** Integrated purchasing and print-Notes revision ready for product review; publication pending
+**Prepared:** 12 August 2026
+**Status:** Quarantine-first returns and simplified purchasing revision ready for product review; publication pending
 **Repository:** `josh441/gameguys-proposed-ui`
 **Live proposal:** <https://josh441.github.io/gameguys-proposed-ui/>
 **GitHub Pages source:** `main` branch, repository root
@@ -34,14 +34,16 @@ Use these references together:
 | [HANDOFF.md](HANDOFF.md) | Product acceptance criteria, edge cases, and open decisions |
 | [handoff.html](handoff.html) | Shareable visual summary of the product handoff |
 | [PURCHASING-STREAMLINE.md](PURCHASING-STREAMLINE.md) | Purchasing proposal for the **production** app: current-state map, target flow, data model, fix list, build sequence (summarised in section 17) |
-| [Inventory → Purchasing](inventory.html#purchasing) | Integrated purchasing mockup with three work tabs: Plan, Orders, and Receive |
+| [Inventory → Purchasing](inventory.html#purchasing) | Integrated purchasing mockup with three work tabs: Buy stock, Incoming, and Receive |
 | This file | Current release, scope, implementation boundary, and operational handover |
 
 If an older statement conflicts with the current prototype, the current requirement is:
 
 - the filler printout has **six columns**: `Slot · Item · Price to set · Last sold (Nayax) · Amount · Notes`;
 - Returns are a separate sub-tab in Machines;
-- Inventory uses one unified Stock History rather than a separate Route Returns screen.
+- Inventory uses one unified Stock History rather than a separate Route Returns screen;
+- every route return enters Returns quarantine or Damage quarantine before any sellable reassignment;
+- Purchasing uses Buy stock, Incoming, and Receive; products are grouped by set and buying quantities may be entered manually.
 
 Known discrepancies in older artifacts at the time of handover:
 
@@ -138,14 +140,14 @@ The filler can:
 
 Expected destinations:
 
-- Good return → **Warehouse · unallocated**
-- Damaged return → **Quarantine** only
+- Good or swapped return → **Returns quarantine**
+- Damaged return → **Damage quarantine** only
 
 After confirmation:
 
-- good stock appears immediately in Inventory Current Stock;
+- good stock appears immediately in Inventory Current Stock under Returns quarantine;
 - good and damaged movements appear in the unified Stock History;
-- the receiver does not approve or move the same return again;
+- a warehouse user may later reassign reviewed good stock to Online store or Vending machines through a separate transfer movement;
 - Nayax sales, prices, and machine quantities are not changed by the warehouse return.
 
 Prototype links:
@@ -190,9 +192,12 @@ The receiver view demonstrates:
 - search by product, SKU, or location;
 - language and allocation filters;
 - sorting by name, language, or on-hand quantity;
-- separate balances for Online store, Vending machines, Warehouse · unallocated, and Quarantine;
+- separate balances for Online store, Vending machines, Warehouse · unallocated, Returns quarantine, and Damage quarantine;
+- products grouped by main set with expandable child formats;
+- a manual stock action for adding an unsuggested set/product to a buying round;
 - physical location per stock row;
 - a compact **Scan stock** header action that opens on demand.
+- a compact **Add stock manually** action for reasoned, auditable non-PO adjustments.
 
 There is no stock-health graphic or low/borderline/healthy threshold because the business has not defined those calculations.
 
@@ -210,7 +215,7 @@ Receiving rules:
 - `good_qty = arrived_qty - damaged_qty`.
 - `online_store_qty + vending_qty = good_qty`.
 - Damaged quantity greater than zero requires a reason.
-- Damaged stock creates a Quarantine movement only.
+- Damaged stock creates a Damage-quarantine movement only.
 - Saving a PO or receiving draft moves no stock.
 - **Receive all outstanding** fills the remaining quantities but must preserve valid allocation.
 - **Clear this delivery** resets the draft only.
@@ -233,7 +238,7 @@ It includes:
 - route returns;
 - allocation transfers;
 - stocktake adjustments;
-- supplier and route damage/Quarantine movements.
+- supplier and route Damage-quarantine movements.
 
 The proposal shows date/time, movement type, product/SKU, source, destination/allocation, signed quantity, reference, recorded-by user, and resulting stock. It supports search plus movement-type, stock-area, and balance-effect filters.
 
@@ -270,11 +275,12 @@ Do not create a second stock deduction from the filler hub. Fill finalisation re
 - Returns and receipts use unique idempotency keys.
 - Confirmed movements are immutable.
 - Corrections use compensating movements rather than editing history.
-- Good returns create positive Warehouse movements.
-- Damaged returns and damaged receipts go to Quarantine and never increase sellable stock.
+- Good and swapped returns create positive Returns-quarantine movements.
+- Damaged returns and damaged receipts go to Damage quarantine and never increase sellable stock.
+- Reassigning reviewed returns creates a separate transfer to Online store or Vending machines.
 - Every good received unit must be allocated to Online store, Vending machines, or an exact split.
 - Online-store and Vending-machine stock must never be merged into an ambiguous Store balance.
-- Quarantine is never counted as sellable stock.
+- Neither Returns quarantine nor Damage quarantine is counted as sellable stock.
 - Nayax remains authoritative for vending sales and prices.
 - Last-sold lookup must use successful sales and respect the filler's machine visibility.
 - A comparable price must be labelled as a similar-product fallback.
@@ -326,14 +332,13 @@ All current confirmations and calculations are front-end demonstrations using sa
 The following decisions should be confirmed before finalising irreversible schema or permission behavior:
 
 1. **Mixed condition for one SKU:** may a return row contain both good and damaged quantities, or must staff create separate rows?
-2. **Allocation of good returns:** should Warehouse staff allocate returned stock later, or should allocation occur during the return?
-3. **Return eligibility window:** how long does a completed run remain returnable, and may one run have multiple return batches?
-4. **Physical locations:** confirm real warehouse, online fulfilment, route staging, returns bench, and Quarantine location codes.
-5. **Correction permissions:** confirm who may edit POs, void receipts, or correct returns after confirmation.
-6. **Similar-product pricing:** define the permitted fallback matching rule when no exact Nayax SKU sale exists.
-7. **Price-to-set ownership:** confirm whether the filler may ever override the suggested price or whether only office/admin users control it.
-8. **Filler cost visibility:** confirm whether latest PO cost should be visible to fillers in production or restricted by role.
-9. **Print retention:** confirm whether generated print snapshots must be stored, versioned, or reproducible for audit.
+2. **Return eligibility window:** how long does a completed run remain returnable, and may one run have multiple return batches?
+3. **Physical locations:** confirm real warehouse, online fulfilment, route staging, Returns-quarantine, and Damage-quarantine location codes.
+4. **Correction permissions:** confirm who may reassign returns, edit POs, void receipts, or correct returns after confirmation.
+5. **Similar-product pricing:** define the permitted fallback matching rule when no exact Nayax SKU sale exists.
+6. **Price-to-set ownership:** confirm whether the filler may ever override the suggested price or whether only office/admin users control it.
+7. **Filler cost visibility:** confirm whether latest PO cost should be visible to fillers in production or restricted by role.
+8. **Print retention:** confirm whether generated print snapshots must be stored, versioned, or reproducible for audit.
 
 ## 11. Required production tests
 
@@ -378,8 +383,8 @@ The proposal has been checked for:
 - local link targets;
 - separate Machines/Returns panels;
 - unified Stock History and filters;
-- Current Stock visibility for a good return;
-- five-column print rows for all sample products;
+- Current Stock visibility for returns in Returns quarantine and their later reassignment;
+- six-column print rows for all sample products;
 - Pokémon 151 PO-cost/last-sold example;
 - local HTTP 200 responses for affected pages;
 - live GitHub Pages HTTP 200 responses and required content;
@@ -432,8 +437,9 @@ The production feature is complete only when:
 - fillers see only assigned machines and eligible completed runs;
 - pick lists use production Nayax data and preserve the approved pricing/print behavior;
 - fill stock deducts exactly once;
-- unused good stock returns to Warehouse and damaged stock goes only to Quarantine;
-- good returns immediately affect Current Stock;
+- unused good or swapped stock goes to Returns quarantine and damaged stock goes only to Damage quarantine;
+- good returns immediately appear in Current Stock without becoming sellable;
+- reviewed returns can be reassigned to Online or Vending through a separate auditable transfer;
 - POs can be safely edited and received with complete Online/Vending allocation;
 - confirmations are authorized, atomic, idempotent, and auditable;
 - Stock History shows all relevant immutable movements without creating a second stock action;
@@ -442,32 +448,36 @@ The production feature is complete only when:
 
 ## 17. Purchasing streamline (production app)
 
-**Scope note.** This section summarises a proposal against the **live production application** (`gameguys-saas`, Next.js + Supabase), covering purchasing end to end from buy signal through supplier reality, approval, ordering, tracking, receiving, and landed cost. The audited production detail remains in `PURCHASING-STREAMLINE.md`; its six underlying lifecycle steps are grouped into three user-facing tabs—Plan, Orders, and Receive—inside `Inventory → Purchasing`. The audit was written on 4 August 2026 from a direct read of the production working tree plus `docs/SOP-Purchasing.html`, `docs/SOP-Admin.html`, `docs/USER_GUIDE.md`, `docs/Bottlenecks-Proposal.html` and `docs/SOP-Readiness-Audit.md`.
+**Scope note.** This section summarises the current product direction for the **live production application**
+(`gameguys-saas`, Next.js + Supabase). The earlier production audit remains in
+`PURCHASING-STREAMLINE.md`, but its supplier-offer ledger and dedicated release-call screen are deferred.
+The approved UI is now grouped into **Buy stock**, **Incoming**, and **Receive** inside
+`Inventory → Purchasing`.
 
 The full proposal is [PURCHASING-STREAMLINE.md](PURCHASING-STREAMLINE.md). The interactive version is [Inventory → Purchasing](inventory.html#purchasing). This section exists so the handover is not silent about it.
 
-### 17.1 The finding
+### 17.1 Current UI principle
 
-Purchasing in production is already substantial: draft to approved to ordered to partial to received, admin-only approval gated on an attached supplier quote, AI extraction of supplier documents, a self-learning supplier alias layer, a pool-aware suggestion board, allocation tracking, a first-class receive flow, AfterShip webhook ingestion with HMAC verification, and a read-only Xero pull. The gap is not features. It is three specific things:
-
-1. **The buy decision contains no supplier reality.** Every suggestion assumes the SKU is available. In TCG it frequently is not, so the buyer pivots to whatever has stock, entirely outside the app. A keyword sweep of `app/`, `lib/` and `supabase/` confirms there is no offer, availability, MOQ, price-validity, substitute or alternate model anywhere. `po_lines.qty_allocated` records what a supplier actually shipped, after the order was placed, which is a different question.
-2. **New releases carry no economics.** `upcoming_releases` stores a date, a name, a source URL and a pre-payment amount. It stores no expected demand, expected sell price, projected margin, committed quantity or decision record. Separately, four independent mechanisms suppress a zero-velocity SKU (no planogram slot means no row at all; `qty_to_bring` falls to zero; `units_to_purchase` is therefore zero; and `computeInventoryHealth` classifies zero velocity as dead stock). Meanwhile a capable consensus market-price engine exists, with a branch built specifically for never-sold products, and no part of it reaches purchasing.
-3. **Arrival tracking is captured and then drives nothing.** The AfterShip webhook writes `aftership_eta` on every update. The PO detail page displays it; nothing else consumes it, not the board lanes, not the late calculation, not `/po-dashboard`, and not as a fallback for the hand-typed `expected_date`. Registration fires only on the transition to `ordered`, so tracking added later, including from the receive page, is never registered at all. Changing a tracking number blocks re-registration permanently. Nothing notifies anyone on an exception, and the overdue badge requires `paid_at` to be null while payment is a hard gate before receiving, so the POs actually in transit are precisely the ones that never show as late.
+The purchasing surface should help the buyer answer three questions: what should we buy, what is on the
+way, and what arrived. It should not require supplier terms, an offer history, release economics, or a
+separate release decision ritual before the team can create a draft PO. Existing approval, sending,
+tracking, receiving, and audit rules still apply through Purchase Orders & Invoices.
 
 ### 17.2 Target flow
 
 | Stage | Change |
 |---|---|
-| 01 Buy list | `/purchasing/board` becomes the single origination surface. Lead-time cover folds into its query and `/auto-po` stops writing POs. Snoozes honoured. One `v_buy_signals` view feeds the board, the reorder queue and the dashboard. One `v_po_attention` view replaces four competing definitions of "needs attention". |
-| 02 Availability | New. Generate an availability request per supplier, capture the reply (PDF, photo or pasted text) through the existing extractor with the prompt extended for availability, quantity, MOQ and price validity, map names via the existing alias table, and show an offer chip plus ranked alternates on the buy list. Every suggestion ends with a recorded outcome. |
-| 03 Release call | New card. Quantity from a named comparable's actual first-28-day sell-through; expected sell price from the existing consensus engine's never-sold branch; projected margin from the existing formula; demand research stored with sources and confidence; deposit surfaced from the existing `prepayment_*` columns. Decision recorded as commit, watch or pass with a revisit date. |
-| 04 Approval | One card carrying lines, landed cost in AUD, projected margin, supplier fill rate, cash guardrail and the quote. `approved_by` added. `setPOStatus` becomes a real state machine so approval cannot be skipped. Standing authority under a threshold offered as an optional policy switch. |
-| 05 Send and track | Link the supplier PDF that already exists and is currently unreachable, after deciding whether its totals block should keep printing our import duty, broker, quarantine and other import cost rows to the supplier (the file comment and the SOP both claim it strips them; it does not). Record send channel, recipient and sender. Prefill ETA from supplier lead time. Register or re-register tracking whenever it changes. Use `aftership_eta` as the primary ETA. One Arrivals view. Slack and in-app alerts on exception, expiry and ETA slip. |
-| 06 Record | One totals function including all five landed-cost columns, recomputing `total_aud` on any cost, currency or FX change. A `po_fees` ledger replacing accumulate-in-place. Landed cost converted to AUD and apportioned into `stock_movements` at receipt. Receiving made atomic and idempotent on both paths. Status trigger compares against confirmed quantity so short allocations can reach `received`. |
+| 01 Buy stock | Group rows by main set, show child product formats, net suggestions against on-hand/open-order stock, allow manual quantity overrides, and provide Add stock manually. New releases use the same override. |
+| 02 Supplier check | Optional ad-hoc stock check attached to the buying round. Do not assume standing terms or create an Offers-on-file ledger. |
+| 03 Draft PO | Create a draft from the reviewed quantities; use Purchase Orders & Invoices for formal editing, approval, sending, and supplier references. |
+| 04 Incoming | Permanent tab for POs on the way, grouped by set with supplier, ETA, tracking status, and next action. |
+| 05 Receive | Record arrived/good/damaged/still-due quantities, allocate good stock to Online or Vending, and post landed costs with atomic, idempotent movements. |
 
-### 17.3 New schema
+### 17.3 Data direction
 
-Five new tables: `supplier_offers`, `supplier_offer_lines`, `product_alternates`, `buy_outcomes`, `po_fees`. Added columns on `upcoming_releases` (release economics and decision), `purchase_orders` (`approved_by`, send record) and `receipts` (the `idempotency_key` the code already assumes exists). Three new views: `v_buy_signals`, `v_po_attention`, `v_supplier_fill_rate`. Everything else is wiring existing parts together.
+Reuse the existing products, product groups/sets, purchase orders, PO lines, receipts, allocations, and
+tracking data first. Add only what the production audit proves is missing—for example a parent-set relation,
+buying-round draft rows, or receipt idempotency. Do not add supplier terms or supplier-offer tables for this UI.
 
 ### 17.4 Defects to fix in the same pass
 
@@ -486,16 +496,20 @@ Thirty-five are catalogued in the proposal with file and line references. The on
 
 ### 17.5 Sequence
 
-Five sprints, roughly 19 to 27 developer-days, each shipping something usable alone: free wins with no schema; approval and arrivals; availability and substitution; release economics; cost truth; then consolidation and SOP reconciliation. Full breakdown in the proposal.
+Ship the grouped Buy stock view and manual quantities first, then the dedicated Incoming view, then connect
+Receive and PO actions. Preserve the existing production state machine and fix any confirmed transactional
+or tracking defects while integrating these surfaces.
 
 ### 17.6 Decisions required
 
-Nine, listed in section 10 of the proposal. The ones that block schema: standing-authority threshold and eligible suppliers, default offer validity, substitution rules (which swaps count as valid and in what rank order), Xero push versus a bill export, release commit granularity, and whether the five header cost columns stay as derived values once the fee ledger exists.
+Confirm the source of product-set grouping, who may override buying quantities, whether manual additions
+require a catalogue match, and which users may create/approve/send a draft PO. Supplier terms and release-
+call economics are outside the current UI scope.
 
 ## 18. Immediate next actions
 
-- Product: confirm the nine prototype decisions in section 10.
-- Product: confirm the nine purchasing decisions in section 10 of `PURCHASING-STREAMLINE.md`, in particular standing authority and substitution rules.
+- Product: confirm the eight unresolved prototype decisions in section 10.
+- Product: confirm set-grouping data, buying-quantity override permissions, and manual-add catalogue rules.
 - Developer: audit the production repository before proposing migrations.
 - Developer: map current Nayax sale-history fields and stock-movement paths.
 - Developer: produce an implementation plan showing reused versus new components.

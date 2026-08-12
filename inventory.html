@@ -54,6 +54,7 @@
   .head-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
   .scan-stock-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--purple-line);background:var(--purple);color:#fff;font:800 11.5px var(--font);padding:9px 12px;border-radius:10px;cursor:pointer;box-shadow:0 4px 12px rgba(109,40,217,.16)}
   .scan-stock-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+  .manual-stock-btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--teal);background:#fff;color:var(--teal);font:800 11.5px var(--font);padding:9px 12px;border-radius:10px;cursor:pointer}
   .syncchip{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--green-txt);background:var(--green-soft);padding:8px 12px;border-radius:10px}
   .syncchip svg{width:15px;height:15px;stroke:var(--green-txt);fill:none;stroke-width:2}
   .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:6px 0 20px}
@@ -97,7 +98,17 @@
   .channel-online{background:var(--purple-soft);color:var(--purple)}
   .channel-vending{background:var(--blue-soft);color:var(--blue)}
   .channel-warehouse{background:var(--green-soft);color:var(--green-txt)}
+  .channel-returns{background:var(--amber-soft);color:#b45309}
   .channel-quarantine{background:var(--red-soft);color:var(--red)}
+  .return-queue{margin-bottom:16px!important;border-color:#f1d29b!important}
+  .return-queue .ph{padding-bottom:12px!important}
+  .return-queue-row{display:grid;grid-template-columns:minmax(220px,1.5fr) 100px 150px minmax(260px,1fr);align-items:center;gap:12px;padding:12px 18px;border-top:1px solid var(--line2)}
+  .return-queue-row .product b{display:block;font-size:12px}.return-queue-row .product span{display:block;color:var(--fg3);font-size:9.5px;margin-top:2px}
+  .return-queue-row .qty{font:800 14px var(--display);text-align:right}
+  .return-queue-row .source{font-size:10.5px;color:var(--fg2)}
+  .return-assign{display:flex;align-items:center;justify-content:flex-end;gap:6px}
+  .return-assign select{height:34px;min-width:150px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--fg);font:700 10.5px var(--font);padding:0 8px}
+  .return-assign button{border:1px solid var(--teal);background:var(--teal);color:#fff;font:800 10.5px var(--font);padding:8px 10px;border-radius:8px;cursor:pointer}
   .stock-card{margin-bottom:16px!important}
   .stock-card .ph{padding-bottom:14px!important;border-bottom:1px solid var(--line2)}
   .stock-card .ph h3{margin:0 0 3px!important}
@@ -115,6 +126,8 @@
   .stock-table th.sortable{cursor:pointer;user-select:none}
   .stock-table th.sortable:hover{color:var(--teal)}
   .stock-table tbody tr:hover{background:#fcfbff}
+  .stock-table .stock-group-row:hover{background:#f5f1ff}
+  .stock-group-row td{padding:8px 12px;background:#f5f1ff;color:var(--purple);font:800 10.5px var(--display);letter-spacing:.02em;border-top:1px solid var(--purple-line)}
   .stock-product b{display:block;font-size:12.5px}
   .stock-product span{display:block;color:var(--fg3);font-size:9.5px;margin-top:2px}
   .stock-language{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
@@ -137,6 +150,13 @@
   .scan-target{min-height:145px;border:2px dashed var(--purple-line);border-radius:13px;background:var(--purple-soft);display:grid;place-items:center;text-align:center;padding:20px;color:var(--fg2);font-size:11.5px;line-height:1.5}
   .scan-target b{display:block;color:var(--purple);font-family:var(--display);font-size:14px;margin-bottom:5px}
   .scan-dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+  .manual-stock-form{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .manual-stock-form .wide{grid-column:1/-1}
+  .manual-stock-form label{display:block;margin-bottom:5px;color:var(--fg3);font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  .manual-stock-form input,.manual-stock-form select,.manual-stock-form textarea{width:100%;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--fg);font:600 11px var(--font);padding:9px;outline:none}
+  .manual-stock-form textarea{min-height:68px;resize:vertical}
+  .manual-stock-note{margin-top:12px;padding:10px 11px;border-radius:9px;background:var(--amber-soft);color:#8a4b08;font-size:10.5px;line-height:1.45}
+  .manual-stock-saved{display:none;margin-top:12px;padding:10px 11px;border-radius:9px;background:var(--green-soft);color:var(--green-txt);font-size:10.5px;font-weight:800}.manual-stock-saved.show{display:block}
   /* purchase order editing and delivery receiving */
   .po-id{font-family:var(--display);font-weight:800;color:var(--purple)}
   .po-actions{display:flex;justify-content:flex-end;gap:6px;white-space:nowrap}
@@ -297,7 +317,8 @@
     .receipt-summary{grid-template-columns:repeat(2,1fr)}
     .po-workspace-head{align-items:flex-start;flex-wrap:wrap}
   }
-  @media (max-width:520px){ .k4,.form-grid,.receipt-summary,.stock-toolbar,.history-toolbar{grid-template-columns:1fr}.stock-search,.history-toolbar .history-search{grid-column:auto}.form-field.wide{grid-column:auto}.panel-actions,.receive-commandbar{flex-wrap:wrap}.receive-commandbar .context{width:100%}.stock-table-footer{align-items:flex-start;flex-direction:column}.head-actions{justify-content:flex-start} }
+  @media (max-width:860px){.return-queue-row{grid-template-columns:1fr auto}.return-queue-row .source{grid-column:1}.return-assign{grid-column:1/-1;justify-content:flex-start}}
+  @media (max-width:520px){ .k4,.form-grid,.receipt-summary,.stock-toolbar,.history-toolbar{grid-template-columns:1fr}.stock-search,.history-toolbar .history-search{grid-column:auto}.form-field.wide{grid-column:auto}.panel-actions,.receive-commandbar{flex-wrap:wrap}.receive-commandbar .context{width:100%}.stock-table-footer{align-items:flex-start;flex-direction:column}.head-actions{justify-content:flex-start}.return-queue-row{grid-template-columns:1fr}.return-queue-row .qty{text-align:left}.return-assign{grid-column:auto;align-items:stretch;flex-direction:column}.return-assign select{width:100%} }
 </style>
 </head>
 <body>
@@ -323,6 +344,7 @@
         <div><h1>Inventory <span class="pill p-recv">RECEIVER VIEW</span></h1>
         <div class="subtitle">Everything on hand and coming in — synced with Nayax &amp; Shopify — plus purchase orders and invoices.</div></div>
         <div class="head-actions">
+          <button class="manual-stock-btn" id="manual-stock" type="button">+ Add stock manually</button>
           <button class="scan-stock-btn" id="scan-stock" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Scan stock</button>
           <div class="syncchip"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/></svg> Synced · 8:32 AM</div>
         </div>
@@ -341,15 +363,26 @@
           <div class="kpi"><div class="l">On-hand value</div><div class="v">$63,421</div><div class="d muted">1,845 units</div></div>
           <div class="kpi"><div class="l">Online store stock</div><div class="v" style="color:var(--purple)">820</div><div class="d muted">allocated to fulfilment</div></div>
           <div class="kpi"><div class="l">Vending machine stock</div><div class="v" style="color:var(--blue)">1,025</div><div class="d muted">allocated to machine routes</div></div>
-          <div class="kpi"><div class="l">Warehouse unallocated</div><div class="v" style="color:var(--green-txt)">138</div><div class="d muted">awaiting channel allocation</div></div>
+          <div class="kpi"><div class="l">Returns quarantine</div><div class="v" style="color:var(--amber)">5</div><div class="d muted">review before reassignment</div></div>
+        </div>
+
+        <div class="card tight p0 return-queue">
+          <div class="ph"><div><h3>Returned stock waiting for reassignment</h3><p>All products returned from vending routes—including swapped products—stay unavailable until warehouse review.</p></div><span class="badge b-amber">5 units waiting</span></div>
+          <div class="return-queue-row">
+            <div class="product"><b>Surging Sparks Booster Pack</b><span>PKM-SS-EN · RET-00518</span></div><div class="qty">4 packs</div><div class="source">Machine 1 · GGV-001<br>North route</div><div class="return-assign"><select aria-label="Reassign Surging Sparks"><option value="">Choose destination</option><option>Online store</option><option>Vending machines</option></select><button type="button" data-reassign-return="Surging Sparks Booster Pack">Reassign</button></div>
+          </div>
+          <div class="return-queue-row">
+            <div class="product"><b>Prismatic Evolutions Booster Bundle</b><span>PKM-PE-BB · swapped item · RET-00518</span></div><div class="qty">1 bundle</div><div class="source">Machine 1 · GGV-001<br>North route</div><div class="return-assign"><select aria-label="Reassign Prismatic Evolutions"><option value="">Choose destination</option><option>Online store</option><option>Vending machines</option></select><button type="button" data-reassign-return="Prismatic Evolutions Booster Bundle">Reassign</button></div>
+          </div>
+          <div class="manual-stock-saved" id="return-reassign-status" role="status" style="margin:0 18px 14px"></div>
         </div>
 
         <div class="card tight p0 stock-card">
-          <div class="ph"><div><h3>Current stock</h3><p>Channel allocations and physical locations remain separate.</p></div><span class="muted" id="stock-result-count">20 records</span></div>
+          <div class="ph"><div><h3>Current stock</h3><p>Products are grouped by main set; formats and channel locations remain separate.</p></div><span class="muted" id="stock-result-count">20 records</span></div>
           <div class="stock-toolbar" aria-label="Current stock controls">
             <div class="stock-control stock-search"><label for="stock-search">Find stock</label><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="stock-search" type="search" placeholder="Search product, SKU or location"></div>
             <div class="stock-control"><label for="stock-language">Language</label><select id="stock-language"><option value="all">All languages</option><option value="English">English</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option></select></div>
-            <div class="stock-control"><label for="stock-allocation">Allocation</label><select id="stock-allocation"><option value="all">All allocations</option><option value="online">Online store</option><option value="vending">Vending machines</option><option value="warehouse">Warehouse · unallocated</option><option value="quarantine">Quarantine</option></select></div>
+            <div class="stock-control"><label for="stock-allocation">Allocation</label><select id="stock-allocation"><option value="all">All allocations</option><option value="online">Online store</option><option value="vending">Vending machines</option><option value="warehouse">Warehouse · unallocated</option><option value="returns">Returns quarantine</option><option value="quarantine">Damage quarantine</option></select></div>
             <div class="stock-control"><label for="stock-sort">Sort by</label><select id="stock-sort"><option value="name-asc">Name · A–Z</option><option value="name-desc">Name · Z–A</option><option value="language">Language</option><option value="qty-desc">On hand · high to low</option><option value="qty-asc">On hand · low to high</option></select></div>
             <div class="stock-control"><label for="stock-page-size">Rows</label><select id="stock-page-size"><option value="10" selected>10 per page</option><option value="25">25 per page</option></select></div>
           </div>
@@ -372,8 +405,9 @@
                 <tr data-stock-row data-name="Glory of Team Rocket Booster Pack" data-language="Japanese" data-allocation="vending" data-on-hand="48"><td class="stock-product"><b>Glory of Team Rocket Booster Pack</b><span>PKM-GTR-JP</span></td><td><span class="stock-language"><i></i>Japanese</span></td><td>Booster pack</td><td><span class="stock-channel channel-vending">Vending machines</span></td><td>Route staging · East</td><td class="num">48</td></tr>
                 <tr data-stock-row data-name="Mega Brave Booster Pack" data-language="Japanese" data-allocation="online" data-on-hand="120"><td class="stock-product"><b>Mega Brave Booster Pack</b><span>PKM-MB-JP</span></td><td><span class="stock-language"><i></i>Japanese</span></td><td>Booster pack</td><td><span class="stock-channel channel-online">Online store</span></td><td>Fulfilment shelf J-06</td><td class="num">120</td></tr>
                 <tr data-stock-row data-name="Mega Symphonia Booster Pack" data-language="Japanese" data-allocation="online" data-on-hand="110"><td class="stock-product"><b>Mega Symphonia Booster Pack</b><span>PKM-MS-JP</span></td><td><span class="stock-language"><i></i>Japanese</span></td><td>Booster pack</td><td><span class="stock-channel channel-online">Online store</span></td><td>Fulfilment shelf J-07</td><td class="num">110</td></tr>
-                <tr data-stock-row data-name="Surging Sparks Booster Pack" data-language="English" data-allocation="warehouse" data-on-hand="100"><td class="stock-product"><b>Surging Sparks Booster Pack</b><span class="stock-return-note">PKM-SS-EN · includes RET-00518 +4 return</span></td><td><span class="stock-language"><i></i>English</span></td><td>Booster pack</td><td><span class="stock-channel channel-warehouse">Warehouse · unallocated</span></td><td>Returns bench R-01</td><td class="num">100</td></tr>
-                <tr data-stock-row data-name="Destined Rivals Booster Pack" data-language="English" data-allocation="quarantine" data-on-hand="2"><td class="stock-product"><b>Destined Rivals Booster Pack</b><span>PKM-DR-EN</span></td><td><span class="stock-language"><i></i>English</span></td><td>Booster pack</td><td><span class="stock-channel channel-quarantine">Quarantine</span></td><td>Damage cage Q-01</td><td class="num">2</td></tr>
+                <tr data-stock-row data-name="Surging Sparks Booster Pack" data-language="English" data-allocation="returns" data-on-hand="4"><td class="stock-product"><b>Surging Sparks Booster Pack</b><span class="stock-return-note">PKM-SS-EN · RET-00518 · pending review</span></td><td><span class="stock-language"><i></i>English</span></td><td>Booster pack</td><td><span class="stock-channel channel-returns">Returns quarantine</span></td><td>Returns bench R-01</td><td class="num">4</td></tr>
+                <tr data-stock-row data-name="Prismatic Evolutions Booster Bundle" data-language="English" data-allocation="returns" data-on-hand="1"><td class="stock-product"><b>Prismatic Evolutions Booster Bundle</b><span class="stock-return-note">PKM-PE-BB · swapped item · RET-00518</span></td><td><span class="stock-language"><i></i>English</span></td><td>Booster bundle</td><td><span class="stock-channel channel-returns">Returns quarantine</span></td><td>Returns bench R-01</td><td class="num">1</td></tr>
+                <tr data-stock-row data-name="Destined Rivals Booster Pack" data-language="English" data-allocation="quarantine" data-on-hand="2"><td class="stock-product"><b>Destined Rivals Booster Pack</b><span>PKM-DR-EN</span></td><td><span class="stock-language"><i></i>English</span></td><td>Booster pack</td><td><span class="stock-channel channel-quarantine">Damage quarantine</span></td><td>Damage cage Q-01</td><td class="num">2</td></tr>
                 <tr data-stock-row data-name="Heat Wave Arena Booster Pack" data-language="Japanese" data-allocation="warehouse" data-on-hand="38"><td class="stock-product"><b>Heat Wave Arena Booster Pack</b><span>PKM-HWA-JP</span></td><td><span class="stock-language"><i></i>Japanese</span></td><td>Booster pack</td><td><span class="stock-channel channel-warehouse">Warehouse · unallocated</span></td><td>Returns bench R-02</td><td class="num">38</td></tr>
                 <tr data-stock-row data-name="White Flare Booster Pack" data-language="English" data-allocation="online" data-on-hand="90"><td class="stock-product"><b>White Flare Booster Pack</b><span>PKM-WF-EN</span></td><td><span class="stock-language"><i></i>English</span></td><td>Booster pack</td><td><span class="stock-channel channel-online">Online store</span></td><td>Fulfilment shelf A-08</td><td class="num">90</td></tr>
                 <tr data-stock-row data-name="Black Bolt Booster Pack" data-language="English" data-allocation="vending" data-on-hand="80"><td class="stock-product"><b>Black Bolt Booster Pack</b><span>PKM-BB-EN</span></td><td><span class="stock-language"><i></i>English</span></td><td>Booster pack</td><td><span class="stock-channel channel-vending">Vending machines</span></td><td>Route staging · Campus</td><td class="num">80</td></tr>
@@ -384,7 +418,7 @@
           <div class="stock-table-footer"><span id="stock-page-status">Showing 1–10 of 20 records</span><div class="stock-pager"><button id="stock-prev" type="button">Previous</button><span id="stock-page-label">Page 1 of 2</span><button id="stock-next" type="button">Next</button></div></div>
         </div>
 
-        <div class="card tight p0">
+        <div class="card tight p0" hidden aria-hidden="true">
           <div class="ph"><h3 style="margin:0">Incoming stock</h3><span class="muted" style="font-size:11px">Synced from Nayax + Shopify — for receivers</span></div>
           <div style="padding:0 18px 8px">
             <div class="lrow"><div class="thumb">SV</div><div><div class="nm">Surging Sparks (EN) — Booster box</div><div class="sub">PO-1042 · TCG Direct</div></div><div class="r"><span class="badge b-blue">In transit</span><div class="sub">ETA 26 May · 240 units</div></div></div>
@@ -397,7 +431,7 @@
 
       <!-- ===== 2.b PURCHASING ===== -->
       <section class="view purchasing-embed" id="v-purchasing" aria-labelledby="purchasing-tab">
-        <iframe class="purchasing-frame" id="purchasing-frame" src="purchasing-flow.html?embed=1" title="Purchasing workflow: Plan, Orders, and Receive">
+        <iframe class="purchasing-frame" id="purchasing-frame" src="purchasing-flow.html?embed=1" title="Purchasing workflow: Buy stock, Incoming, and Receive">
           <p><a href="purchasing-flow.html">Open the Purchasing workflow</a></p>
         </iframe>
       </section>
@@ -474,7 +508,7 @@
           </div>
 
           <div class="po-panel" id="po-panel-receive">
-            <div class="receive-guide"><span>✓</span><div><b>Mark off exactly what arrived.</b> “Arrived now” includes damaged units. Every good unit must be allocated to either the <b>Online store</b>, <b>Vending machines</b>, or a split of both. Damaged units go to Quarantine and never increase sellable stock.</div></div>
+            <div class="receive-guide"><span>✓</span><div><b>Mark off exactly what arrived.</b> “Arrived now” includes damaged units. Every good unit must be allocated to either the <b>Online store</b>, <b>Vending machines</b>, or a split of both. Damaged units go to Damage quarantine and never increase sellable stock.</div></div>
             <div class="receive-commandbar"><span class="context"><b>2 PO lines</b> · 360 units ordered</span><span class="spacer"></span><button id="clear-receiving" type="button">Clear this delivery</button><button class="primary-shortcut" id="receive-all-outstanding" type="button">Receive all outstanding</button></div>
             <div class="receipt-table">
               <table>
@@ -496,10 +530,10 @@
             <div class="receipt-summary">
               <div><span>Good to Online store</span><b id="receipt-online">60</b></div>
               <div><span>Good to Vending machines</span><b id="receipt-vending">290</b></div>
-              <div class="damaged"><span>Damaged to Quarantine</span><b id="receipt-damaged">6</b></div>
+              <div class="damaged"><span>Damaged to Damage quarantine</span><b id="receipt-damaged">6</b></div>
               <div class="due"><span>Still due from supplier</span><b id="receipt-due">4</b></div>
             </div>
-            <div class="receipt-confirmation" id="receipt-confirmation" role="status">Receipt RCV-00842 confirmed. 60 good units were allocated to the Online store, 290 to Vending machines, 6 damaged units were quarantined, and PO-1042 is now Partial with 4 units still due.</div>
+            <div class="receipt-confirmation" id="receipt-confirmation" role="status">Receipt RCV-00842 confirmed. 60 good units were allocated to the Online store, 290 to Vending machines, 6 damaged units were moved to Damage quarantine, and PO-1042 is now Partial with 4 units still due.</div>
             <div class="panel-actions">
               <span class="save-message" id="receipt-draft-message" role="status">Receiving draft saved</span>
               <span class="spacer"></span>
@@ -513,37 +547,39 @@
       <!-- ===== 2.c RUNNING STOCK HISTORY ===== -->
       <section class="view" id="v-history">
         <div class="kpis k4">
-          <div class="kpi"><div class="l">Movements today</div><div class="v">12</div><div class="d muted">receipts, fills, returns and transfers</div></div>
+          <div class="kpi"><div class="l">Movements today</div><div class="v">13</div><div class="d muted">receipts, fills, returns and transfers</div></div>
           <div class="kpi"><div class="l">Received to sellable</div><div class="v" style="color:var(--purple)">+350</div><div class="d muted">Online store + Vending machines</div></div>
-          <div class="kpi"><div class="l">Returned to main stock</div><div class="v" style="color:var(--green-txt)">+4</div><div class="d muted">visible in Current stock now</div></div>
-          <div class="kpi"><div class="l">Moved to Quarantine</div><div class="v" style="color:var(--red)">8</div><div class="d muted">returns + supplier damage</div></div>
+          <div class="kpi"><div class="l">Returns awaiting review</div><div class="v" style="color:var(--amber)">5</div><div class="d muted">not yet sellable or allocated</div></div>
+          <div class="kpi"><div class="l">Damage quarantine</div><div class="v" style="color:var(--red)">8</div><div class="d muted">returns + supplier damage</div></div>
         </div>
 
         <div class="history-callout">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><path d="M17 16l3 3-3 3"/></svg></div>
-          <div><h3>Every stock movement in one running history</h3><p>Route returns are part of the same inventory ledger as PO receipts, fills, allocation transfers, adjustments, and damage. A good return updates <b>Current stock</b> immediately and appears here with its return reference.</p></div>
-          <div class="history-rule">No second approval: confirmed filler returns already created the Warehouse or Quarantine movement.</div>
+          <div><h3>Every stock movement in one running history</h3><p>Route returns are part of the same inventory ledger as PO receipts, fills, allocation transfers, adjustments, and damage. Every return first appears in <b>Returns quarantine</b>; a later reassignment movement releases reviewed stock to Online store or Vending machines.</p></div>
+          <div class="history-rule">Returned stock is unavailable until reviewed and reassigned. Damaged stock remains in Damage quarantine.</div>
         </div>
 
         <div class="history-card" id="stock-history">
-          <div class="history-card-head"><div><h3>Stock movement history</h3><p>Newest first · signed quantities show the effect on the destination or source balance.</p></div><span class="history-count" id="history-count">10 movements</span></div>
+          <div class="history-card-head"><div><h3>Stock movement history</h3><p>Newest first · signed quantities show the effect on the destination or source balance.</p></div><span class="history-count" id="history-count">12 movements</span></div>
           <div class="history-toolbar" aria-label="Stock history filters">
             <div class="history-control history-search"><label for="history-search">Find a movement</label><input id="history-search" type="search" placeholder="Search product, SKU, reference, location or person"></div>
             <div class="history-control"><label for="history-type">Movement type</label><select id="history-type"><option value="all">All movement types</option><option value="return">Route returns</option><option value="receive">PO receipts</option><option value="fill">Route fills</option><option value="damage">Supplier damage</option><option value="transfer">Allocation transfers</option><option value="adjustment">Adjustments</option></select></div>
-            <div class="history-control"><label for="history-area">Stock area</label><select id="history-area"><option value="all">All stock areas</option><option value="warehouse">Warehouse · unallocated</option><option value="online">Online store</option><option value="vending">Vending machines</option><option value="quarantine">Quarantine</option></select></div>
+            <div class="history-control"><label for="history-area">Stock area</label><select id="history-area"><option value="all">All stock areas</option><option value="warehouse">Warehouse · unallocated</option><option value="returns">Returns quarantine</option><option value="online">Online store</option><option value="vending">Vending machines</option><option value="quarantine">Damage quarantine</option></select></div>
             <div class="history-control"><label for="history-direction">Balance effect</label><select id="history-direction"><option value="all">All effects</option><option value="in">Added to a balance</option><option value="out">Removed from main stock</option><option value="transfer">Moved between areas</option></select></div>
           </div>
           <div class="history-table-wrap">
             <table class="history-table">
               <thead><tr><th>Date &amp; time</th><th>Movement</th><th>Pokémon product</th><th>From</th><th></th><th>To / allocation</th><th class="num">Quantity</th><th>Reference</th><th>Recorded by</th><th class="num">Resulting stock</th></tr></thead>
               <tbody id="history-body">
-                <tr data-history-row data-type="return" data-group="return" data-area="warehouse"><td class="history-time"><b>3 Aug 2026</b><span>4:42 PM</span></td><td><span class="movement-type return">↩ Good return</span></td><td class="history-product"><b>Surging Sparks Booster Pack</b><span>PKM-SS-EN</span></td><td class="history-place"><b>Machine 1 · GGV-001</b><span>North route</span></td><td class="history-arrow">→</td><td class="history-place"><b>Warehouse · unallocated</b><span>Returns bench R-01</span></td><td class="history-delta positive">+4</td><td><span class="history-ref">RET-00518</span></td><td>Sam · Filler</td><td class="history-balance">96 → 100<span>Main stock</span></td></tr>
-                <tr data-history-row data-type="damage" data-group="return" data-area="quarantine"><td class="history-time"><b>3 Aug 2026</b><span>4:42 PM</span></td><td><span class="movement-type damage">! Damaged return</span></td><td class="history-product"><b>Destined Rivals Booster Pack</b><span>PKM-DR-EN · dented packaging</span></td><td class="history-place"><b>Machine 1 · GGV-001</b><span>North route</span></td><td class="history-arrow">→</td><td class="history-place"><b>Quarantine</b><span>Damage cage Q-01</span></td><td class="history-delta positive">+2</td><td><span class="history-ref">RET-00518</span></td><td>Sam · Filler</td><td class="history-balance">0 → 2<span>Quarantine</span></td></tr>
+                <tr data-history-row data-type="return" data-group="return" data-area="returns"><td class="history-time"><b>3 Aug 2026</b><span>4:42 PM</span></td><td><span class="movement-type return">↩ Route return</span></td><td class="history-product"><b>Surging Sparks Booster Pack</b><span>PKM-SS-EN</span></td><td class="history-place"><b>Machine 1 · GGV-001</b><span>North route</span></td><td class="history-arrow">→</td><td class="history-place"><b>Returns quarantine</b><span>Returns bench R-01</span></td><td class="history-delta positive">+4</td><td><span class="history-ref">RET-00518</span></td><td>Sam · Filler</td><td class="history-balance">0 → 4<span>Awaiting review</span></td></tr>
+                <tr data-history-row data-type="return" data-group="return" data-area="returns"><td class="history-time"><b>3 Aug 2026</b><span>4:42 PM</span></td><td><span class="movement-type return">↩ Swapped return</span></td><td class="history-product"><b>Prismatic Evolutions Booster Bundle</b><span>PKM-PE-BB · swapped item</span></td><td class="history-place"><b>Machine 1 · GGV-001</b><span>North route</span></td><td class="history-arrow">→</td><td class="history-place"><b>Returns quarantine</b><span>Returns bench R-01</span></td><td class="history-delta positive">+1</td><td><span class="history-ref">RET-00518</span></td><td>Sam · Filler</td><td class="history-balance">0 → 1<span>Awaiting review</span></td></tr>
+                <tr data-history-row data-type="damage" data-group="return" data-area="quarantine"><td class="history-time"><b>3 Aug 2026</b><span>4:42 PM</span></td><td><span class="movement-type damage">! Damaged return</span></td><td class="history-product"><b>Destined Rivals Booster Pack</b><span>PKM-DR-EN · dented packaging</span></td><td class="history-place"><b>Machine 1 · GGV-001</b><span>North route</span></td><td class="history-arrow">→</td><td class="history-place"><b>Damage quarantine</b><span>Damage cage Q-01</span></td><td class="history-delta positive">+2</td><td><span class="history-ref">RET-00518</span></td><td>Sam · Filler</td><td class="history-balance">0 → 2<span>Damage quarantine</span></td></tr>
+                <tr data-history-row data-type="transfer" data-area="online"><td class="history-time"><b>2 Aug 2026</b><span>4:18 PM</span></td><td><span class="movement-type transfer">⇄ Return reassignment</span></td><td class="history-product"><b>Pokémon Card 151 Booster Pack</b><span>PKM-151-JP · reviewed return</span></td><td class="history-place"><b>Returns quarantine</b><span>Returns bench R-01</span></td><td class="history-arrow">→</td><td class="history-place"><b>Online store</b><span>Fulfilment shelf J-02</span></td><td class="history-delta neutral">6 moved</td><td><span class="history-ref">TRF-00294</span></td><td>Riley · Receiver</td><td class="history-balance">174 → 180<span>Online store</span></td></tr>
                 <tr data-history-row data-type="receive" data-area="online"><td class="history-time"><b>3 Aug 2026</b><span>1:18 PM</span></td><td><span class="movement-type receive">↓ PO receipt</span></td><td class="history-product"><b>Surging Sparks Booster Pack</b><span>PKM-SS-EN</span></td><td class="history-place"><b>TCG Direct</b><span>Supplier delivery</span></td><td class="history-arrow">→</td><td class="history-place"><b>Online store</b><span>Fulfilment shelf A-04</span></td><td class="history-delta positive">+60</td><td><span class="history-ref">RCV-00842</span></td><td>Riley · Receiver</td><td class="history-balance">180 → 240<span>Online store</span></td></tr>
                 <tr data-history-row data-type="receive" data-area="vending"><td class="history-time"><b>3 Aug 2026</b><span>1:18 PM</span></td><td><span class="movement-type receive">↓ PO receipt</span></td><td class="history-product"><b>Surging Sparks Booster Pack</b><span>PKM-SS-EN</span></td><td class="history-place"><b>TCG Direct</b><span>Supplier delivery</span></td><td class="history-arrow">→</td><td class="history-place"><b>Vending machines</b><span>Route staging · North</span></td><td class="history-delta positive">+176</td><td><span class="history-ref">RCV-00842</span></td><td>Riley · Receiver</td><td class="history-balance">4 → 180<span>Vending stock</span></td></tr>
                 <tr data-history-row data-type="receive" data-area="vending"><td class="history-time"><b>3 Aug 2026</b><span>1:18 PM</span></td><td><span class="movement-type receive">↓ PO receipt</span></td><td class="history-product"><b>Destined Rivals Booster Pack</b><span>PKM-DR-EN</span></td><td class="history-place"><b>TCG Direct</b><span>Supplier delivery</span></td><td class="history-arrow">→</td><td class="history-place"><b>Vending machines</b><span>Route staging · East</span></td><td class="history-delta positive">+114</td><td><span class="history-ref">RCV-00842</span></td><td>Riley · Receiver</td><td class="history-balance">0 → 114<span>Vending stock</span></td></tr>
-                <tr data-history-row data-type="damage" data-area="quarantine"><td class="history-time"><b>3 Aug 2026</b><span>1:18 PM</span></td><td><span class="movement-type damage">! Supplier damage</span></td><td class="history-product"><b>Surging Sparks Booster Pack</b><span>PKM-SS-EN · crushed box</span></td><td class="history-place"><b>TCG Direct</b><span>PO-1042</span></td><td class="history-arrow">→</td><td class="history-place"><b>Quarantine</b><span>Damage cage Q-01</span></td><td class="history-delta positive">+4</td><td><span class="history-ref">RCV-00842</span></td><td>Riley · Receiver</td><td class="history-balance">2 → 6<span>Quarantine</span></td></tr>
-                <tr data-history-row data-type="damage" data-area="quarantine"><td class="history-time"><b>3 Aug 2026</b><span>1:18 PM</span></td><td><span class="movement-type damage">! Supplier damage</span></td><td class="history-product"><b>Destined Rivals Booster Pack</b><span>PKM-DR-EN · dented packaging</span></td><td class="history-place"><b>TCG Direct</b><span>PO-1042</span></td><td class="history-arrow">→</td><td class="history-place"><b>Quarantine</b><span>Damage cage Q-01</span></td><td class="history-delta positive">+2</td><td><span class="history-ref">RCV-00842</span></td><td>Riley · Receiver</td><td class="history-balance">2 → 4<span>Quarantine</span></td></tr>
+                <tr data-history-row data-type="damage" data-area="quarantine"><td class="history-time"><b>3 Aug 2026</b><span>1:18 PM</span></td><td><span class="movement-type damage">! Supplier damage</span></td><td class="history-product"><b>Surging Sparks Booster Pack</b><span>PKM-SS-EN · crushed box</span></td><td class="history-place"><b>TCG Direct</b><span>PO-1042</span></td><td class="history-arrow">→</td><td class="history-place"><b>Damage quarantine</b><span>Damage cage Q-01</span></td><td class="history-delta positive">+4</td><td><span class="history-ref">RCV-00842</span></td><td>Riley · Receiver</td><td class="history-balance">2 → 6<span>Damage quarantine</span></td></tr>
+                <tr data-history-row data-type="damage" data-area="quarantine"><td class="history-time"><b>3 Aug 2026</b><span>1:18 PM</span></td><td><span class="movement-type damage">! Supplier damage</span></td><td class="history-product"><b>Destined Rivals Booster Pack</b><span>PKM-DR-EN · dented packaging</span></td><td class="history-place"><b>TCG Direct</b><span>PO-1042</span></td><td class="history-arrow">→</td><td class="history-place"><b>Damage quarantine</b><span>Damage cage Q-01</span></td><td class="history-delta positive">+2</td><td><span class="history-ref">RCV-00842</span></td><td>Riley · Receiver</td><td class="history-balance">2 → 4<span>Damage quarantine</span></td></tr>
                 <tr data-history-row data-type="fill" data-area="warehouse"><td class="history-time"><b>3 Aug 2026</b><span>9:10 AM</span></td><td><span class="movement-type fill">↑ Route fill</span></td><td class="history-product"><b>Surging Sparks Booster Pack</b><span>PKM-SS-EN · slot 1</span></td><td class="history-place"><b>Warehouse · unallocated</b><span>Main stock</span></td><td class="history-arrow">→</td><td class="history-place"><b>Machine 1 · GGV-001</b><span>Westfield Parramatta</span></td><td class="history-delta negative">−21</td><td><span class="history-ref">ROUTE-NR-0524</span></td><td>Sam · Filler</td><td class="history-balance">117 → 96<span>Main stock</span></td></tr>
                 <tr data-history-row data-type="transfer" data-area="vending"><td class="history-time"><b>2 Aug 2026</b><span>3:25 PM</span></td><td><span class="movement-type transfer">⇄ Allocation</span></td><td class="history-product"><b>Heat Wave Arena Booster Pack</b><span>PKM-HWA-JP</span></td><td class="history-place"><b>Warehouse · unallocated</b><span>Returns bench R-02</span></td><td class="history-arrow">→</td><td class="history-place"><b>Vending machines</b><span>Route staging · Campus</span></td><td class="history-delta neutral">24 moved</td><td><span class="history-ref">TRF-00291</span></td><td>Riley · Receiver</td><td class="history-balance">62 → 38<span>Warehouse</span></td></tr>
                 <tr data-history-row data-type="adjustment" data-area="online"><td class="history-time"><b>2 Aug 2026</b><span>10:06 AM</span></td><td><span class="movement-type adjustment">± Adjustment</span></td><td class="history-product"><b>Pokémon Card 151 Booster Pack</b><span>PKM-151-JP · stocktake</span></td><td class="history-place"><b>Cycle count</b><span>Fulfilment shelf J-02</span></td><td class="history-arrow">→</td><td class="history-place"><b>Online store</b><span>Fulfilment shelf J-02</span></td><td class="history-delta positive">+3</td><td><span class="history-ref">ADJ-00187</span></td><td>Riley · Receiver</td><td class="history-balance">177 → 180<span>Online store</span></td></tr>
@@ -563,6 +599,23 @@
     <div class="scan-dialog-body"><div class="scan-target" id="scan-target"><div><b>Ready to scan</b>Point the camera at one product, shelf label, or barcode.</div></div><div class="scan-dialog-actions"><button class="btn-secondary" id="scan-cancel" type="button">Cancel</button><button class="btn-primary" id="scan-start" type="button">Start camera</button></div></div>
   </div>
 </div>
+<div class="scan-overlay" id="manual-stock-overlay" role="dialog" aria-modal="true" aria-labelledby="manual-stock-title" aria-hidden="true">
+  <div class="scan-dialog">
+    <div class="scan-dialog-head"><span class="icon">+</span><div><h3 id="manual-stock-title">Add stock manually</h3><p>Use an audited stock adjustment when stock did not arrive through a purchase order.</p></div><button class="scan-close" id="manual-stock-close" type="button" aria-label="Close manual stock form">×</button></div>
+    <div class="scan-dialog-body">
+      <div class="manual-stock-form">
+        <div class="wide"><label for="manual-stock-product">Product</label><select id="manual-stock-product"><option>Pokémon Mega Dream — Booster Pack</option><option>Pokémon Mega Dream — Booster Box</option><option>Pokémon Mega Dream — Elite Trainer Box</option><option>Pokémon Surging Sparks — Booster Pack</option><option>Pokémon Card 151 — Booster Pack</option></select></div>
+        <div><label for="manual-stock-quantity">Quantity</label><input id="manual-stock-quantity" type="number" min="1" value="1"></div>
+        <div><label for="manual-stock-area">Add to</label><select id="manual-stock-area"><option>Warehouse · unallocated</option><option>Online store</option><option>Vending machines</option><option>Returns quarantine</option><option>Damage quarantine</option></select></div>
+        <div class="wide"><label for="manual-stock-location">Physical location</label><input id="manual-stock-location" type="text" placeholder="e.g. Receiving bench A-01"></div>
+        <div class="wide"><label for="manual-stock-reason">Reason / reference</label><textarea id="manual-stock-reason" placeholder="Why is this stock being added? Add a reference for audit."></textarea></div>
+      </div>
+      <div class="manual-stock-note">For supplier deliveries, use the PO Receive flow. Manual additions create an immutable stock-adjustment movement and require a reason.</div>
+      <div class="manual-stock-saved" id="manual-stock-saved">Manual adjustment recorded · ADJ-00219 · visible in Stock History</div>
+      <div class="scan-dialog-actions"><button class="btn-secondary" id="manual-stock-cancel" type="button">Cancel</button><button class="btn-primary" id="manual-stock-save" type="button">Record stock adjustment</button></div>
+    </div>
+  </div>
+</div>
 <script>
   const stockRows=[...document.querySelectorAll('[data-stock-row]')];
   const stockBody=document.getElementById('stock-table-body');
@@ -575,6 +628,10 @@
   const stockNext=document.getElementById('stock-next');
   const stockEmptyRow=document.getElementById('stock-empty-row');
   let stockPage=1;
+
+  function stockGroupName(row){
+    return row.dataset.name.replace(/ (Booster Pack|Booster Bundle|Booster Box|Elite Trainer Box)$/,'');
+  }
 
   function renderStockTable(){
     const query=stockSearch.value.trim().toLocaleLowerCase();
@@ -590,6 +647,8 @@
 
     const [sortKey,sortDirection='asc']=stockSort.value.split('-');
     filtered.sort((a,b)=>{
+      const groupResult=stockGroupName(a).localeCompare(stockGroupName(b));
+      if(groupResult) return groupResult;
       let result=0;
       if(sortKey==='qty') result=Number(a.dataset.onHand)-Number(b.dataset.onHand);
       else if(sortKey==='language') result=a.dataset.language.localeCompare(b.dataset.language)||a.dataset.name.localeCompare(b.dataset.name);
@@ -601,9 +660,24 @@
     stockPage=Math.min(stockPage,pageCount);
     const start=(stockPage-1)*pageSize;
     const visible=filtered.slice(start,start+pageSize);
+    stockBody.querySelectorAll('.stock-group-row').forEach(row=>row.remove());
     stockRows.forEach(row=>row.hidden=true);
     filtered.forEach(row=>stockBody.insertBefore(row,stockEmptyRow));
     visible.forEach(row=>row.hidden=false);
+    let previousGroup='';
+    visible.forEach(row=>{
+      const group=stockGroupName(row);
+      if(group!==previousGroup){
+        const heading=document.createElement('tr');
+        heading.className='stock-group-row';
+        const cell=document.createElement('td');
+        cell.colSpan=6;
+        cell.textContent=group;
+        heading.appendChild(cell);
+        stockBody.insertBefore(heading,row);
+        previousGroup=group;
+      }
+    });
     stockEmptyRow.hidden=filtered.length!==0;
     stockEmptyRow.querySelector('td').style.display=filtered.length===0?'table-cell':'none';
 
@@ -622,6 +696,22 @@
   stockPrev.addEventListener('click',()=>{if(stockPage>1){stockPage--;renderStockTable();}});
   stockNext.addEventListener('click',()=>{stockPage++;renderStockTable();});
   renderStockTable();
+
+  document.querySelectorAll('[data-reassign-return]').forEach(button=>button.addEventListener('click',()=>{
+    const select=button.previousElementSibling;
+    const status=document.getElementById('return-reassign-status');
+    if(!select.value){
+      status.textContent='Choose Online store or Vending machines before reassigning this return.';
+      status.classList.add('show');
+      select.focus();
+      return;
+    }
+    status.textContent=`${button.dataset.reassignReturn} reassigned to ${select.value} · TRF-00302 created in Stock History`;
+    status.classList.add('show');
+    select.disabled=true;
+    button.textContent='Reassigned';
+    button.disabled=true;
+  }));
 
   const historyRows=[...document.querySelectorAll('[data-history-row]')];
   const historySearch=document.getElementById('history-search');
@@ -674,6 +764,23 @@
     scanStart.disabled=true;
   });
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&scanOverlay.classList.contains('open'))setScanOpen(false);});
+
+  const manualStockOverlay=document.getElementById('manual-stock-overlay');
+  function setManualStockOpen(open){
+    manualStockOverlay.classList.toggle('open',open);
+    manualStockOverlay.setAttribute('aria-hidden',String(!open));
+    if(open) document.getElementById('manual-stock-close').focus();
+  }
+  document.getElementById('manual-stock').addEventListener('click',()=>setManualStockOpen(true));
+  document.getElementById('manual-stock-close').addEventListener('click',()=>setManualStockOpen(false));
+  document.getElementById('manual-stock-cancel').addEventListener('click',()=>setManualStockOpen(false));
+  manualStockOverlay.addEventListener('click',event=>{if(event.target===manualStockOverlay)setManualStockOpen(false);});
+  document.getElementById('manual-stock-save').addEventListener('click',event=>{
+    document.getElementById('manual-stock-saved').classList.add('show');
+    event.currentTarget.textContent='Recorded';
+    event.currentTarget.disabled=true;
+  });
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&manualStockOverlay.classList.contains('open'))setManualStockOpen(false);});
 
   function showInventoryView(name){
     const button = document.querySelector(`.subtabs button[data-v="${name}"]`);
@@ -859,7 +966,7 @@
     document.getElementById('workspace-po-status').textContent=status;
     document.getElementById('workspace-po-status').className=`badge ${totals.dueTotal ? 'b-amber' : 'b-green'}`;
     const confirmation=document.getElementById('receipt-confirmation');
-    confirmation.textContent=`Receipt RCV-00842 confirmed. ${goodTotal} good units were allocated (${totals.onlineTotal} Online store, ${totals.vendingTotal} Vending machines), ${totals.damagedTotal} damaged units were quarantined, and PO-1042 is now ${status}${totals.dueTotal ? ` with ${totals.dueTotal} units still due` : ''}.`;
+    confirmation.textContent=`Receipt RCV-00842 confirmed. ${goodTotal} good units were allocated (${totals.onlineTotal} Online store, ${totals.vendingTotal} Vending machines), ${totals.damagedTotal} damaged units were moved to Damage quarantine, and PO-1042 is now ${status}${totals.dueTotal ? ` with ${totals.dueTotal} units still due` : ''}.`;
     confirmation.classList.add('show');
     confirmReceipt.disabled=true;
     confirmReceipt.textContent='Receipt confirmed';

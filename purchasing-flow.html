@@ -85,6 +85,25 @@
   .phasehead h2{font-size:17px;margin:0 0 4px}
   .phasehead p{font-size:12px;color:var(--fg3);margin:0;line-height:1.5}
   .phasehead .step{font-family:var(--display);font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--purple);background:var(--purple-soft);border-radius:999px;padding:6px 9px;white-space:nowrap}
+  .buy-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+  .buy-toolbar .spacer{flex:1}
+  .set-card{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;margin-bottom:13px;box-shadow:0 1px 2px rgba(26,31,57,.04)}
+  .set-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,#faf8ff,#fff);border-bottom:1px solid var(--line2)}
+  .set-mark{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:var(--purple-soft);color:var(--purple);font:900 11px var(--display);flex:0 0 auto}
+  .set-head h3{font-size:14px;margin:0}.set-head p{font-size:10.5px;color:var(--fg3);margin:3px 0 0}.set-head .spacer{flex:1}
+  .set-table input{width:76px;height:32px;border:1px solid var(--purple-line);border-radius:8px;text-align:right;padding:0 8px;font:800 11px var(--display);color:var(--purple);background:#fff}
+  .set-table input:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(109,40,217,.09)}
+  .set-name b{display:block}.set-name span{display:block;font-size:9.5px;color:var(--fg3);margin-top:2px}
+  .manual-note{font-size:9.5px;color:var(--amber);font-weight:800;margin-top:3px}
+  .manual-add{display:none;background:#fff;border:1px solid var(--purple-line);border-radius:15px;padding:16px;margin-bottom:14px}
+  .manual-add.show{display:block}.manual-add h3{font-size:14px;margin-bottom:4px}.manual-add .cap{margin-bottom:13px}
+  .manual-add-grid{display:grid;grid-template-columns:1.25fr 1fr .8fr .65fr auto;gap:9px;align-items:end}
+  .manual-add label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:800;color:var(--fg3);margin-bottom:5px}
+  .manual-add input,.manual-add select{width:100%;height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;font:600 11px var(--font);padding:0 9px}
+  .buy-footer{position:sticky;bottom:8px;z-index:4;display:flex;align-items:center;gap:10px;background:#24164d;color:#fff;border-radius:13px;padding:12px 14px;box-shadow:0 12px 30px rgba(36,22,77,.23)}
+  .buy-footer .summary{font-size:11px;color:#d9d2f0}.buy-footer .summary b{display:block;color:#fff;font:800 13px var(--display);margin-bottom:2px}.buy-footer .spacer{flex:1}
+  .incoming-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:15px}
+  .incoming-table .set-name{min-width:210px}
 
   .kpis{display:grid;gap:13px;margin-bottom:18px}
   .k3{grid-template-columns:repeat(3,1fr)}
@@ -186,11 +205,14 @@
     h1{font-size:21px}
     .content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
     .k4{grid-template-columns:repeat(2,1fr)}
-    .grid2,.grid2b{grid-template-columns:1fr}
+    .grid2,.grid2b,.incoming-summary{grid-template-columns:1fr 1fr}
+    .manual-add-grid{grid-template-columns:1fr 1fr}
+    .manual-add-grid button{align-self:end}
     .head-actions{justify-content:flex-start}
   }
   @media (max-width:520px){
-    .k3,.k4,.form-grid{grid-template-columns:1fr}
+    .k3,.k4,.form-grid,.incoming-summary,.manual-add-grid{grid-template-columns:1fr}
+    .buy-footer{align-items:stretch;flex-direction:column}.buy-footer .spacer{display:none}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -217,9 +239,9 @@
     <div class="content">
       <div class="head">
         <div><h1>Purchasing <span class="pill p-buy">PURCHASING VIEW</span></h1>
-        <div class="subtitle">What to buy, what suppliers have, and what is on its way — netted against stock on hand and orders already placed.</div></div>
+        <div class="subtitle">Choose what to buy, track what is coming, and record what arrived.</div></div>
         <div class="head-actions">
-          <button class="btn-primary" type="button" data-goto="plan" data-target="availability">Request availability</button>
+          <button class="btn-primary" id="open-manual-stock" type="button" data-goto="plan" data-target="manual-add-stock">+ Add stock manually</button>
           <div class="syncchip"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/></svg> Synced · 8:32 AM</div>
         </div>
       </div>
@@ -232,13 +254,75 @@
       </div>
 
       <div class="srail" role="tablist" aria-label="Purchasing workspaces">
-        <button class="on" role="tab" aria-selected="true" aria-controls="v-plan" data-s="plan"><span class="n">1</span><span class="tabtext"><span class="t">Plan</span><span class="d">Buy list · suppliers · releases</span></span></button>
-        <button role="tab" aria-selected="false" aria-controls="v-orders" data-s="orders"><span class="n">2</span><span class="tabtext"><span class="t">Orders</span><span class="d">Approve · send · track</span></span></button>
-        <button role="tab" aria-selected="false" aria-controls="v-receive" data-s="receive"><span class="n">3</span><span class="tabtext"><span class="t">Receive</span><span class="d">Arrivals · damage · landed cost</span></span></button>
+        <button class="on" role="tab" aria-selected="true" aria-controls="v-plan" data-s="plan"><span class="n">1</span><span class="tabtext"><span class="t">Buy stock</span><span class="d">Suggested or manual quantities</span></span></button>
+        <button role="tab" aria-selected="false" aria-controls="v-orders" data-s="orders"><span class="n">2</span><span class="tabtext"><span class="t">Incoming</span><span class="d">Orders on the way</span></span></button>
+        <button role="tab" aria-selected="false" aria-controls="v-receive" data-s="receive"><span class="n">3</span><span class="tabtext"><span class="t">Receive</span><span class="d">Count · damage · assign stock</span></span></button>
       </div>
 
       <!-- ================= PLAN ================= -->
       <section class="view show" id="v-plan">
+        <div class="kpis k4">
+          <div class="kpi"><div class="l">Products to review</div><div class="v">9</div><div class="d muted">grouped into 3 Pokémon sets</div></div>
+          <div class="kpi"><div class="l">Suggested units</div><div class="v">624</div><div class="d muted">stock and open orders already deducted</div></div>
+          <div class="kpi"><div class="l">Manual changes</div><div class="v" style="color:var(--amber)">2</div><div class="d muted">Mega Dream quantities overridden</div></div>
+          <div class="kpi"><div class="l">Draft total</div><div class="v">$7,842</div><div class="d muted">review in Purchase Orders &amp; Invoices</div></div>
+        </div>
+
+        <div class="buy-toolbar">
+          <div><h2 style="font-size:17px">Buying round</h2><div class="sub2">Review by main Pokémon set, then change any quantity directly.</div></div>
+          <span class="spacer"></span>
+          <button class="btn-secondary" type="button" data-goto="plan" data-target="supplier-check">Check supplier stock</button>
+          <button class="btn-primary" id="add-stock-manually" type="button">+ Add stock manually</button>
+        </div>
+
+        <div class="manual-add" id="manual-add-stock">
+          <h3>Add stock manually</h3><div class="cap">Use this when an item is not suggested or when you want to buy a new release yourself.</div>
+          <div class="manual-add-grid">
+            <div><label for="manual-group">Main set</label><input id="manual-group" value="Pokémon Mega Dream"></div>
+            <div><label for="manual-product">Product</label><select id="manual-product"><option>Booster Pack</option><option>Booster Box</option><option>Elite Trainer Box</option><option>Booster Bundle</option></select></div>
+            <div><label for="manual-supplier">Supplier</label><select id="manual-supplier"><option>Select later</option><option>TCG Direct</option><option>PokéJapan Direct</option><option>Pokémon Centre AU</option></select></div>
+            <div><label for="manual-qty">Buy quantity</label><input id="manual-qty" type="number" min="1" value="24"></div>
+            <button class="btn-primary" id="save-manual-stock" type="button">Add to round</button>
+          </div>
+          <div class="stamp hide" id="manual-stock-added" style="margin-top:12px">Added to Pokémon Mega Dream · quantities can still be changed before creating the draft PO.</div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-head"><div class="set-mark">MD</div><div><h3>Pokémon Mega Dream</h3><p>Main set · new release · English</p></div><span class="spacer"></span><span class="badge b-amber">Manual quantities</span></div>
+          <div class="tw set-table"><table><thead><tr><th>Product in this set</th><th class="num">On hand</th><th class="num">Already ordered</th><th class="num">Suggested</th><th class="num">Buy quantity</th><th>Supplier</th></tr></thead><tbody>
+            <tr><td class="set-name"><b>Booster Pack</b><span>PKM-MD-BP-EN</span></td><td class="num">0</td><td class="num">0</td><td class="num muted">New</td><td class="num"><input type="number" value="144" min="0" aria-label="Mega Dream Booster Pack buy quantity"><div class="manual-note">Manual override</div></td><td><select aria-label="Mega Dream Booster Pack supplier"><option>TCG Direct</option><option>Pokémon Centre AU</option></select></td></tr>
+            <tr><td class="set-name"><b>Booster Box</b><span>PKM-MD-BB-EN · 36 packs</span></td><td class="num">0</td><td class="num">0</td><td class="num muted">New</td><td class="num"><input type="number" value="6" min="0" aria-label="Mega Dream Booster Box buy quantity"><div class="manual-note">Manual override</div></td><td><select aria-label="Mega Dream Booster Box supplier"><option>TCG Direct</option><option>Pokémon Centre AU</option></select></td></tr>
+            <tr><td class="set-name"><b>Elite Trainer Box</b><span>PKM-MD-ETB-EN</span></td><td class="num">0</td><td class="num">0</td><td class="num muted">New</td><td class="num"><input type="number" value="12" min="0" aria-label="Mega Dream Elite Trainer Box buy quantity"><div class="manual-note">Manual override</div></td><td><select aria-label="Mega Dream Elite Trainer Box supplier"><option>Pokémon Centre AU</option><option>TCG Direct</option></select></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-head"><div class="set-mark">SS</div><div><h3>Pokémon Surging Sparks</h3><p>Main set · English · based on current stock and sales</p></div><span class="spacer"></span><span class="badge b-green">Suggested</span></div>
+          <div class="tw set-table"><table><thead><tr><th>Product in this set</th><th class="num">On hand</th><th class="num">Already ordered</th><th class="num">Suggested</th><th class="num">Buy quantity</th><th>Supplier</th></tr></thead><tbody>
+            <tr><td class="set-name"><b>Booster Pack</b><span>PKM-SS-BP-EN</span></td><td class="num">520</td><td class="num">240</td><td class="num">216</td><td class="num"><input type="number" value="216" min="0" aria-label="Surging Sparks Booster Pack buy quantity"></td><td><select aria-label="Surging Sparks Booster Pack supplier"><option>TCG Direct</option><option>Select later</option></select></td></tr>
+            <tr><td class="set-name"><b>Booster Box</b><span>PKM-SS-BB-EN · 36 packs</span></td><td class="num">8</td><td class="num">6</td><td class="num">4</td><td class="num"><input type="number" value="4" min="0" aria-label="Surging Sparks Booster Box buy quantity"></td><td><select aria-label="Surging Sparks Booster Box supplier"><option>TCG Direct</option><option>Select later</option></select></td></tr>
+            <tr><td class="set-name"><b>Elite Trainer Box</b><span>PKM-SS-ETB-EN</span></td><td class="num">14</td><td class="num">0</td><td class="num">8</td><td class="num"><input type="number" value="8" min="0" aria-label="Surging Sparks Elite Trainer Box buy quantity"></td><td><select aria-label="Surging Sparks Elite Trainer Box supplier"><option>Pokémon Centre AU</option><option>Select later</option></select></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-head"><div class="set-mark">151</div><div><h3>Pokémon Card 151</h3><p>Main set · Japanese</p></div><span class="spacer"></span><span class="badge b-green">Suggested</span></div>
+          <div class="tw set-table"><table><thead><tr><th>Product in this set</th><th class="num">On hand</th><th class="num">Already ordered</th><th class="num">Suggested</th><th class="num">Buy quantity</th><th>Supplier</th></tr></thead><tbody>
+            <tr><td class="set-name"><b>Booster Pack</b><span>PKM-151-BP-JP</span></td><td class="num">252</td><td class="num">0</td><td class="num">180</td><td class="num"><input type="number" value="180" min="0" aria-label="Pokémon 151 Booster Pack buy quantity"></td><td><select aria-label="Pokémon 151 Booster Pack supplier"><option>PokéJapan Direct</option><option>Select later</option></select></td></tr>
+            <tr><td class="set-name"><b>Booster Box</b><span>PKM-151-BB-JP · 20 packs</span></td><td class="num">9</td><td class="num">0</td><td class="num">6</td><td class="num"><input type="number" value="6" min="0" aria-label="Pokémon 151 Booster Box buy quantity"></td><td><select aria-label="Pokémon 151 Booster Box supplier"><option>PokéJapan Direct</option><option>Select later</option></select></td></tr>
+            <tr><td class="set-name"><b>Elite Trainer Box</b><span>Not stocked for this language</span></td><td class="num">—</td><td class="num">—</td><td class="num">0</td><td class="num"><input type="number" value="0" min="0" aria-label="Pokémon 151 Elite Trainer Box buy quantity"></td><td><select aria-label="Pokémon 151 Elite Trainer Box supplier"><option>Select later</option></select></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="card" id="supplier-check">
+          <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px"><div><h3>Check supplier stock</h3><div class="cap" style="margin:0">Optional: ask what is available before creating the PO. No supplier terms are assumed.</div></div><span class="badge b-purple">3 sets selected</span></div>
+          <div class="form-grid"><div class="field"><label for="simple-supplier">Supplier</label><select id="simple-supplier"><option>TCG Direct</option><option>PokéJapan Direct</option><option>Pokémon Centre AU</option></select></div><div class="field"><label for="simple-channel">Send by</label><select id="simple-channel"><option>Email</option><option>WhatsApp</option></select></div></div>
+          <div class="btn-row"><button class="btn-primary" type="button">Copy stock request</button><button class="btn-secondary" type="button">Upload supplier reply</button></div>
+        </div>
+
+        <div class="buy-footer"><div class="summary"><b>9 products · 2 manual changes</b>Suppliers and quantities can still be edited on the draft PO.</div><span class="spacer"></span><a class="btn-secondary" href="inventory.html#po" style="text-decoration:none">Open Purchase Orders</a><button class="btn-primary" type="button">Create draft PO</button></div>
+
+        <div hidden aria-hidden="true">
         <div class="kpis k4">
           <div class="kpi"><div class="l">Buy suggestions</div><div class="v">18</div><div class="d muted">14 restock · 4 preorder</div></div>
           <div class="kpi"><div class="l">Committed spend</div><div class="v">$24,180</div><div class="d muted">not yet received</div></div>
@@ -482,10 +566,35 @@ Terms on file: NET30.</pre>
           </table>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- ================= ORDERS ================= -->
       <section class="view" id="v-orders">
+        <div class="incoming-summary">
+          <div class="kpi"><div class="l">Orders on the way</div><div class="v">5</div><div class="d muted">grouped by Pokémon set</div></div>
+          <div class="kpi"><div class="l">Ready to receive</div><div class="v" style="color:var(--green-txt)">1</div><div class="d muted">PO-1044 has arrived</div></div>
+          <div class="kpi"><div class="l">Needs attention</div><div class="v" style="color:var(--amber)">1</div><div class="d muted">PO-1039 in customs</div></div>
+          <div class="kpi"><div class="l">Units incoming</div><div class="v">1,524</div><div class="d muted">packs, boxes and bundles</div></div>
+        </div>
+
+        <div class="card tight p0 incoming-table">
+          <div class="ph"><div><h3 style="margin:0">Incoming stock</h3><div class="cap" style="margin:4px 0 0">Kept in its own tab so incoming orders stay visible even when the buying list grows.</div></div><div class="btn-row"><span class="badge b-amber">1 needs attention</span><span class="badge b-green">1 ready</span></div></div>
+          <div class="tw"><table><thead><tr><th>Main set</th><th>Products in this order</th><th>Supplier</th><th>Status</th><th class="num">ETA</th><th></th></tr></thead><tbody>
+            <tr><td class="set-name"><b>Pokémon Journey Together</b><span>PO-1044</span></td><td>Elite Trainer Box × 60</td><td>Pokémon Centre AU</td><td><span class="badge b-green">Arrived</span></td><td class="num">Ready</td><td><button class="btn-teal" type="button" data-goto="receive">Receive</button></td></tr>
+            <tr><td class="set-name"><b>Pokémon Prismatic Evolutions</b><span>PO-1045</span></td><td>Booster Bundle × 120</td><td>Southern Hobby Distribution</td><td><span class="badge b-blue">On the way</span></td><td class="num">25 May</td><td><button class="btn-secondary" type="button">Track</button></td></tr>
+            <tr><td class="set-name"><b>Pokémon Surging Sparks</b><span>PO-1042</span></td><td>Booster Pack × 240<br><span class="sub2">Booster Box × 6</span></td><td>TCG Direct</td><td><span class="badge b-blue">On the way</span></td><td class="num">26 May</td><td><button class="btn-secondary" type="button">Track</button></td></tr>
+            <tr><td class="set-name"><b>Pokémon Destined Rivals</b><span>PO-1039</span></td><td>Booster Pack × 600<br><span class="sub2">Elite Trainer Box × 24</span></td><td>PokéJapan Direct</td><td><span class="badge b-amber">In customs</span></td><td class="num">28 May</td><td><button class="btn-secondary" type="button">View issue</button></td></tr>
+            <tr><td class="set-name"><b>Pokémon Mega Dream</b><span>PO-1046</span></td><td>Booster Pack × 144<br><span class="sub2">Booster Box × 6 · Elite Trainer Box × 12</span></td><td>TCG Direct</td><td><span class="badge b-purple">Ordered</span></td><td class="num">12 Aug</td><td><a class="btn-secondary" href="inventory.html#po" style="text-decoration:none">Open PO</a></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="grid2" style="margin-top:16px">
+          <div class="card tight"><h3>PO-1042 · tracking</h3><div class="cap">Pokémon Surging Sparks · TCG Direct</div><ul class="tl"><li class="done"><span class="dot"></span><div><b>Order sent</b><div class="when">18 May</div></div></li><li class="done"><span class="dot"></span><div><b>Picked up</b><div class="when">20 May</div></div></li><li class="done"><span class="dot"></span><div><b>Cleared origin</b><div class="when">22 May</div></div></li><li class="now"><span class="dot"></span><div><b>Out for delivery</b><div class="when">Expected 26 May</div></div></li></ul></div>
+          <div class="card tight"><h3>Where order details live</h3><div class="cap">Purchasing keeps the buying and incoming views simple.</div><ul class="checks"><li><span class="tick y">✓</span><div><b>Purchase Orders &amp; Invoices</b><div class="sub2">Edit the supplier, costs, dates, invoice and PO lines.</div></div></li><li><span class="tick y">✓</span><div><b>Incoming</b><div class="sub2">Track what is on the way and what needs attention.</div></div></li><li><span class="tick y">✓</span><div><b>Receive</b><div class="sub2">Record arrived, damaged and allocated quantities.</div></div></li></ul><div class="btn-row" style="margin-top:14px"><a class="btn-primary" href="inventory.html#po" style="text-decoration:none">Open Purchase Orders</a></div></div>
+        </div>
+
+        <div hidden aria-hidden="true">
         <div class="phasehead" style="margin-top:0;padding-top:0;border-top:0"><div><h2>Approve the order</h2><p>Make the buying decision from one complete cost and supplier summary.</p></div><span class="step">ORDER · 1</span></div>
         <div class="grid2">
           <div class="card tight p0">
@@ -632,11 +741,12 @@ Terms on file: NET30.</pre>
           </table>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- ================= RECEIVE ================= -->
       <section class="view" id="v-receive">
-        <div class="phasehead" style="margin-top:0;padding-top:0;border-top:0"><div><h2>Receive and allocate</h2><p>Record one delivery, quarantine damage, and finish landed cost.</p></div><span class="step">RECEIVE</span></div>
+        <div class="phasehead" style="margin-top:0;padding-top:0;border-top:0"><div><h2>Receive stock</h2><p>Count what arrived, mark damage, and choose Online store or Vending machines.</p></div><span class="step">RECEIVE</span></div>
         <div class="grid2">
           <div class="card tight p0">
             <div class="ph">
@@ -656,18 +766,18 @@ Terms on file: NET30.</pre>
               <div class="kpis k4" style="margin-bottom:14px;gap:10px">
                 <div class="kpi" style="padding:11px 12px"><div class="l">Good to online</div><div class="v" style="font-size:19px;color:var(--purple)">60</div></div>
                 <div class="kpi" style="padding:11px 12px"><div class="l">Good to vending</div><div class="v" style="font-size:19px;color:var(--blue)">290</div></div>
-                <div class="kpi" style="padding:11px 12px"><div class="l">To quarantine</div><div class="v" style="font-size:19px;color:var(--red)">6</div></div>
+                <div class="kpi" style="padding:11px 12px"><div class="l">Damaged stock</div><div class="v" style="font-size:19px;color:var(--red)">6</div></div>
                 <div class="kpi" style="padding:11px 12px"><div class="l">Still due</div><div class="v" style="font-size:19px;color:var(--amber)">4</div></div>
               </div>
               <button class="btn-teal" id="recvbtn" type="button">Confirm receipt · 350 good + 6 damaged</button>
-              <div id="received" class="stamp hide" style="margin-top:13px">Receipt RCV-00842 confirmed · 60 good to the Online store, 290 to Vending machines, 6 damaged quarantined · PO-1042 is now Partial with 4 units still due</div>
+              <div id="received" class="stamp hide" style="margin-top:13px">Receipt RCV-00842 confirmed · 60 good to the Online store, 290 to Vending machines, 6 damaged to Damage quarantine · PO-1042 is now Partial with 4 units still due</div>
             </div>
           </div>
 
           <div>
             <div class="card tight" style="margin-bottom:16px">
               <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
-                <div><h3>Import costs</h3><div class="cap" style="margin:0">Logged as each bill lands.</div></div>
+                <div><h3>Delivery and import costs</h3><div class="cap" style="margin:0">Add each bill when it arrives.</div></div>
                 <span class="badge b-purple">3 bills</span>
               </div>
               <div class="tw" style="border:1px solid var(--line);border-radius:11px;overflow:hidden">
@@ -682,12 +792,12 @@ Terms on file: NET30.</pre>
               </div>
               <div class="btn-row" style="margin-top:12px"><button class="btn-secondary" type="button">Log another bill</button><button class="btn-link" type="button">None expected</button></div>
 
-              <div class="sublabel">Landed cost, per pack</div>
+              <div class="sublabel">Final cost per pack</div>
               <dl class="kv">
                 <dt>Goods</dt><dd>$3.82</dd>
                 <dt>Freight, apportioned</dt><dd>$0.20</dd>
                 <dt>Duty and GST, apportioned</dt><dd>$0.18</dd>
-                <dt>Landed cost</dt><dd class="tot">$4.20</dd>
+                <dt>Final cost</dt><dd class="tot">$4.20</dd>
               </dl>
               <div class="sub2" style="margin-top:8px">Matches the $4.20 latest PO cost shown on the machine pick list.</div>
             </div>
@@ -695,7 +805,7 @@ Terms on file: NET30.</pre>
         </div>
 
         <div class="card tight p0">
-          <div class="ph"><h3 style="margin:0">History for this PO</h3><span class="muted" style="font-size:11.5px">6 events</span></div>
+          <div class="ph"><h3 style="margin:0">Order history</h3><span class="muted" style="font-size:11.5px">6 updates</span></div>
           <div class="tw">
           <table>
             <thead><tr><th>When</th><th>Event</th><th>Who</th><th>Detail</th></tr></thead>
@@ -755,6 +865,25 @@ Terms on file: NET30.</pre>
   if (drop) drop.addEventListener('click', function(){
     document.getElementById('extract').classList.remove('hide');
     drop.textContent = 'pokejapan_stocklist_0804.jpg · read in 8 seconds';
+  });
+
+  var manualForm = document.getElementById('manual-add-stock');
+  function openManualForm(){
+    if (!manualForm) return;
+    manualForm.classList.add('show');
+    manualForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var field = document.getElementById('manual-group');
+    if (field) field.focus();
+  }
+  ['open-manual-stock','add-stock-manually'].forEach(function(id){
+    var button = document.getElementById(id);
+    if (button) button.addEventListener('click', openManualForm);
+  });
+  var saveManualStock = document.getElementById('save-manual-stock');
+  if (saveManualStock) saveManualStock.addEventListener('click', function(){
+    document.getElementById('manual-stock-added').classList.remove('hide');
+    saveManualStock.textContent = 'Added';
+    saveManualStock.disabled = true;
   });
 
   function stamp(btnId, stampId, label){
