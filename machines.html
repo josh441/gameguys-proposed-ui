@@ -516,11 +516,11 @@
             <div class="eyebrow">Stocking items · back at the warehouse?</div>
             <h3 id="return-title">Return unused stock</h3>
             <p>Got more product than a machine needed? Choose the completed run, then count what came back.</p>
-            <div class="return-flow"><span>1. Count leftovers</span><b>&rarr;</b><span>2. Confirm return</span><b>&rarr;</b><span>3. Warehouse stock updates</span></div>
+            <div class="return-flow"><span>1. Count leftovers</span><b>&rarr;</b><span>2. Confirm return</span><b>&rarr;</b><span>3. Returns quarantine</span></div>
           </div>
           <button class="return-start" id="open-return" type="button" aria-expanded="false" aria-controls="return-form">Start a return</button>
         </div>
-        <div class="return-rule"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg> Adds one positive stock movement per returned product, linked to this route. Nayax sales and prices are not changed.</div>
+        <div class="return-rule"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg> Every returned product—including a swapped item—goes to Returns quarantine first. It can be reassigned to Online store or Vending only after warehouse review.</div>
         <div class="return-form" id="return-form">
           <div class="return-meta">
             <div class="return-route-picker">
@@ -532,7 +532,7 @@
               </select>
               <small>Completed runs with returnable stock only</small>
             </div>
-            <span class="dest"><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5v11H3zM8 20v-6h8v6"/></svg> Good → Warehouse · Damaged → Quarantine</span>
+            <span class="dest"><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5v11H3zM8 20v-6h8v6"/></svg> Good → Returns quarantine · Damaged → Damage quarantine</span>
           </div>
           <table class="rtable">
             <thead><tr><th>Item</th><th class="num">Issued</th><th class="num">Filled</th><th>Came from</th><th class="num">Count returned</th><th>Condition</th></tr></thead>
@@ -564,25 +564,25 @@
               <tr data-return-row data-product="Prismatic Evolutions">
                 <td><div class="rproduct"><div class="rthumb th-do">PE</div><div><div class="name">Prismatic Evolutions Booster Bundle</div><div class="sku">SKU: PKM-PE-BB · swapped in</div></div></div></td>
                 <td class="num"><div class="routeqty">6<small>bundles issued</small></div></td>
-                <td class="num"><div class="routeqty">6<small>bundles stocked</small></div></td>
+                <td class="num"><div class="routeqty">5<small>bundles stocked</small></div></td>
                 <td><div class="return-source"><b data-return-source-title>Machine 1 · GGV-001</b><span data-return-source-detail>Westfield Parramatta<br>North route carry stock</span></div></td>
-                <td class="num"><span class="rzero">Nothing left over</span></td>
-                <td><span class="rzero">No return</span></td>
+                <td class="num"><div class="rstepper" data-max="1"><button type="button" data-step="-1" aria-label="Return one fewer Prismatic Evolutions bundle">−</button><output aria-live="polite">1</output><button type="button" data-step="1" aria-label="Return one more Prismatic Evolutions bundle">+</button></div></td>
+                <td><div class="condition-toggle" aria-label="Prismatic Evolutions condition"><button type="button" data-condition="good" aria-pressed="true">Good</button><button type="button" data-condition="damaged" aria-pressed="false">Damaged</button></div><select class="damage-reason" aria-label="Prismatic Evolutions damage reason"><option>Dented packaging</option><option>Crushed box</option><option>Torn wrapper / seal</option><option>Water damage</option><option>Scuffed / unsellable</option><option>Other</option></select></td>
               </tr>
             </tbody>
           </table>
           <div class="return-review">
-            <div><div class="summary"><b id="return-total">6 units</b> across <b id="return-items">2 products</b> will be recorded from <b id="return-source-summary">Machine 1 · GGV-001</b>.</div><div class="return-breakdown"><span id="return-good">4 good → Warehouse</span><span class="damaged" id="return-damaged">2 damaged → Quarantine</span></div><div class="condition">Damaged Pokémon products are recorded for audit but never added to sellable stock.</div></div>
+            <div><div class="summary"><b id="return-total">7 units</b> across <b id="return-items">3 products</b> will be recorded from <b id="return-source-summary">Machine 1 · GGV-001</b>.</div><div class="return-breakdown"><span id="return-good">5 good → Returns quarantine</span><span class="damaged" id="return-damaged">2 damaged → Damage quarantine</span></div><div class="condition">Returned stock cannot be sold or allocated until warehouse review. Damaged products remain non-sellable.</div></div>
             <span class="spacer"></span>
-            <button class="return-confirm" id="confirm-return" type="button">Confirm 6-unit return</button>
+            <button class="return-confirm" id="confirm-return" type="button">Confirm 7-unit return</button>
           </div>
         </div>
         <div class="return-success" role="status" aria-live="polite">
           <div class="success-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></div>
           <div>
-            <h3><span id="success-total">6 units</span> processed from <span id="success-route-machine">Machine 1 · GGV-001</span></h3>
+            <h3><span id="success-total">7 units</span> processed from <span id="success-route-machine">Machine 1 · GGV-001</span></h3>
             <p id="success-route-meta">Return RET-00518 · North route · Westfield Parramatta · recorded by Sam today at 4:42 PM</p>
-            <div class="movement-chips" id="movement-chips"><span>Surging Sparks +4 Warehouse</span><span>Destined Rivals 2 damaged · Quarantine</span></div>
+            <div class="movement-chips" id="movement-chips"><span>Surging Sparks 4 · Returns quarantine</span><span>Destined Rivals 2 · Damage quarantine</span><span>Prismatic Evolutions 1 swapped return · Returns quarantine</span></div>
           </div>
           <div class="success-actions"><a href="inventory.html#stock-history">View in stock history</a><button type="button" id="return-more">Return more stock</button></div>
         </div>
@@ -655,7 +655,7 @@
     actionBar.classList.toggle('is-hidden',isReturns);
     document.getElementById('machine-page-title').textContent=isReturns?'Returns':'My Machines';
     document.getElementById('machine-page-subtitle').textContent=isReturns
-      ? 'Record unused products from completed routes and send damaged stock to Quarantine.'
+      ? 'Record unused products from completed routes. All returns wait in quarantine before reassignment.'
       : 'Your assigned machines for today. Plan your fills and complete your route.';
     if(updateHash) history.replaceState(null,'',isReturns?'#returns':location.pathname);
   }
@@ -703,8 +703,8 @@
     const items = entries.filter(entry => entry.qty).length;
     document.getElementById('return-total').textContent = `${total} ${total === 1 ? 'unit' : 'units'}`;
     document.getElementById('return-items').textContent = `${items} ${items === 1 ? 'product' : 'products'}`;
-    document.getElementById('return-good').textContent = `${good} good → Warehouse`;
-    document.getElementById('return-damaged').textContent = `${damaged} damaged → Quarantine`;
+    document.getElementById('return-good').textContent = `${good} good → Returns quarantine`;
+    document.getElementById('return-damaged').textContent = `${damaged} damaged → Damage quarantine`;
     confirmReturn.textContent = total ? `Confirm ${total}-unit return` : 'Add a return quantity';
     confirmReturn.disabled = total === 0;
     return entries;
@@ -757,7 +757,7 @@
     const entries = updateReturnSummary();
     const total = entries.reduce((sum, entry) => sum + entry.qty, 0);
     document.getElementById('success-total').textContent = `${total} ${total === 1 ? 'unit' : 'units'}`;
-    const chips = entries.map(entry => entry.qty ? `<span>${entry.product} ${entry.damaged ? `${entry.qty} damaged · Quarantine` : `+${entry.qty} Warehouse`}</span>` : '').join('');
+    const chips = entries.map(entry => entry.qty ? `<span>${entry.product} ${entry.qty} · ${entry.damaged ? 'Damage quarantine' : 'Returns quarantine'}</span>` : '').join('');
     document.getElementById('movement-chips').innerHTML = chips;
     returnCard.classList.remove('is-open');
     returnCard.classList.add('is-complete');

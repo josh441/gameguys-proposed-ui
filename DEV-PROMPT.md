@@ -31,28 +31,36 @@ Use the application's existing roles. Map the receiver workflow to the current w
 Build a compact current-stock table optimized for warehouse use:
 
 - Show product name, SKU, language, product type, allocation, physical location, and on-hand quantity.
-- Keep **Online store**, **Vending machines**, **Warehouse · unallocated**, and **Quarantine** distinct.
+- Keep **Online store**, **Vending machines**, **Warehouse · unallocated**, **Returns quarantine**, and
+  **Damage quarantine** distinct. Neither quarantine area is sellable.
+- Group rows by the main product set and allow each group to expand to its formats—for example,
+  Pokémon Mega Dream with Booster Pack, Booster Box, and Elite Trainer Box child rows.
 - Support search by product, SKU, or location.
 - Support language and allocation filters.
 - Support sorting by name, language, and on-hand quantity.
 - Default to 10 rows and allow 25 rows per page, with record count and previous/next controls.
 - Do not show a stock-health bar, low-stock label, or reorder threshold until the business defines the calculation and thresholds.
 - Put **Scan stock** in the Inventory header. Open the AI camera/scanner only on request; do not reserve a large dashboard card for it.
+- Put **Add stock manually** in the Inventory header for non-PO stock corrections. Require product,
+  quantity, stock area, physical location, and reason/reference; write an immutable adjustment movement.
+  Supplier deliveries must continue through PO Receive.
 
 ## Purchase orders and receiving
 
-Support PO viewing and editing for header fields and line items. In receiving, group each line into three clear work areas:
+Support PO viewing and editing for header fields and line items. Show the order language at header level and
+an editable language on every PO line. In receiving, group each line into three clear work areas:
 
 1. **Product + PO balance** — item, SKU, ordered, previously received, and still due.
 2. **This delivery + damage** — arrived now, damaged quantity, damage reason, calculated good quantity.
-3. **Good-stock allocation** — Online store, Vending machines, or a balanced split.
+3. **Good-stock allocation** — editable Online-store and Vending-machine quantities directly under each
+   received item. Their sum must equal the calculated good quantity.
 
 Receiving rules:
 
 - `arrived_qty` includes damaged units.
 - `good_qty = arrived_qty - damaged_qty`.
 - `online_store_qty + vending_qty = good_qty` for every confirmed line.
-- A damaged quantity greater than zero requires a reason and creates a Quarantine movement only.
+- A damaged quantity greater than zero requires a reason and creates a Damage-quarantine movement only.
 - **Receive all outstanding** may fill every remaining line, but it must keep allocations valid.
 - **Clear this delivery** resets the draft only and moves no stock.
 - Saving a draft moves no stock.
@@ -62,9 +70,26 @@ Receiving rules:
 
 Build Purchasing as a **native Inventory sub-view**, not as a sixth top-level tab, separate application route, iframe, or disconnected tool. A user must be able to move among Stock Overview, Purchasing, Purchase Orders & Invoices, and Stock History without leaving the Inventory shell. Limit Purchasing's primary navigation to three work tabs:
 
-1. **Plan** — combine the pool-aware buy list, supplier availability, and new-release calls. Suggestions are net of on-hand and already-on-order quantities. Supplier replies show price, MOQ, validity, available quantity, and ranked alternates. Never-sold releases use named comparables, expected selling price, margin, deposit, and a commit/watch/pass decision.
-2. **Orders** — combine approval, supplier send, tracking, and incoming stock. Present quote, landed-cost estimate, margin, supplier performance, and cash guardrail on one approval card. Enforce `Draft → Approved → Ordered`; approval never silently marks a PO Ordered. Record the send and use carrier ETA and exception alerts thereafter.
-3. **Receive** — combine delivery counts, good/damaged quantities, Online/Vending allocation, Quarantine, retry-safe fees, landed cost in AUD, and PO history.
+1. **Buy stock** — group products under their main set, show quantities net of on-hand and already-on-order
+   stock, and let the buyer override any suggested quantity. Include **Add stock manually** for a set/product
+   that was not suggested. A supplier stock check can be attached to the buying round, but do not assume
+   supplier terms or build an “Offers on file” feature. Replace the separate release-call process with the
+   same simple manual quantity override used for every buying round.
+   Show editable cost price and calculated line cost beside every buy quantity. Keep **New product** separate
+   from **Add to buying round**: New product creates a catalogue item with set, product name, SKU, language,
+   type, pack size, default cost, preferred supplier, and internal notes; it may then be added to the round.
+2. **Incoming** — give POs on the way their own permanent tab so they never sit below a long product list.
+   Group incoming child products under their main set and show PO, supplier, ETA, status, and next action.
+   Put **Shipping & tax** beside Track/Open PO and enter freight, duty, GST/tax, other landed costs, currency,
+   and invoice/customs reference here. Receive may show the saved figures but must not be the entry surface.
+3. **Receive** — combine delivery counts, good/damaged quantities, Online/Vending allocation, Damage
+   quarantine, a read-only landed-cost summary from Incoming, and PO history.
+
+Whenever a draft PO is created, open a cost-focused approval window for Linda showing supplier, products,
+language, quantity, unit cost, line cost, item-cost total, requester, and reason. Queue one Slack notification
+to Linda in the configured purchase-approval channel and provide **Notify via Slack** as an explicit retry or
+manual-send action. Include View PO, Approve, and Needs changes actions. Make notification delivery
+idempotent and auditable; a retry must not silently create duplicate approval events.
 
 Reuse the working production purchasing board, PO resolver, pool netting, supplier aliases, document extraction, consensus pricing, upcoming releases, receiving, and AfterShip integration. Follow `PURCHASING-STREAMLINE.md` for the audited production map, schema extensions, defects, sequencing, and decisions. Keep `Purchase Orders & Invoices` as the operational PO list/detail/history surface while Purchasing owns the buying lifecycle. Preserve existing Purchasing deep links by redirecting them into the Inventory Purchasing state where practical.
 
@@ -76,12 +101,16 @@ In **Machines**, let the filler return unused Pokémon stock after completing a 
 - Load returnable products from the finalised run, not from the earlier editable pick-list draft.
 - Show the item, editable return count, and locked machine/location/route source.
 - Constrain `returned_qty` to `0..(issued_qty - filled_qty)`.
-- Mark each line **Good** or **Damaged**. A damaged line requires a hobby-relevant reason.
-- Good stock creates a positive movement to **Warehouse · unallocated**.
-- Damaged stock creates a **Quarantine** movement only and never increases sellable inventory.
+- Mark each line **Good** or **Damaged**. A damaged line requires a hobby-relevant reason. Swapped products
+  from the completed run are valid return lines and must not bypass the quarantine workflow.
+- Good stock creates a positive movement to **Returns quarantine**, not directly to sellable stock.
+- Damaged stock creates a **Damage quarantine** movement only and never increases sellable inventory.
 - Confirm the batch once with a unique idempotency key and a route-linked return reference.
-- Show every return movement in `Inventory → Stock History`, alongside PO receipts, route fills, allocation transfers, adjustments, and other damage movements. The receiver must not approve it or move the stock again.
-- Show good returns immediately in `Inventory → Stock Overview → Current stock` as Warehouse · unallocated.
+- Show every return movement in `Inventory → Stock History`, alongside PO receipts, route fills, allocation
+  transfers, adjustments, and other damage movements.
+- Show good returns immediately in `Inventory → Stock Overview → Current stock` as Returns quarantine.
+  From that queue, allow a warehouse user to reassign reviewed units to **Online store** or **Vending
+  machines**. This creates a separate auditable transfer movement; it does not edit or replay the return.
 
 If production must support good and damaged quantities for the same SKU in one return, model them as separate condition quantities or rows while preserving the single return batch. Confirm this open product decision before finalising the schema.
 
@@ -90,7 +119,8 @@ If production must support good and damaged quantities for the same SKU in one r
 Build one newest-first, read-only movement ledger instead of a return-specific Inventory screen:
 
 - Source the ledger from immutable stock movements and join the relevant receipt, route, transfer, adjustment, product, location, and user metadata. Do not create a second return record or approval step just to populate this view.
-- Include PO receipts, route-fill withdrawals, route returns, allocation transfers, stocktake adjustments, and Quarantine/damage movements.
+- Include PO receipts, route-fill withdrawals, route returns, return reassignments, allocation transfers,
+  stocktake adjustments, and both quarantine movement types.
 - Show date/time, movement type, product/SKU, source, destination/allocation, signed quantity, reference, recorded-by user, and resulting balance.
 - Support text search and filters for movement type, stock area/allocation, and whether the movement increased, decreased, or did not affect sellable stock.
 - Open a referenced PO, receipt, route, return batch, or adjustment in its existing detail view when the production app already has that route.
@@ -117,7 +147,7 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
 - Corrections use compensating movements; do not edit confirmed movement history.
 - Nayax remains the selling-price and machine-sales source of truth. Last-sold lookup must use successful sales, respect filler machine visibility, and expose its source timestamp. Warehouse returns must not alter Nayax sales, prices, or machine stock.
 - Never merge Online-store and Vending-machine balances into an ambiguous “Store” bucket.
-- Never count Quarantine as sellable stock.
+- Never count Returns quarantine or Damage quarantine as sellable stock.
 - Never store supplier login credentials; supplier contact details only.
 - Validate permissions, quantities, allocations, and outstanding balances on the server inside the same transaction as confirmation.
 
@@ -134,7 +164,8 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
 ## Delivery sequence
 
 1. Audit the production repository and map reusable functionality.
-2. Confirm the five open product decisions listed in `HANDOFF.md` where they affect schema or irreversible behavior.
+2. Confirm only unresolved product decisions in `HANDOFF.md`; return allocation is now defined as
+   quarantine first, followed by manual Online/Vending reassignment.
 3. Implement navigation and role visibility without breaking existing deep links.
 4. Integrate the three-tab Purchasing workspace inside Inventory using the existing production purchasing paths.
 5. Implement the optimized Inventory table and PO edit/receiving workflow.
@@ -145,4 +176,9 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
 
 ## Definition of done
 
-The work is done when a buyer can move from a netted buy signal through supplier reality, release decisions, approval, send/tracking, and receipt in one Inventory workflow; a filler can complete a run and return unused Pokémon stock from the correct route/machine; damaged stock cannot enter a sellable balance; a receiver can efficiently browse current stock and receive a PO with a fully balanced Online-store/Vending allocation; the filler printout has the six approved columns including blank Notes; every confirmation is authorized, auditable, atomic, and idempotent; and the resulting references and balances appear in the correct Inventory views without duplicate deductions.
+The work is done when a buyer can group products by set, override suggested buying quantities, manually add
+stock, track all incoming POs in a dedicated tab, and receive them in one Inventory workflow; a filler can
+return unused or swapped Pokémon stock from the correct route/machine into quarantine; reviewed returns can
+be reassigned to Online store or Vending machines without bypassing the audit trail; damaged stock cannot
+enter a sellable balance; the filler printout has the six approved columns including blank Notes; every
+confirmation is authorized, auditable, atomic, and idempotent; and Inventory shows the resulting movements.

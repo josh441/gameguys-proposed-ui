@@ -26,11 +26,11 @@
 4. **Fillers are scoped** to their assigned machines only (individual `filler_machine_assignments`;
    route assignment is a bulk convenience that writes those rows).
 5. Keep navigation to **5 top-level tabs**. Everything deeper is a sub-tab.
-6. **Unused route stock returns through one explicit positive movement.** After a route is completed,
-   the filler can return unopened leftovers to Warehouse. The existing fill finalisation remains the
-   only negative movement; the confirmed return writes one positive `stock_movements` row per product.
-   The movement appears in the receiver's unified **Stock History**, but the receiver does not approve
-   it again or create another movement. Good returns also appear immediately in Current stock.
+6. **Unused route stock returns through one explicit positive movement into quarantine.** After a route
+   is completed, the filler returns unopened leftovers—including swapped products—to **Returns
+   quarantine**. The existing fill finalisation remains the only negative movement; confirmation writes
+   one positive `stock_movements` row per returned product into the non-sellable return pool. A warehouse
+   user reviews it and creates a separate reassignment movement to Online store or Vending machines.
 
 ---
 
@@ -97,13 +97,17 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
   stock-level or health graphic until the business defines the thresholds behind it.
   **AI stock camera:** a compact **Scan stock** action in the Inventory header opens the scanner on
   demand; do not reserve a dashboard card for it.
-- **Purchasing:** one integrated workspace with no more than three tabs: **Plan**, **Orders**, and
-  **Receive**. Plan contains the buy list, supplier availability, and new-release calls. Orders contains
-  approval, supplier send, tracking, and incoming stock. Receive contains delivery counts, damage,
-  Online/Vending allocation, landed cost, and PO history. Keep it inside Inventory and connect it to
-  the existing PO list/detail and receiving surfaces. The buy list is net of on-hand and already-on-order
-  stock; approval never skips directly to Ordered; receipt keeps Online/Vending/Quarantine allocations
-  explicit. See `PURCHASING-STREAMLINE.md` for production reuse, schema, defect, and sequencing details.
+  **Manual stock:** a compact **Add stock manually** action records non-PO stock corrections with product,
+  quantity, area, location, reason, and an immutable adjustment reference. PO deliveries still use Receive.
+- **Purchasing:** one integrated workspace with three tabs: **Buy stock**, **Incoming**, and **Receive**.
+  Buy stock groups products by their main set, shows simple suggested quantities, allows a manual quantity
+  override, shows editable unit cost plus calculated line cost, and supports manually adding an existing
+  product to the round. A separate New product window creates catalogue items with set, SKU, language,
+  type, pack size, default cost, supplier, and notes. Supplier checks are optional and
+  ad hoc; do not assume standing terms or maintain an “Offers on file” ledger. Incoming is its own always-
+  visible tab for POs on the way and owns shipping/tax entry. Receive contains delivery counts, damage,
+  editable Online/Vending quantities under each item, a read-only landed-cost summary, and PO history.
+  Creating a draft opens Linda’s cost approval and queues an auditable Slack notification.
   The static proposal embeds its modular purchasing mockup inside `inventory.html#purchasing`; production
   must render this as native application components within the Inventory route, not as an iframe or
   separate application shell. Redirect older purchasing deep links into this Inventory state.
@@ -138,22 +142,22 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
 - **Printout** — see §3.1b. Stripped to **slot · item · price to set · last sold (Nayax) · amount · notes**.
 - **Returns sub-tab** — separate from **Machines & Pick List**. After the route is complete and the filler is back at the warehouse,
   show the **item**, editable **count**, explicit source **machine/location/route**, and a **Good /
-  Damaged** condition choice. Good stock returns to Warehouse; damaged stock requires a reason and
-  moves to Quarantine. Confirmation produces one route-linked return reference.
+  Damaged** condition choice. Good stock—including swaps—moves to **Returns quarantine**; damaged stock
+  requires a reason and moves to **Damage quarantine**. Confirmation produces one route-linked return reference.
 - Bottom bar: Confirm fills · Mark route complete · Return stock · Print/PDF (bad reception) · total est. cost.
 
 On **Inventory**, use one running **Stock History** sub-view instead of a return-specific screen. It
 shows PO receipts, route-fill withdrawals, allocation transfers, adjustments, damaged movements, and
-route returns in the same newest-first ledger. The receiver can search and filter the ledger by
-movement type and stock area. Good route returns update **Current stock → Warehouse · unallocated**
-immediately and the history row shows the return reference, source, signed quantity, and resulting stock.
+route returns and later reassignments in the same newest-first ledger. The receiver can search and filter
+the ledger by movement type and stock area. Good route returns update **Current stock → Returns
+quarantine** immediately, then move to Online store or Vending machines only after manual review.
 
 ### 2.4 Calendar (all)
 Release calendar grouped by month: product, set code, language, preorder status. "Action needed"
 list for releases without secured stock. (Feature already exists — just relocate under this tab.)
 
 ### 2.5 CRM (owner/team)
-- **Suppliers:** contact only — name, phone, email, products ordered, terms, rating.
+- **Suppliers:** contact only — name, phone, email, products ordered, and internal notes/rating. Do not assume supplier terms.
   **Never store login credentials / passwords.**
 - **Task Management:** create + assign a task → assignee is notified (existing `pingAssignee` →
   `notifyUser`). Board columns: To do / In progress / Done.
@@ -228,13 +232,13 @@ flowchart TD
   E --> F0[App shows products issued for that completed run]
   F0 --> F[Filler records item, count, and source location]
   F --> G{Good or damaged?}
-  G -- Good --> H[Destination: Warehouse]
-  G -- Damaged --> Q[Select damage reason<br/>Destination: Quarantine]
+  G -- Good --> H[Destination: Returns quarantine]
+  G -- Damaged --> Q[Select damage reason<br/>Destination: Damage quarantine]
   H --> K[Confirm return once]
   Q --> K
   K --> L[Create route return batch]
-  L --> I[Good qty creates positive warehouse movement]
-  L --> X[Damaged qty creates quarantine movement only]
+  L --> I[Good qty creates positive returns-quarantine movement]
+  L --> X[Damaged qty creates damage-quarantine movement only]
   L --> J[Inventory Stock History shows the movement]
 ```
 
@@ -243,16 +247,17 @@ flowchart TD
   Selecting a run loads its issued products and updates every row’s machine, venue, and route source.
 - The source machine, location, and route are fixed from the completed run. Quantity is constrained
   to `0..(issued_qty - filled_qty)` per product.
-- Each returned line is marked **Good** or **Damaged**. Good destination is **Warehouse**. Damaged
-  destination is **Quarantine**, requires a damage reason, and never increases sellable on-hand.
+- Each returned line is marked **Good** or **Damaged**. Good destination is **Returns quarantine**.
+  Damaged destination is **Damage quarantine**, requires a damage reason, and never increases sellable on-hand.
 - Confirmation is idempotent. Disable the submitted batch and use a unique idempotency key so a
   retry cannot add the same stock twice.
-- Write one positive warehouse `stock_movements` row per good returned product. Write a separate
-  quarantine/damage movement for damaged returned product. Both link to the return batch, route,
+- Write one positive Returns-quarantine `stock_movements` row per good returned product. Write a separate
+  Damage-quarantine movement for damaged returned product. Both link to the return batch, route,
   machine, location, and filler. The negative fill movement is not edited or replayed.
-- The net warehouse change is: `finalised fill withdrawal + confirmed positive return`.
-- The receiver sees the movement in the unified **Stock History**; there is no second approval or stock movement.
-- Good returns are included immediately in **Current stock** under Warehouse · unallocated.
+- The return confirmation creates no sellable stock. The later manual reassignment creates a separate,
+  auditable movement from Returns quarantine to Online store or Vending machines.
+- The receiver sees both movements in unified **Stock History**; reassignment is not another return receipt.
+- Good returns are included immediately in **Current stock** under Returns quarantine.
 - Nayax is untouched: no sale, selling-price, or machine-stock update is pushed for a warehouse return.
 - The same return batch can contain good and damaged lines, but their destinations and movements remain separate.
 
@@ -299,7 +304,7 @@ flowchart TD
   ALLOC -- Online store --> ST[Online fulfilment stock movement]
   ALLOC -- Vending machines --> VN[Vending route stock movement]
   ALLOC -- Split --> BOTH[Separate Online + Vending movements]
-  RCV --> DMG[Damaged qty -> Quarantine movement]
+  RCV --> DMG[Damaged qty -> Damage quarantine movement]
   ST --> STATUS{Anything still due?}
   VN --> STATUS
   BOTH --> STATUS
@@ -312,7 +317,7 @@ flowchart TD
 - `arrived_qty` includes damaged units; `good_qty = arrived_qty - damaged_qty`.
 - For every row, `online_store_qty + vending_qty = good_qty`. The UI blocks confirmation until it balances.
 - `remaining_qty = ordered_qty - previously_received_qty - arrived_qty`, never below zero.
-- Damaged units require a damage reason, go to Quarantine, and do not increase Online-store/Vending stock.
+- Damaged units require a damage reason, go to Damage quarantine, and do not increase Online-store/Vending stock.
 - Confirmation is idempotent and writes one immutable receipt reference. Drafts do not move stock.
 
 ### 3.5 Task assignment
@@ -355,8 +360,9 @@ flowchart LR
 - **Route stock returns** — `route_stock_returns(id, route_id, machine_id, source_location_id,
   filler_id, status, idempotency_key, returned_at)` plus
   `route_stock_return_rows(return_id, product_id, issued_qty, filled_qty, returned_qty, condition,
-  damage_reason, destination, stock_movement_id)`. Good rows insert positive Warehouse movements;
-  damaged rows insert Quarantine movements only. Inventory joins these movements into its running
+  damage_reason, destination, stock_movement_id)`. Good rows insert positive Returns-quarantine movements;
+  damaged rows insert Damage-quarantine movements only. A later reassignment writes a separate transfer
+  to Online store or Vending machines. Inventory joins these movements into its running
   Stock History with receipts, fills, transfers, adjustments, and other damage movements.
 - **Editable purchase orders and receipts** — reuse existing PO/header and line tables where possible;
   add `purchase_order_receipts(id, purchase_order_id, received_by, status, idempotency_key,
@@ -418,15 +424,15 @@ create table route_stock_return_rows (
   returned_qty      int not null check (returned_qty >= 0),
   condition         text not null check (condition in ('good', 'damaged')),
   damage_reason     text,
-  destination       text not null check (destination in ('warehouse', 'quarantine')),
+  destination       text not null check (destination in ('returns_quarantine', 'damage_quarantine')),
   stock_movement_id uuid references stock_movements(id),
   unique (return_id, product_id),
   check (filled_qty <= issued_qty),
   check (returned_qty <= issued_qty - filled_qty),
   check (
-    (condition = 'good' and destination = 'warehouse' and damage_reason is null)
+    (condition = 'good' and destination = 'returns_quarantine' and damage_reason is null)
     or
-    (condition = 'damaged' and destination = 'quarantine' and damage_reason is not null)
+    (condition = 'damaged' and destination = 'damage_quarantine' and damage_reason is not null)
   )
 );
 
@@ -465,8 +471,8 @@ create table purchase_order_receipt_rows (
    (slot·item·price·qty). Needs `machine_slots` par/planogram + `picklists`/`picklist_rows`.
    Reuse existing final-upload/deduct path — do NOT add a second deduct.
 3. **Route stock returns** — filler records item, count, source machine/location, and Good/Damaged
-   condition from a completed route; good stock returns to Warehouse and damaged stock to Quarantine;
-   Inventory includes them in the running Stock History and good returns in Current stock.
+   condition from a completed route; good stock goes to Returns quarantine and damaged stock to Damage
+   quarantine. Inventory includes both in Stock History and provides a manual Online/Vending reassignment.
 4. **Machine Value** — join qty × (cost, selling price); recompute on sale-pull + restock; Ownership sub-tab.
 5. **PO editing and delivery receiving** — editable PO header/lines; line-by-line arrived/damaged
    counts; Online-store/Vending/Split allocation; idempotent confirmation; Partial/Received status.
@@ -483,7 +489,7 @@ create table purchase_order_receipt_rows (
 - No supplier credentials stored — contact details only.
 - Keep owner financials curated (surface Xero essentials, not a full accounting rebuild).
 - Pick list is **slot-ordered**, **generated on demand**, and **edit-locked to product + quantity**.
-- Printout is **slot · item · price to set · last sold (Nayax) · amount only** — PO cost and sale-source metadata do not print.
-- Damaged route returns and damaged PO receipts always go to Quarantine and never increase sellable stock.
+- Printout is **slot · item · price to set · last sold (Nayax) · amount · notes** — PO cost and sale-source metadata do not print.
+- Damaged route returns and damaged PO receipts always go to Damage quarantine and never increase sellable stock.
 - Every received good unit is allocated to Online store, Vending machines, or a balanced split before confirmation.
 - Confirmed return batches and PO receipts are idempotent; drafts never move stock.

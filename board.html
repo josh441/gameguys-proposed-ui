@@ -91,8 +91,8 @@
         <div class="rule"><div class="n">3</div><div><b>Deduct exactly once.</b> Stock is withdrawn only at “Mark route complete” via the existing <code>picklist_final_rows</code> trigger. The filler hub must not add a second deduction (double-count risk).</div></div>
         <div class="rule"><div class="n">4</div><div><b>Fillers are scoped.</b> A filler only ever sees their assigned machines (individual assignments; routes are a bulk convenience).</div></div>
         <div class="rule"><div class="n">5</div><div><b>Five tabs, max.</b> Ownership · Inventory · Machines · Calendar · CRM. Everything deeper is a sub-tab. No stored supplier credentials.</div></div>
-        <div class="rule"><div class="n">6</div><div><b>Keep allocations distinct.</b> Online store, Vending machines, Warehouse · unallocated, and Quarantine are separate balances with explicit movements between them.</div></div>
-        <div class="rule"><div class="n">7</div><div><b>Quarantine damage.</b> Damaged route returns and PO arrivals require a reason and never increase sellable stock.</div></div>
+        <div class="rule"><div class="n">6</div><div><b>Keep stock areas distinct.</b> Online store, Vending machines, Warehouse · unallocated, Returns quarantine, and Damage quarantine are separate balances with explicit movements between them.</div></div>
+        <div class="rule"><div class="n">7</div><div><b>Quarantine every return.</b> Good and swapped returns wait for reassignment; damaged returns require a reason and never increase sellable stock.</div></div>
       </div>
     </div>
 
@@ -156,12 +156,13 @@ flowchart TD
   B --> C[Load final issued items + locked source]
   C --> D[Enter unused return count]
   D --> E{Condition}
-  E -- Good --> F[Warehouse · unallocated movement]
-  E -- Damaged + reason --> G[Quarantine movement only]
+  E -- Good or swapped --> F[Returns quarantine movement]
+  E -- Damaged + reason --> G[Damage quarantine movement only]
   F --> H[Confirm one idempotent return batch]
   G --> H
   H --> I[Inventory Stock History shows movement]
-  H --> J[Good units appear in Current stock]
+  H --> J[Good units appear in Returns quarantine]
+  J --> K[Warehouse reassigns to Online or Vending]
       </pre>
     </div>
 
@@ -200,7 +201,7 @@ flowchart TD
   PO[Open / edit PO] --> RCV[Receive: arrived + damaged per line]
   RCV --> GOOD[Good = arrived - damaged]
   GOOD --> ALLOC[Allocate all good to Online + Vending]
-  RCV --> DMG[Damaged + reason to Quarantine]
+  RCV --> DMG[Damaged + reason to Damage quarantine]
   ALLOC --> CF[Confirm idempotent receipt]
   DMG --> CF
   CF --> ST[PO Partial or Received]

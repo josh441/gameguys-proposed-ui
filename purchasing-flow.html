@@ -85,6 +85,25 @@
   .phasehead h2{font-size:17px;margin:0 0 4px}
   .phasehead p{font-size:12px;color:var(--fg3);margin:0;line-height:1.5}
   .phasehead .step{font-family:var(--display);font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--purple);background:var(--purple-soft);border-radius:999px;padding:6px 9px;white-space:nowrap}
+  .buy-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+  .buy-toolbar .spacer{flex:1}
+  .set-card{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;margin-bottom:13px;box-shadow:0 1px 2px rgba(26,31,57,.04)}
+  .set-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,#faf8ff,#fff);border-bottom:1px solid var(--line2)}
+  .set-mark{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:var(--purple-soft);color:var(--purple);font:900 11px var(--display);flex:0 0 auto}
+  .set-head h3{font-size:14px;margin:0}.set-head p{font-size:10.5px;color:var(--fg3);margin:3px 0 0}.set-head .spacer{flex:1}
+  .set-table input{width:76px;height:32px;border:1px solid var(--purple-line);border-radius:8px;text-align:right;padding:0 8px;font:800 11px var(--display);color:var(--purple);background:#fff}
+  .set-table input:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(109,40,217,.09)}
+  .set-name b{display:block}.set-name span{display:block;font-size:9.5px;color:var(--fg3);margin-top:2px}
+  .manual-note{font-size:9.5px;color:var(--amber);font-weight:800;margin-top:3px}
+  .manual-add{display:none;background:#fff;border:1px solid var(--purple-line);border-radius:15px;padding:16px;margin-bottom:14px}
+  .manual-add.show{display:block}.manual-add h3{font-size:14px;margin-bottom:4px}.manual-add .cap{margin-bottom:13px}
+  .manual-add-grid{display:grid;grid-template-columns:1.2fr .8fr 1fr .9fr .65fr .75fr auto;gap:9px;align-items:end}
+  .manual-add label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:800;color:var(--fg3);margin-bottom:5px}
+  .manual-add input,.manual-add select{width:100%;height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;font:600 11px var(--font);padding:0 9px}
+  .buy-footer{position:sticky;bottom:8px;z-index:4;display:flex;align-items:center;gap:10px;background:#24164d;color:#fff;border-radius:13px;padding:12px 14px;box-shadow:0 12px 30px rgba(36,22,77,.23)}
+  .buy-footer .summary{font-size:11px;color:#d9d2f0}.buy-footer .summary b{display:block;color:#fff;font:800 13px var(--display);margin-bottom:2px}.buy-footer .spacer{flex:1}
+  .incoming-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:15px}
+  .incoming-table .set-name{min-width:210px}
 
   .kpis{display:grid;gap:13px;margin-bottom:18px}
   .k3{grid-template-columns:repeat(3,1fr)}
@@ -166,6 +185,25 @@
   .cmp b{color:var(--purple)}
   .tw{overflow-x:auto}
   .hide{display:none}
+  .money-input{display:inline-flex;align-items:center;gap:3px;color:var(--fg2);font:700 11px var(--display)}
+  .money-input input{width:72px!important;color:var(--fg)!important}
+  .line-total{white-space:nowrap;color:var(--fg);font:800 11px var(--display)}
+  .modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(25,20,42,.58);backdrop-filter:blur(4px)}
+  .modal-overlay.open{display:flex}
+  .modal-card{width:min(720px,100%);max-height:min(88vh,820px);overflow:auto;background:#fff;border:1px solid var(--purple-line);border-radius:18px;box-shadow:0 28px 80px rgba(28,14,58,.34)}
+  .modal-card.wide{width:min(900px,100%)}
+  .modal-head{display:flex;align-items:flex-start;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+  .modal-head .icon{width:42px;height:42px;border-radius:12px;background:var(--purple-soft);color:var(--purple);display:grid;place-items:center;font:900 17px var(--display);flex:0 0 auto}
+  .modal-head h2{font-size:17px;margin:1px 0 4px}.modal-head p{font-size:11px;color:var(--fg3);margin:0;line-height:1.45}
+  .modal-close{margin-left:auto;border:none;background:#f4f2f7;color:var(--fg2);width:32px;height:32px;border-radius:9px;font-size:18px;cursor:pointer}
+  .modal-body{padding:18px 20px 20px}.modal-actions{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line2)}
+  .product-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.product-form .wide{grid-column:1/-1}
+  .product-form label,.cost-form label{display:block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.045em;color:var(--fg2);margin-bottom:5px}
+  .product-form input,.product-form select,.cost-form input,.cost-form select{width:100%;height:38px;border:1px solid var(--line);border-radius:9px;background:#fff;padding:0 10px;font:600 11.5px var(--font)}
+  .approval-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px}.approval-summary div{background:#faf9fe;border:1px solid var(--line);border-radius:11px;padding:11px}.approval-summary span{display:block;color:var(--fg3);font-size:9px;font-weight:800;text-transform:uppercase}.approval-summary b{display:block;margin-top:5px;font:800 15px var(--display)}
+  .slack-preview{margin-top:14px;border:1px solid #d9dce4;border-left:4px solid #4a154b;border-radius:10px;padding:12px 13px;background:#fbfbfc;font-size:11.5px;line-height:1.55}.slack-preview .slack-title{font:800 12px var(--display);color:#4a154b;margin-bottom:5px}.slack-status{display:none;margin-top:10px;padding:9px 11px;border-radius:9px;background:var(--green-soft);color:var(--green-txt);font-size:11px;font-weight:800}.slack-status.show{display:block}
+  .cost-form{display:grid;grid-template-columns:1fr 1fr;gap:11px}.cost-form .wide{grid-column:1/-1}.cost-total{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding:12px 14px;border-radius:11px;background:var(--purple-soft);color:var(--purple)}.cost-total b{font:900 18px var(--display)}
+  .allocation-edit{display:grid;grid-template-columns:1fr 1fr;gap:6px;min-width:190px}.allocation-edit label{font-size:9px;color:var(--fg3);font-weight:800}.allocation-edit input{width:100%;height:32px;border:1px solid var(--line);border-radius:8px;padding:0 7px;text-align:right;font:800 11px var(--display)}.allocation-edit .allocation-error{grid-column:1/-1;color:var(--red);font-size:9px;font-weight:800;display:none}.allocation-edit.invalid .allocation-error{display:block}.allocation-edit.invalid input{border-color:var(--red)}
 
   @media (max-width:860px){
     html,body{height:auto;overflow-y:auto}
@@ -186,11 +224,14 @@
     h1{font-size:21px}
     .content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
     .k4{grid-template-columns:repeat(2,1fr)}
-    .grid2,.grid2b{grid-template-columns:1fr}
+    .grid2,.grid2b,.incoming-summary{grid-template-columns:1fr 1fr}
+    .manual-add-grid{grid-template-columns:1fr 1fr}
+    .manual-add-grid button{align-self:end}
     .head-actions{justify-content:flex-start}
   }
   @media (max-width:520px){
-    .k3,.k4,.form-grid{grid-template-columns:1fr}
+    .k3,.k4,.form-grid,.incoming-summary,.manual-add-grid,.product-form,.cost-form,.approval-summary{grid-template-columns:1fr}
+    .buy-footer{align-items:stretch;flex-direction:column}.buy-footer .spacer{display:none}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -217,9 +258,10 @@
     <div class="content">
       <div class="head">
         <div><h1>Purchasing <span class="pill p-buy">PURCHASING VIEW</span></h1>
-        <div class="subtitle">What to buy, what suppliers have, and what is on its way — netted against stock on hand and orders already placed.</div></div>
+        <div class="subtitle">Choose what to buy, track what is coming, and record what arrived.</div></div>
         <div class="head-actions">
-          <button class="btn-primary" type="button" data-goto="plan" data-target="availability">Request availability</button>
+          <button class="btn-secondary" id="open-new-product" type="button">+ New product</button>
+          <button class="btn-primary" id="open-manual-stock" type="button" data-goto="plan" data-target="manual-add-stock">+ Add to buying round</button>
           <div class="syncchip"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/></svg> Synced · 8:32 AM</div>
         </div>
       </div>
@@ -232,13 +274,78 @@
       </div>
 
       <div class="srail" role="tablist" aria-label="Purchasing workspaces">
-        <button class="on" role="tab" aria-selected="true" aria-controls="v-plan" data-s="plan"><span class="n">1</span><span class="tabtext"><span class="t">Plan</span><span class="d">Buy list · suppliers · releases</span></span></button>
-        <button role="tab" aria-selected="false" aria-controls="v-orders" data-s="orders"><span class="n">2</span><span class="tabtext"><span class="t">Orders</span><span class="d">Approve · send · track</span></span></button>
-        <button role="tab" aria-selected="false" aria-controls="v-receive" data-s="receive"><span class="n">3</span><span class="tabtext"><span class="t">Receive</span><span class="d">Arrivals · damage · landed cost</span></span></button>
+        <button class="on" role="tab" aria-selected="true" aria-controls="v-plan" data-s="plan"><span class="n">1</span><span class="tabtext"><span class="t">Buy stock</span><span class="d">Suggested or manual quantities</span></span></button>
+        <button role="tab" aria-selected="false" aria-controls="v-orders" data-s="orders"><span class="n">2</span><span class="tabtext"><span class="t">Incoming</span><span class="d">Orders on the way</span></span></button>
+        <button role="tab" aria-selected="false" aria-controls="v-receive" data-s="receive"><span class="n">3</span><span class="tabtext"><span class="t">Receive</span><span class="d">Count · damage · assign stock</span></span></button>
       </div>
 
       <!-- ================= PLAN ================= -->
       <section class="view show" id="v-plan">
+        <div class="kpis k4">
+          <div class="kpi"><div class="l">Products to review</div><div class="v">9</div><div class="d muted">grouped into 3 Pokémon sets</div></div>
+          <div class="kpi"><div class="l">Suggested units</div><div class="v">624</div><div class="d muted">stock and open orders already deducted</div></div>
+          <div class="kpi"><div class="l">Manual changes</div><div class="v" style="color:var(--amber)">2</div><div class="d muted">Mega Dream quantities overridden</div></div>
+          <div class="kpi"><div class="l">Draft cost</div><div class="v" id="draft-cost-total">$6,101.00</div><div class="d muted">item cost before shipping and tax</div></div>
+        </div>
+
+        <div class="buy-toolbar">
+          <div><h2 style="font-size:17px">Buying round</h2><div class="sub2">Review by main Pokémon set, then change any quantity directly.</div></div>
+          <span class="spacer"></span>
+          <button class="btn-secondary" type="button" data-goto="plan" data-target="supplier-check">Check supplier stock</button>
+          <button class="btn-secondary" id="add-new-product" type="button">+ New product</button>
+          <button class="btn-primary" id="add-stock-manually" type="button">+ Add to buying round</button>
+        </div>
+
+        <div class="manual-add" id="manual-add-stock">
+          <h3>Add an existing product to this buying round</h3><div class="cap">Use this when a catalogue item is not suggested or when you want to buy a new release yourself.</div>
+          <div class="manual-add-grid">
+            <div><label for="manual-group">Main set</label><input id="manual-group" value="Pokémon Mega Dream"></div>
+            <div><label for="manual-language">Language</label><select id="manual-language"><option>English</option><option>Japanese</option><option>Korean</option><option>Chinese</option></select></div>
+            <div><label for="manual-product">Product</label><select id="manual-product"><option>Booster Pack</option><option>Booster Box</option><option>Elite Trainer Box</option><option>Booster Bundle</option></select></div>
+            <div><label for="manual-supplier">Supplier</label><select id="manual-supplier"><option>Select later</option><option>TCG Direct</option><option>PokéJapan Direct</option><option>Pokémon Centre AU</option></select></div>
+            <div><label for="manual-qty">Buy quantity</label><input id="manual-qty" type="number" min="1" value="24"></div>
+            <div><label for="manual-cost">Unit cost</label><input id="manual-cost" type="number" min="0" step=".01" value="4.20"></div>
+            <button class="btn-primary" id="save-manual-stock" type="button">Add to round</button>
+          </div>
+          <div class="stamp hide" id="manual-stock-added" style="margin-top:12px">Added to Pokémon Mega Dream · quantities can still be changed before creating the draft PO.</div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-head"><div class="set-mark">MD</div><div><h3>Pokémon Mega Dream</h3><p>Main set · new release · English</p></div><span class="spacer"></span><span class="badge b-amber">Manual quantities</span></div>
+          <div class="tw set-table"><table><thead><tr><th>Product in this set</th><th class="num">On hand</th><th class="num">Already ordered</th><th class="num">Suggested</th><th class="num">Buy quantity</th><th class="num">Unit cost</th><th class="num">Cost total</th><th>Supplier</th></tr></thead><tbody>
+            <tr data-buy-line><td class="set-name"><b>Booster Pack</b><span>PKM-MD-BP-EN</span></td><td class="num">0</td><td class="num">0</td><td class="num muted">New</td><td class="num"><input data-buy-qty type="number" value="144" min="0" aria-label="Mega Dream Booster Pack buy quantity"><div class="manual-note">Manual override</div></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="4.20" min="0" step=".01" aria-label="Mega Dream Booster Pack unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$604.80</span></td><td><select aria-label="Mega Dream Booster Pack supplier"><option>TCG Direct</option><option>Pokémon Centre AU</option></select></td></tr>
+            <tr data-buy-line><td class="set-name"><b>Booster Box</b><span>PKM-MD-BB-EN · 36 packs</span></td><td class="num">0</td><td class="num">0</td><td class="num muted">New</td><td class="num"><input data-buy-qty type="number" value="6" min="0" aria-label="Mega Dream Booster Box buy quantity"><div class="manual-note">Manual override</div></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="151.20" min="0" step=".01" aria-label="Mega Dream Booster Box unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$907.20</span></td><td><select aria-label="Mega Dream Booster Box supplier"><option>TCG Direct</option><option>Pokémon Centre AU</option></select></td></tr>
+            <tr data-buy-line><td class="set-name"><b>Elite Trainer Box</b><span>PKM-MD-ETB-EN</span></td><td class="num">0</td><td class="num">0</td><td class="num muted">New</td><td class="num"><input data-buy-qty type="number" value="12" min="0" aria-label="Mega Dream Elite Trainer Box buy quantity"><div class="manual-note">Manual override</div></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="64.00" min="0" step=".01" aria-label="Mega Dream Elite Trainer Box unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$768.00</span></td><td><select aria-label="Mega Dream Elite Trainer Box supplier"><option>Pokémon Centre AU</option><option>TCG Direct</option></select></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-head"><div class="set-mark">SS</div><div><h3>Pokémon Surging Sparks</h3><p>Main set · English · based on current stock and sales</p></div><span class="spacer"></span><span class="badge b-green">Suggested</span></div>
+          <div class="tw set-table"><table><thead><tr><th>Product in this set</th><th class="num">On hand</th><th class="num">Already ordered</th><th class="num">Suggested</th><th class="num">Buy quantity</th><th class="num">Unit cost</th><th class="num">Cost total</th><th>Supplier</th></tr></thead><tbody>
+            <tr data-buy-line><td class="set-name"><b>Booster Pack</b><span>PKM-SS-BP-EN</span></td><td class="num">520</td><td class="num">240</td><td class="num">216</td><td class="num"><input data-buy-qty type="number" value="216" min="0" aria-label="Surging Sparks Booster Pack buy quantity"></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="4.20" min="0" step=".01" aria-label="Surging Sparks Booster Pack unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$907.20</span></td><td><select aria-label="Surging Sparks Booster Pack supplier"><option>TCG Direct</option><option>Select later</option></select></td></tr>
+            <tr data-buy-line><td class="set-name"><b>Booster Box</b><span>PKM-SS-BB-EN · 36 packs</span></td><td class="num">8</td><td class="num">6</td><td class="num">4</td><td class="num"><input data-buy-qty type="number" value="4" min="0" aria-label="Surging Sparks Booster Box buy quantity"></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="151.20" min="0" step=".01" aria-label="Surging Sparks Booster Box unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$604.80</span></td><td><select aria-label="Surging Sparks Booster Box supplier"><option>TCG Direct</option><option>Select later</option></select></td></tr>
+            <tr data-buy-line><td class="set-name"><b>Elite Trainer Box</b><span>PKM-SS-ETB-EN</span></td><td class="num">14</td><td class="num">0</td><td class="num">8</td><td class="num"><input data-buy-qty type="number" value="8" min="0" aria-label="Surging Sparks Elite Trainer Box buy quantity"></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="64.00" min="0" step=".01" aria-label="Surging Sparks Elite Trainer Box unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$512.00</span></td><td><select aria-label="Surging Sparks Elite Trainer Box supplier"><option>Pokémon Centre AU</option><option>Select later</option></select></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-head"><div class="set-mark">151</div><div><h3>Pokémon Card 151</h3><p>Main set · Japanese</p></div><span class="spacer"></span><span class="badge b-green">Suggested</span></div>
+          <div class="tw set-table"><table><thead><tr><th>Product in this set</th><th class="num">On hand</th><th class="num">Already ordered</th><th class="num">Suggested</th><th class="num">Buy quantity</th><th class="num">Unit cost</th><th class="num">Cost total</th><th>Supplier</th></tr></thead><tbody>
+            <tr data-buy-line><td class="set-name"><b>Booster Pack</b><span>PKM-151-BP-JP</span></td><td class="num">252</td><td class="num">0</td><td class="num">180</td><td class="num"><input data-buy-qty type="number" value="180" min="0" aria-label="Pokémon 151 Booster Pack buy quantity"></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="5.99" min="0" step=".01" aria-label="Pokémon 151 Booster Pack unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$1,078.20</span></td><td><select aria-label="Pokémon 151 Booster Pack supplier"><option>PokéJapan Direct</option><option>Select later</option></select></td></tr>
+            <tr data-buy-line><td class="set-name"><b>Booster Box</b><span>PKM-151-BB-JP · 20 packs</span></td><td class="num">9</td><td class="num">0</td><td class="num">6</td><td class="num"><input data-buy-qty type="number" value="6" min="0" aria-label="Pokémon 151 Booster Box buy quantity"></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="119.80" min="0" step=".01" aria-label="Pokémon 151 Booster Box unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$718.80</span></td><td><select aria-label="Pokémon 151 Booster Box supplier"><option>PokéJapan Direct</option><option>Select later</option></select></td></tr>
+            <tr data-buy-line><td class="set-name"><b>Elite Trainer Box</b><span>Not stocked for this language</span></td><td class="num">—</td><td class="num">—</td><td class="num">0</td><td class="num"><input data-buy-qty type="number" value="0" min="0" aria-label="Pokémon 151 Elite Trainer Box buy quantity"></td><td class="num"><span class="money-input">$<input data-unit-cost type="number" value="0.00" min="0" step=".01" aria-label="Pokémon 151 Elite Trainer Box unit cost"></span></td><td class="num"><span class="line-total" data-line-total>$0.00</span></td><td><select aria-label="Pokémon 151 Elite Trainer Box supplier"><option>Select later</option></select></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="card" id="supplier-check">
+          <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px"><div><h3>Check supplier stock</h3><div class="cap" style="margin:0">Optional: ask what is available before creating the PO. No supplier terms are assumed.</div></div><span class="badge b-purple">3 sets selected</span></div>
+          <div class="form-grid"><div class="field"><label for="simple-supplier">Supplier</label><select id="simple-supplier"><option>TCG Direct</option><option>PokéJapan Direct</option><option>Pokémon Centre AU</option></select></div><div class="field"><label for="simple-channel">Send by</label><select id="simple-channel"><option>Email</option><option>WhatsApp</option></select></div></div>
+          <div class="btn-row"><button class="btn-primary" type="button">Copy stock request</button><button class="btn-secondary" type="button">Upload supplier reply</button></div>
+        </div>
+
+        <div class="buy-footer"><div class="summary"><b>9 products · <span id="footer-draft-cost">$6,101.00 item cost</span></b>Linda reviews the item costs before the draft is approved.</div><span class="spacer"></span><button class="btn-secondary" id="preview-linda-approval" type="button">Preview Linda approval</button><button class="btn-primary" id="create-draft-po" type="button">Create draft PO</button></div>
+
+        <div hidden aria-hidden="true">
         <div class="kpis k4">
           <div class="kpi"><div class="l">Buy suggestions</div><div class="v">18</div><div class="d muted">14 restock · 4 preorder</div></div>
           <div class="kpi"><div class="l">Committed spend</div><div class="v">$24,180</div><div class="d muted">not yet received</div></div>
@@ -482,10 +589,35 @@ Terms on file: NET30.</pre>
           </table>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- ================= ORDERS ================= -->
       <section class="view" id="v-orders">
+        <div class="incoming-summary">
+          <div class="kpi"><div class="l">Orders on the way</div><div class="v">5</div><div class="d muted">grouped by Pokémon set</div></div>
+          <div class="kpi"><div class="l">Ready to receive</div><div class="v" style="color:var(--green-txt)">1</div><div class="d muted">PO-1044 has arrived</div></div>
+          <div class="kpi"><div class="l">Needs attention</div><div class="v" style="color:var(--amber)">1</div><div class="d muted">PO-1039 in customs</div></div>
+          <div class="kpi"><div class="l">Units incoming</div><div class="v">1,524</div><div class="d muted">packs, boxes and bundles</div></div>
+        </div>
+
+        <div class="card tight p0 incoming-table">
+          <div class="ph"><div><h3 style="margin:0">Incoming stock</h3><div class="cap" style="margin:4px 0 0">Kept in its own tab so incoming orders stay visible even when the buying list grows.</div></div><div class="btn-row"><span class="badge b-amber">1 needs attention</span><span class="badge b-green">1 ready</span></div></div>
+          <div class="tw"><table><thead><tr><th>Main set</th><th>Products in this order</th><th>Supplier</th><th>Status</th><th class="num">ETA</th><th></th></tr></thead><tbody>
+            <tr><td class="set-name"><b>Pokémon Journey Together</b><span>PO-1044</span></td><td>Elite Trainer Box × 60</td><td>Pokémon Centre AU</td><td><span class="badge b-green">Arrived</span></td><td class="num">Ready</td><td><div class="btn-row"><button class="btn-secondary" type="button" data-shipping-po="PO-1044">Shipping &amp; tax</button><button class="btn-teal" type="button" data-goto="receive">Receive</button></div></td></tr>
+            <tr><td class="set-name"><b>Pokémon Prismatic Evolutions</b><span>PO-1045</span></td><td>Booster Bundle × 120</td><td>Southern Hobby Distribution</td><td><span class="badge b-blue">On the way</span></td><td class="num">25 May</td><td><div class="btn-row"><button class="btn-secondary" type="button">Track</button><button class="btn-secondary" type="button" data-shipping-po="PO-1045">Shipping &amp; tax</button></div></td></tr>
+            <tr><td class="set-name"><b>Pokémon Surging Sparks</b><span>PO-1042</span></td><td>Booster Pack × 240<br><span class="sub2">Booster Box × 6</span></td><td>TCG Direct</td><td><span class="badge b-blue">On the way</span></td><td class="num">26 May</td><td><div class="btn-row"><button class="btn-secondary" type="button">Track</button><button class="btn-secondary" type="button" data-shipping-po="PO-1042">Shipping &amp; tax</button></div></td></tr>
+            <tr><td class="set-name"><b>Pokémon Destined Rivals</b><span>PO-1039</span></td><td>Booster Pack × 600<br><span class="sub2">Elite Trainer Box × 24</span></td><td>PokéJapan Direct</td><td><span class="badge b-amber">In customs</span></td><td class="num">28 May</td><td><div class="btn-row"><button class="btn-secondary" type="button">View issue</button><button class="btn-secondary" type="button" data-shipping-po="PO-1039">Shipping &amp; tax</button></div></td></tr>
+            <tr><td class="set-name"><b>Pokémon Mega Dream</b><span>PO-1046</span></td><td>Booster Pack × 144<br><span class="sub2">Booster Box × 6 · Elite Trainer Box × 12</span></td><td>TCG Direct</td><td><span class="badge b-purple">Ordered</span></td><td class="num">12 Aug</td><td><div class="btn-row"><a class="btn-secondary" href="inventory.html#po" style="text-decoration:none">Open PO</a><button class="btn-secondary" type="button" data-shipping-po="PO-1046">Shipping &amp; tax</button></div></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="grid2" style="margin-top:16px">
+          <div class="card tight"><h3>PO-1042 · tracking</h3><div class="cap">Pokémon Surging Sparks · TCG Direct</div><ul class="tl"><li class="done"><span class="dot"></span><div><b>Order sent</b><div class="when">18 May</div></div></li><li class="done"><span class="dot"></span><div><b>Picked up</b><div class="when">20 May</div></div></li><li class="done"><span class="dot"></span><div><b>Cleared origin</b><div class="when">22 May</div></div></li><li class="now"><span class="dot"></span><div><b>Out for delivery</b><div class="when">Expected 26 May</div></div></li></ul></div>
+          <div class="card tight"><h3>Where order details live</h3><div class="cap">Purchasing keeps the buying and incoming views simple.</div><ul class="checks"><li><span class="tick y">✓</span><div><b>Purchase Orders &amp; Invoices</b><div class="sub2">Edit the supplier, costs, dates, invoice and PO lines.</div></div></li><li><span class="tick y">✓</span><div><b>Incoming</b><div class="sub2">Track what is on the way and what needs attention.</div></div></li><li><span class="tick y">✓</span><div><b>Receive</b><div class="sub2">Record arrived, damaged and allocated quantities.</div></div></li></ul><div class="btn-row" style="margin-top:14px"><a class="btn-primary" href="inventory.html#po" style="text-decoration:none">Open Purchase Orders</a></div></div>
+        </div>
+
+        <div hidden aria-hidden="true">
         <div class="phasehead" style="margin-top:0;padding-top:0;border-top:0"><div><h2>Approve the order</h2><p>Make the buying decision from one complete cost and supplier summary.</p></div><span class="step">ORDER · 1</span></div>
         <div class="grid2">
           <div class="card tight p0">
@@ -632,11 +764,12 @@ Terms on file: NET30.</pre>
           </table>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- ================= RECEIVE ================= -->
       <section class="view" id="v-receive">
-        <div class="phasehead" style="margin-top:0;padding-top:0;border-top:0"><div><h2>Receive and allocate</h2><p>Record one delivery, quarantine damage, and finish landed cost.</p></div><span class="step">RECEIVE</span></div>
+        <div class="phasehead" style="margin-top:0;padding-top:0;border-top:0"><div><h2>Receive stock</h2><p>Count what arrived, mark damage, and choose Online store or Vending machines.</p></div><span class="step">RECEIVE</span></div>
         <div class="grid2">
           <div class="card tight p0">
             <div class="ph">
@@ -645,57 +778,37 @@ Terms on file: NET30.</pre>
             </div>
             <div class="tw">
             <table>
-              <thead><tr><th>Item</th><th class="num">Ordered</th><th class="num">Arrived</th><th class="num">Damaged</th><th class="num">Good</th><th>Allocate to</th></tr></thead>
+              <thead><tr><th>Item received</th><th class="num">Ordered</th><th class="num">Arrived</th><th class="num">Damaged</th><th class="num">Good</th><th>Allocate good stock</th></tr></thead>
               <tbody>
-                <tr><td><b>Surging Sparks (EN)</b><div class="sub2">PKM-SS-EN</div></td><td class="num">240</td><td class="num">240</td><td class="num">4</td><td class="num">236</td><td><span class="badge b-purple">Split online + vending</span><div class="sub2">60 online · 176 vending</div></td></tr>
-                <tr><td><b>Destined Rivals (EN)</b><div class="sub2">PKM-DR-EN</div></td><td class="num">120</td><td class="num">116</td><td class="num">2</td><td class="num">114</td><td><span class="badge b-blue">Vending machines</span><div class="sub2">114 vending</div></td></tr>
+                <tr data-receive-line data-good="236"><td><b>Surging Sparks</b><div class="sub2">PKM-SS-EN · English · Booster Pack</div></td><td class="num">240</td><td class="num">240</td><td class="num">4</td><td class="num">236</td><td><div class="allocation-edit"><label>Online store<input data-receive-online type="number" min="0" value="60" aria-label="Surging Sparks quantity for online store"></label><label>Vending<input data-receive-vending type="number" min="0" value="176" aria-label="Surging Sparks quantity for vending machines"></label><div class="allocation-error">Online + vending must equal 236 good units.</div></div></td></tr>
+                <tr data-receive-line data-good="114"><td><b>Destined Rivals</b><div class="sub2">PKM-DR-EN · English · Booster Pack</div></td><td class="num">120</td><td class="num">116</td><td class="num">2</td><td class="num">114</td><td><div class="allocation-edit"><label>Online store<input data-receive-online type="number" min="0" value="0" aria-label="Destined Rivals quantity for online store"></label><label>Vending<input data-receive-vending type="number" min="0" value="114" aria-label="Destined Rivals quantity for vending machines"></label><div class="allocation-error">Online + vending must equal 114 good units.</div></div></td></tr>
               </tbody>
             </table>
             </div>
             <div style="padding:14px 18px 18px">
               <div class="kpis k4" style="margin-bottom:14px;gap:10px">
-                <div class="kpi" style="padding:11px 12px"><div class="l">Good to online</div><div class="v" style="font-size:19px;color:var(--purple)">60</div></div>
-                <div class="kpi" style="padding:11px 12px"><div class="l">Good to vending</div><div class="v" style="font-size:19px;color:var(--blue)">290</div></div>
-                <div class="kpi" style="padding:11px 12px"><div class="l">To quarantine</div><div class="v" style="font-size:19px;color:var(--red)">6</div></div>
+                <div class="kpi" style="padding:11px 12px"><div class="l">Good to online</div><div class="v" id="receive-online-total" style="font-size:19px;color:var(--purple)">60</div></div>
+                <div class="kpi" style="padding:11px 12px"><div class="l">Good to vending</div><div class="v" id="receive-vending-total" style="font-size:19px;color:var(--blue)">290</div></div>
+                <div class="kpi" style="padding:11px 12px"><div class="l">Damaged stock</div><div class="v" style="font-size:19px;color:var(--red)">6</div></div>
                 <div class="kpi" style="padding:11px 12px"><div class="l">Still due</div><div class="v" style="font-size:19px;color:var(--amber)">4</div></div>
               </div>
               <button class="btn-teal" id="recvbtn" type="button">Confirm receipt · 350 good + 6 damaged</button>
-              <div id="received" class="stamp hide" style="margin-top:13px">Receipt RCV-00842 confirmed · 60 good to the Online store, 290 to Vending machines, 6 damaged quarantined · PO-1042 is now Partial with 4 units still due</div>
+              <div id="received" class="stamp hide" style="margin-top:13px">Receipt RCV-00842 confirmed · 60 good to the Online store, 290 to Vending machines, 6 damaged to Damage quarantine · PO-1042 is now Partial with 4 units still due</div>
             </div>
           </div>
 
           <div>
             <div class="card tight" style="margin-bottom:16px">
-              <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
-                <div><h3>Import costs</h3><div class="cap" style="margin:0">Logged as each bill lands.</div></div>
-                <span class="badge b-purple">3 bills</span>
-              </div>
-              <div class="tw" style="border:1px solid var(--line);border-radius:11px;overflow:hidden">
-                <table>
-                  <thead><tr><th>Bill</th><th>Type</th><th>Date</th><th class="num">Amount</th></tr></thead>
-                  <tbody>
-                    <tr><td class="sub2" style="margin:0">Freight invoice</td><td>Freight</td><td class="sub2" style="margin:0">28 Jul</td><td class="num">$180.00</td></tr>
-                    <tr><td class="sub2" style="margin:0">Customs entry</td><td>Import duty</td><td class="sub2" style="margin:0">29 Jul</td><td class="num">$146.75</td></tr>
-                    <tr><td class="sub2" style="margin:0">Customs entry</td><td>Import GST</td><td class="sub2" style="margin:0">2 Aug</td><td class="num">$72.25</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="btn-row" style="margin-top:12px"><button class="btn-secondary" type="button">Log another bill</button><button class="btn-link" type="button">None expected</button></div>
-
-              <div class="sublabel">Landed cost, per pack</div>
-              <dl class="kv">
-                <dt>Goods</dt><dd>$3.82</dd>
-                <dt>Freight, apportioned</dt><dd>$0.20</dd>
-                <dt>Duty and GST, apportioned</dt><dd>$0.18</dd>
-                <dt>Landed cost</dt><dd class="tot">$4.20</dd>
-              </dl>
-              <div class="sub2" style="margin-top:8px">Matches the $4.20 latest PO cost shown on the machine pick list.</div>
+              <div class="ph" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px"><div><h3>Shipping &amp; tax already recorded</h3><div class="cap" style="margin:0">These details are entered from Incoming, before receiving.</div></div><span class="badge b-green">Complete</span></div>
+              <dl class="kv"><dt>Shipping / freight</dt><dd>$180.00</dd><dt>Import duty</dt><dd>$146.75</dd><dt>GST / tax</dt><dd>$72.25</dd><dt>Total shipping &amp; tax</dt><dd class="tot">$399.00</dd></dl>
+              <div class="sublabel">Final landed cost</div><dl class="kv"><dt>Goods per pack</dt><dd>$3.82</dd><dt>Shipping &amp; tax per pack</dt><dd>$0.38</dd><dt>Final cost per pack</dt><dd class="tot">$4.20</dd></dl>
+              <div class="btn-row" style="margin-top:14px"><button class="btn-secondary" id="edit-incoming-cost" type="button">Edit in Incoming</button></div>
             </div>
           </div>
         </div>
 
         <div class="card tight p0">
-          <div class="ph"><h3 style="margin:0">History for this PO</h3><span class="muted" style="font-size:11.5px">6 events</span></div>
+          <div class="ph"><h3 style="margin:0">Order history</h3><span class="muted" style="font-size:11.5px">6 updates</span></div>
           <div class="tw">
           <table>
             <thead><tr><th>When</th><th>Event</th><th>Who</th><th>Detail</th></tr></thead>
@@ -712,6 +825,67 @@ Terms on file: NET30.</pre>
         </div>
       </section>
 
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="new-product-modal" role="dialog" aria-modal="true" aria-labelledby="new-product-title" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head"><span class="icon">+</span><div><h2 id="new-product-title">Add a new product</h2><p>Create the catalogue item here, then add it to this buying round.</p></div><button class="modal-close" type="button" data-close-modal="new-product-modal" aria-label="Close new product window">×</button></div>
+    <div class="modal-body">
+      <div class="product-form">
+        <div><label for="new-product-set">Main set</label><input id="new-product-set" value="Pokémon Mega Dream"></div>
+        <div><label for="new-product-name">Product name</label><input id="new-product-name" value="Premium Collection Box"></div>
+        <div><label for="new-product-sku">SKU</label><input id="new-product-sku" value="PKM-MD-PCB-EN"></div>
+        <div><label for="new-product-language">Language</label><select id="new-product-language"><option>English</option><option>Japanese</option><option>Korean</option><option>Chinese</option></select></div>
+        <div><label for="new-product-type">Product type</label><select id="new-product-type"><option>Collection box</option><option>Booster Pack</option><option>Booster Box</option><option>Elite Trainer Box</option><option>Booster Bundle</option><option>Other</option></select></div>
+        <div><label for="new-product-pack-size">Pack / carton size</label><input id="new-product-pack-size" value="6 boxes / carton"></div>
+        <div><label for="new-product-cost">Default cost price</label><input id="new-product-cost" type="number" min="0" step=".01" value="49.95"></div>
+        <div><label for="new-product-supplier">Preferred supplier</label><select id="new-product-supplier"><option>TCG Direct</option><option>PokéJapan Direct</option><option>Pokémon Centre AU</option><option>Select later</option></select></div>
+        <div class="wide"><label for="new-product-notes">Internal product notes</label><input id="new-product-notes" value="New catalogue item · confirm barcode before receiving"></div>
+      </div>
+      <div class="stamp hide" id="new-product-saved" style="margin-top:14px">Product PRD-02841 added to the catalogue and this buying round.</div>
+      <div class="modal-actions"><button class="btn-secondary" type="button" data-close-modal="new-product-modal">Cancel</button><button class="btn-primary" id="save-new-product" type="button">Save product &amp; add to round</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="linda-approval-modal" role="dialog" aria-modal="true" aria-labelledby="linda-approval-title" aria-hidden="true">
+  <div class="modal-card wide">
+    <div class="modal-head"><span class="icon">L</span><div><h2 id="linda-approval-title">Linda’s PO approval</h2><p>Cost-focused review shown whenever a draft purchase order is created.</p></div><span class="badge b-amber" id="approval-modal-status">Awaiting Linda</span><button class="modal-close" type="button" data-close-modal="linda-approval-modal" aria-label="Close Linda approval window">×</button></div>
+    <div class="modal-body">
+      <div class="approval-summary">
+        <div><span>Draft PO</span><b>PO-1047</b></div><div><span>Supplier</span><b>TCG Direct</b></div><div><span>Item cost</span><b id="approval-item-cost">$6,101.00</b></div><div><span>Approval limit</span><b>$10,000</b></div>
+      </div>
+      <div class="tw"><table><thead><tr><th>Main set / product</th><th>Language</th><th class="num">Quantity</th><th class="num">Unit cost</th><th class="num">Line cost</th></tr></thead><tbody>
+        <tr><td><b>Pokémon Mega Dream</b><div class="sub2">Booster Pack</div></td><td>English</td><td class="num">144</td><td class="num">$4.20</td><td class="num">$604.80</td></tr>
+        <tr><td><b>Pokémon Mega Dream</b><div class="sub2">Booster Box + Elite Trainer Box</div></td><td>English</td><td class="num">18</td><td class="num">Mixed</td><td class="num">$1,675.20</td></tr>
+        <tr><td><b>Pokémon Surging Sparks</b><div class="sub2">3 product formats</div></td><td>English</td><td class="num">228</td><td class="num">Mixed</td><td class="num">$2,024.00</td></tr>
+        <tr><td><b>Pokémon Card 151</b><div class="sub2">Booster Pack + Booster Box</div></td><td>Japanese</td><td class="num">186</td><td class="num">Mixed</td><td class="num">$1,797.00</td></tr>
+      </tbody></table></div>
+      <dl class="kv pad"><dt>Item cost</dt><dd id="approval-goods-total">$6,101.00</dd><dt>Shipping &amp; tax</dt><dd>Entered later from Incoming</dd><dt>Requested by</dt><dd>Game Guys · Buyer</dd><dt>Reason</dt><dd>Buying round replenishment + Mega Dream launch</dd></dl>
+      <div class="slack-preview"><div class="slack-title">Slack notification preview · #purchase-approvals</div><b>New PO draft needs Linda’s approval — PO-1047</b><br>TCG Direct · 580 units across 3 Pokémon sets · item cost <b id="slack-cost-total">$6,101.00</b>.<br>Review product, language, quantity and unit cost in Game Guys Purchasing.<br><span class="muted">Actions: View PO · Approve · Needs changes</span></div>
+      <div class="slack-status" id="slack-status">Slack notification sent to Linda in #purchase-approvals.</div>
+      <div class="modal-actions"><button class="btn-secondary" id="notify-slack" type="button">Notify via Slack</button><span style="flex:1"></span><button class="btn-link" id="approval-needs-changes" type="button">Needs changes</button><button class="btn-teal" id="approval-approve" type="button">Approve PO</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="shipping-tax-modal" role="dialog" aria-modal="true" aria-labelledby="shipping-tax-title" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head"><span class="icon">$</span><div><h2 id="shipping-tax-title">Shipping &amp; tax · <span id="shipping-po">PO-1042</span></h2><p>Record landed-cost details while the order is incoming, before receiving stock.</p></div><button class="modal-close" type="button" data-close-modal="shipping-tax-modal" aria-label="Close shipping and tax window">×</button></div>
+    <div class="modal-body">
+      <div class="cost-form">
+        <div><label for="shipping-amount">Shipping / freight</label><input id="shipping-amount" type="number" min="0" step=".01" value="180.00"></div>
+        <div><label for="import-duty">Import duty</label><input id="import-duty" type="number" min="0" step=".01" value="146.75"></div>
+        <div><label for="tax-amount">GST / tax</label><input id="tax-amount" type="number" min="0" step=".01" value="72.25"></div>
+        <div><label for="other-cost">Other landed cost</label><input id="other-cost" type="number" min="0" step=".01" value="0.00"></div>
+        <div><label for="cost-currency">Currency</label><select id="cost-currency"><option>AUD</option><option>USD</option><option>JPY</option></select></div>
+        <div><label for="cost-reference">Invoice / customs reference</label><input id="cost-reference" value="FRT-8832 · CUS-1191"></div>
+      </div>
+      <div class="cost-total"><span>Total shipping &amp; tax</span><b id="shipping-tax-total">$399.00 AUD</b></div>
+      <div class="stamp hide" id="shipping-tax-saved" style="margin-top:12px">Shipping and tax saved to the incoming PO.</div>
+      <div class="modal-actions"><button class="btn-secondary" type="button" data-close-modal="shipping-tax-modal">Cancel</button><button class="btn-primary" id="save-shipping-tax" type="button">Save shipping &amp; tax</button></div>
     </div>
   </div>
 </div>
@@ -756,6 +930,159 @@ Terms on file: NET30.</pre>
     document.getElementById('extract').classList.remove('hide');
     drop.textContent = 'pokejapan_stocklist_0804.jpg · read in 8 seconds';
   });
+
+  var manualForm = document.getElementById('manual-add-stock');
+  function openManualForm(){
+    if (!manualForm) return;
+    manualForm.classList.add('show');
+    manualForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var field = document.getElementById('manual-group');
+    if (field) field.focus();
+  }
+  ['open-manual-stock','add-stock-manually'].forEach(function(id){
+    var button = document.getElementById(id);
+    if (button) button.addEventListener('click', openManualForm);
+  });
+  var saveManualStock = document.getElementById('save-manual-stock');
+  if (saveManualStock) saveManualStock.addEventListener('click', function(){
+    document.getElementById('manual-stock-added').classList.remove('hide');
+    saveManualStock.textContent = 'Added';
+    saveManualStock.disabled = true;
+  });
+
+  function setModal(id, open){
+    var modal = document.getElementById(id);
+    if (!modal) return;
+    modal.classList.toggle('open', open);
+    modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (open) {
+      var close = modal.querySelector('.modal-close');
+      if (close) close.focus();
+    }
+  }
+  document.querySelectorAll('[data-close-modal]').forEach(function(button){
+    button.addEventListener('click', function(){ setModal(button.dataset.closeModal, false); });
+  });
+  document.querySelectorAll('.modal-overlay').forEach(function(modal){
+    modal.addEventListener('click', function(event){ if (event.target === modal) setModal(modal.id, false); });
+  });
+  document.addEventListener('keydown', function(event){
+    if (event.key === 'Escape') {
+      var openModal = document.querySelector('.modal-overlay.open');
+      if (openModal) setModal(openModal.id, false);
+    }
+  });
+
+  ['open-new-product','add-new-product'].forEach(function(id){
+    var button = document.getElementById(id);
+    if (button) button.addEventListener('click', function(){ setModal('new-product-modal', true); });
+  });
+  var saveNewProduct = document.getElementById('save-new-product');
+  if (saveNewProduct) saveNewProduct.addEventListener('click', function(){
+    document.getElementById('new-product-saved').classList.remove('hide');
+    saveNewProduct.textContent = 'Product added';
+    saveNewProduct.disabled = true;
+  });
+
+  var buyLines = Array.prototype.slice.call(document.querySelectorAll('[data-buy-line]'));
+  function updateBuyingCosts(){
+    var total = 0;
+    buyLines.forEach(function(row){
+      var qty = Number(row.querySelector('[data-buy-qty]').value) || 0;
+      var cost = Number(row.querySelector('[data-unit-cost]').value) || 0;
+      var lineTotal = qty * cost;
+      row.querySelector('[data-line-total]').textContent = lineTotal.toLocaleString('en-AU',{style:'currency',currency:'AUD'});
+      total += lineTotal;
+    });
+    var formatted = total.toLocaleString('en-AU',{style:'currency',currency:'AUD'});
+    document.getElementById('draft-cost-total').textContent = formatted;
+    document.getElementById('footer-draft-cost').textContent = formatted + ' item cost';
+    ['approval-item-cost','approval-goods-total','slack-cost-total'].forEach(function(id){ document.getElementById(id).textContent = formatted; });
+  }
+  buyLines.forEach(function(row){
+    row.querySelectorAll('[data-buy-qty],[data-unit-cost]').forEach(function(input){ input.addEventListener('input', updateBuyingCosts); });
+  });
+  updateBuyingCosts();
+
+  var slackStatus = document.getElementById('slack-status');
+  var notifySlack = document.getElementById('notify-slack');
+  function showLindaApproval(autoNotify){
+    setModal('linda-approval-modal', true);
+    if (autoNotify) {
+      slackStatus.textContent = 'Draft PO created · Slack notification automatically sent to Linda in #purchase-approvals.';
+      slackStatus.classList.add('show');
+      notifySlack.textContent = 'Resend via Slack';
+    }
+  }
+  document.getElementById('preview-linda-approval').addEventListener('click', function(){ showLindaApproval(false); });
+  document.getElementById('create-draft-po').addEventListener('click', function(){ showLindaApproval(true); });
+  notifySlack.addEventListener('click', function(){
+    slackStatus.textContent = 'Slack notification sent to Linda in #purchase-approvals.';
+    slackStatus.classList.add('show');
+    notifySlack.textContent = 'Sent to Slack';
+  });
+  document.getElementById('approval-approve').addEventListener('click', function(){
+    document.getElementById('approval-modal-status').textContent = 'Approved by Linda';
+    document.getElementById('approval-modal-status').className = 'badge b-green';
+    this.textContent = 'Approved';
+    this.disabled = true;
+  });
+  document.getElementById('approval-needs-changes').addEventListener('click', function(){
+    document.getElementById('approval-modal-status').textContent = 'Needs changes';
+    document.getElementById('approval-modal-status').className = 'badge b-red';
+  });
+
+  var shippingInputs = ['shipping-amount','import-duty','tax-amount','other-cost'].map(function(id){ return document.getElementById(id); });
+  function updateShippingTotal(){
+    var total = shippingInputs.reduce(function(sum,input){ return sum + (Number(input.value) || 0); },0);
+    document.getElementById('shipping-tax-total').textContent = total.toLocaleString('en-AU',{style:'currency',currency:'AUD'}) + ' AUD';
+  }
+  shippingInputs.forEach(function(input){ input.addEventListener('input', updateShippingTotal); });
+  document.querySelectorAll('[data-shipping-po]').forEach(function(button){
+    button.addEventListener('click', function(){
+      document.getElementById('shipping-po').textContent = button.dataset.shippingPo;
+      document.getElementById('shipping-tax-saved').classList.add('hide');
+      document.getElementById('save-shipping-tax').textContent = 'Save shipping & tax';
+      document.getElementById('save-shipping-tax').disabled = false;
+      setModal('shipping-tax-modal', true);
+    });
+  });
+  document.getElementById('save-shipping-tax').addEventListener('click', function(){
+    document.getElementById('shipping-tax-saved').classList.remove('hide');
+    this.textContent = 'Saved';
+    this.disabled = true;
+  });
+  updateShippingTotal();
+
+  var receiveLines = Array.prototype.slice.call(document.querySelectorAll('[data-receive-line]'));
+  function updateReceiveAllocations(){
+    var onlineTotal = 0;
+    var vendingTotal = 0;
+    var invalid = false;
+    receiveLines.forEach(function(row){
+      var online = Number(row.querySelector('[data-receive-online]').value) || 0;
+      var vending = Number(row.querySelector('[data-receive-vending]').value) || 0;
+      var good = Number(row.dataset.good);
+      var edit = row.querySelector('.allocation-edit');
+      var rowInvalid = online < 0 || vending < 0 || online + vending !== good;
+      edit.classList.toggle('invalid', rowInvalid);
+      invalid = invalid || rowInvalid;
+      onlineTotal += online;
+      vendingTotal += vending;
+    });
+    document.getElementById('receive-online-total').textContent = onlineTotal;
+    document.getElementById('receive-vending-total').textContent = vendingTotal;
+    var receiveButton = document.getElementById('recvbtn');
+    receiveButton.disabled = invalid;
+    receiveButton.textContent = invalid ? 'Fix allocation totals' : 'Confirm receipt · 350 good + 6 damaged';
+  }
+  receiveLines.forEach(function(row){ row.querySelectorAll('input').forEach(function(input){ input.addEventListener('input', updateReceiveAllocations); }); });
+  document.getElementById('edit-incoming-cost').addEventListener('click', function(){
+    show('orders');
+    document.getElementById('shipping-po').textContent = 'PO-1042';
+    setModal('shipping-tax-modal', true);
+  });
+  updateReceiveAllocations();
 
   function stamp(btnId, stampId, label){
     var b = document.getElementById(btnId);

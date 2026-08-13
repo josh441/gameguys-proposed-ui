@@ -5,6 +5,17 @@
 **Audience:** the developer implementing this, plus Josh for the decisions in section 10
 **Basis:** direct read of the working tree at `Game Guys_Dashboard Project/gameguys-saas`, plus `docs/SOP-Purchasing.html`, `docs/SOP-Admin.html`, `docs/USER_GUIDE.md`, `docs/Bottlenecks-Proposal.html`, `docs/SOP-Readiness-Audit.md`
 
+> **Current product direction — 12 August 2026.** This document preserves the detailed production audit,
+> but parts of its proposed UI have been superseded. The approved proposal uses three simple tabs:
+> **Buy stock**, **Incoming**, and **Receive**. Buy stock groups child products under their main set,
+> supports manual quantity overrides and manual product additions, and uses the same override for new
+> releases. Supplier availability is an optional ad-hoc check only. Do not implement supplier terms,
+> “Offers on file,” `supplier_offers`, `supplier_offer_lines`, or the dedicated release-call screen unless
+> product explicitly re-approves them. Incoming stock must remain in its own permanent tab and own
+> shipping/tax entry. Buy stock shows cost price and separates catalogue creation from adding an existing
+> product to a round. Draft creation opens Linda’s cost approval and queues an auditable Slack notification;
+> Receive keeps Online/Vending allocation editable per item.
+
 ---
 
 ## 0. The short version
