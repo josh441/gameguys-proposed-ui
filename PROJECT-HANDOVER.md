@@ -1,7 +1,7 @@
 # Game Guys Operations Proposal — Project Handover
 
-**Prepared:** 12 August 2026
-**Status:** Quarantine-first returns and simplified purchasing revision ready for product review; publication pending
+**Prepared:** 13 August 2026
+**Status:** Purchasing catalogue, cost approval, Incoming landed-cost, and quarantine revision ready for product review; publication pending
 **Repository:** `josh441/gameguys-proposed-ui`
 **Live proposal:** <https://josh441.github.io/gameguys-proposed-ui/>
 **GitHub Pages source:** `main` branch, repository root
@@ -195,6 +195,12 @@ The receiver view demonstrates:
 - separate balances for Online store, Vending machines, Warehouse · unallocated, Returns quarantine, and Damage quarantine;
 - products grouped by main set with expandable child formats;
 - a manual stock action for adding an unsuggested set/product to a buying round;
+- a separate New product catalogue window with language and default cost;
+- PO language at order and line level;
+- editable Buy-stock unit costs and calculated line costs;
+- Linda’s cost approval popup and Slack notification preview for every new draft PO;
+- shipping and tax entry on Incoming rather than Receive;
+- editable Online/Vending quantities directly under each received item;
 - physical location per stock row;
 - a compact **Scan stock** header action that opens on demand.
 - a compact **Add stock manually** action for reasoned, auditable non-PO adjustments.
@@ -458,20 +464,21 @@ The full proposal is [PURCHASING-STREAMLINE.md](PURCHASING-STREAMLINE.md). The i
 
 ### 17.1 Current UI principle
 
-The purchasing surface should help the buyer answer three questions: what should we buy, what is on the
-way, and what arrived. It should not require supplier terms, an offer history, release economics, or a
-separate release decision ritual before the team can create a draft PO. Existing approval, sending,
-tracking, receiving, and audit rules still apply through Purchase Orders & Invoices.
+The purchasing surface should help the buyer answer three questions: what should we buy and at what cost,
+what is on the way and what landed costs apply, and what arrived and where should it be allocated. It
+should not require supplier terms, an offer history, release economics, or a separate release decision
+ritual. A draft PO opens Linda’s cost review and queues a Slack approval notification. Existing approval,
+sending, tracking, receiving, and audit rules still apply through Purchase Orders & Invoices.
 
 ### 17.2 Target flow
 
 | Stage | Change |
 |---|---|
-| 01 Buy stock | Group rows by main set, show child product formats, net suggestions against on-hand/open-order stock, allow manual quantity overrides, and provide Add stock manually. New releases use the same override. |
+| 01 Buy stock | Group rows by main set, show child formats, net suggestions against on-hand/open-order stock, and allow manual quantity and cost-price overrides. New product creates a catalogue item; Add to buying round selects an existing item. |
 | 02 Supplier check | Optional ad-hoc stock check attached to the buying round. Do not assume standing terms or create an Offers-on-file ledger. |
-| 03 Draft PO | Create a draft from the reviewed quantities; use Purchase Orders & Invoices for formal editing, approval, sending, and supplier references. |
-| 04 Incoming | Permanent tab for POs on the way, grouped by set with supplier, ETA, tracking status, and next action. |
-| 05 Receive | Record arrived/good/damaged/still-due quantities, allocate good stock to Online or Vending, and post landed costs with atomic, idempotent movements. |
+| 03 Draft PO | Create a draft from reviewed quantities and costs; open Linda’s approval popup and send an idempotent Slack notification with View, Approve, and Needs changes actions. |
+| 04 Incoming | Permanent tab for POs on the way, grouped by set with supplier, ETA, tracking, and a Shipping & tax action for freight, duty, GST/tax, other costs, currency, and reference. |
+| 05 Receive | Record arrived/good/damaged/still-due quantities and edit Online/Vending quantities under each item. Show landed costs from Incoming read-only and post stock movements atomically. |
 
 ### 17.3 Data direction
 

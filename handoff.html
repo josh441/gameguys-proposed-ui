@@ -172,12 +172,12 @@
       <section class="panel workflow" id="purchasing">
         <div class="workflow-head"><span class="workflow-icon">PO</span><div><h2>Integrated purchasing</h2><p>Inventory → Purchasing · Buy stock, Incoming, and Receive</p></div></div>
         <div class="steps">
-          <div class="step"><span class="num">1</span><b>Buy stock</b><span>Review suggestions grouped by main Pokémon set and product format.</span></div>
-          <div class="step"><span class="num">2</span><b>Set quantities</b><span>Override any suggestion or add an unsuggested product manually.</span></div>
-          <div class="step"><span class="num">3</span><b>Check supplier</b><span>Optionally check current stock; no standing terms or offers ledger is assumed.</span></div>
-          <div class="step"><span class="num">4</span><b>Create draft PO</b><span>Use Purchase Orders &amp; Invoices for formal editing, approval, and sending.</span></div>
-          <div class="step"><span class="num">5</span><b>Incoming</b><span>Keep every PO on the way visible in its own permanent tab.</span></div>
-          <div class="step"><span class="num">6</span><b>Receive</b><span>Count arrivals, allocate good stock, quarantine damage, and finish landed cost.</span></div>
+          <div class="step"><span class="num">1</span><b>Products and costs</b><span>Create new catalogue items separately, then set buy quantity and cost price.</span></div>
+          <div class="step"><span class="num">2</span><b>Create draft</b><span>Review calculated line costs grouped by main Pokémon set and language.</span></div>
+          <div class="step"><span class="num">3</span><b>Linda approval</b><span>Open the cost review and notify Linda automatically or manually via Slack.</span></div>
+          <div class="step"><span class="num">4</span><b>Edit the PO</b><span>Use Purchase Orders &amp; Invoices for language, lines, approval, and sending.</span></div>
+          <div class="step"><span class="num">5</span><b>Incoming costs</b><span>Track the order and enter shipping, duty and tax before it arrives.</span></div>
+          <div class="step"><span class="num">6</span><b>Receive</b><span>Edit Online/Vending quantities under each item and quarantine damage.</span></div>
         </div>
         <div class="result"><b>State rule:</b> Draft → Approved → Ordered → Partial / Received. Approval never skips directly to Ordered.</div>
         <div class="actions"><a class="button primary" href="inventory.html#purchasing">Open Inventory → Purchasing</a><a class="button" href="PURCHASING-STREAMLINE.md">Open developer specification</a></div>
@@ -199,10 +199,10 @@
       <section class="panel workflow" id="receiving">
         <div class="workflow-head"><span class="workflow-icon">PO</span><div><h2>Purchase-order editing and receiving</h2><p>Inventory → Purchase Orders &amp; Invoices</p></div></div>
         <div class="steps">
-          <div class="step"><span class="num">1</span><b>Open the PO</b><span>View/edit order details and Pokémon line items, or go directly to Receive.</span></div>
+          <div class="step"><span class="num">1</span><b>Open the PO</b><span>View/edit order language, line language, cost and other PO details.</span></div>
           <div class="step"><span class="num">2</span><b>Mark arrivals</b><span>Use the grouped delivery controls, or receive all outstanding; arrived includes damaged.</span></div>
           <div class="step"><span class="num">3</span><b>Calculate good</b><span>Good = arrived − damaged. Show the quantity still due.</span></div>
-          <div class="step"><span class="num">4</span><b>Allocate good</b><span>Online store, Vending machines, or an exact split of both.</span></div>
+          <div class="step"><span class="num">4</span><b>Allocate good</b><span>Edit Online store and Vending quantities directly under every received item.</span></div>
           <div class="step"><span class="num">5</span><b>Confirm receipt</b><span>Write channel and Damage-quarantine movements; set the PO Partial or Received.</span></div>
         </div>
         <div class="result"><b>Required balance:</b> Online-store quantity + Vending quantity = Arrived now − Damaged. Confirmation stays blocked until it balances.</div>
@@ -251,8 +251,11 @@
             <tr><td>Optimized receiving entry</td><td>Three grouped work areas + receive-all and clear shortcuts</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>One running stock ledger</td><td>Inventory → Stock History includes receipts, fills, transfers, damage, and returns</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Integrated purchasing lifecycle</td><td>Inventory → Purchasing uses Buy stock, Incoming, and Receive</td><td><span class="done">✓ Included</span></td></tr>
-            <tr><td>Grouped products and manual stock</td><td>Main set cards with child formats and Add stock manually</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>New product and cost price</td><td>Catalogue window plus unit cost and line cost in Buy stock</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Linda approval and Slack</td><td>Draft PO popup with cost summary and Slack notification preview</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Incoming stays visible</td><td>Incoming stock has its own permanent Purchasing tab</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Shipping and tax before receiving</td><td>Shipping &amp; tax action beside tracking on Incoming orders</td><td><span class="done">✓ Included</span></td></tr>
+            <tr><td>Order language</td><td>PO header and editable line languages in View / edit</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Last sold price for fillers</td><td>Machines → Pick List uses latest Nayax sale with machine/date context</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Last sold price on printout</td><td>View print / PDF shows Price to set and Last sold (Nayax)</td><td><span class="done">✓ Included</span></td></tr>
             <tr><td>Handwritten notes on the route sheet</td><td>View print / PDF prints a blank Notes column per slot</td><td><span class="done">✓ Included</span></td></tr>

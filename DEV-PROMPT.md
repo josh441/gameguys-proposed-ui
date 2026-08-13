@@ -47,11 +47,13 @@ Build a compact current-stock table optimized for warehouse use:
 
 ## Purchase orders and receiving
 
-Support PO viewing and editing for header fields and line items. In receiving, group each line into three clear work areas:
+Support PO viewing and editing for header fields and line items. Show the order language at header level and
+an editable language on every PO line. In receiving, group each line into three clear work areas:
 
 1. **Product + PO balance** — item, SKU, ordered, previously received, and still due.
 2. **This delivery + damage** — arrived now, damaged quantity, damage reason, calculated good quantity.
-3. **Good-stock allocation** — Online store, Vending machines, or a balanced split.
+3. **Good-stock allocation** — editable Online-store and Vending-machine quantities directly under each
+   received item. Their sum must equal the calculated good quantity.
 
 Receiving rules:
 
@@ -73,10 +75,21 @@ Build Purchasing as a **native Inventory sub-view**, not as a sixth top-level ta
    that was not suggested. A supplier stock check can be attached to the buying round, but do not assume
    supplier terms or build an “Offers on file” feature. Replace the separate release-call process with the
    same simple manual quantity override used for every buying round.
+   Show editable cost price and calculated line cost beside every buy quantity. Keep **New product** separate
+   from **Add to buying round**: New product creates a catalogue item with set, product name, SKU, language,
+   type, pack size, default cost, preferred supplier, and internal notes; it may then be added to the round.
 2. **Incoming** — give POs on the way their own permanent tab so they never sit below a long product list.
    Group incoming child products under their main set and show PO, supplier, ETA, status, and next action.
+   Put **Shipping & tax** beside Track/Open PO and enter freight, duty, GST/tax, other landed costs, currency,
+   and invoice/customs reference here. Receive may show the saved figures but must not be the entry surface.
 3. **Receive** — combine delivery counts, good/damaged quantities, Online/Vending allocation, Damage
-   quarantine, retry-safe fees, landed cost in AUD, and PO history.
+   quarantine, a read-only landed-cost summary from Incoming, and PO history.
+
+Whenever a draft PO is created, open a cost-focused approval window for Linda showing supplier, products,
+language, quantity, unit cost, line cost, item-cost total, requester, and reason. Queue one Slack notification
+to Linda in the configured purchase-approval channel and provide **Notify via Slack** as an explicit retry or
+manual-send action. Include View PO, Approve, and Needs changes actions. Make notification delivery
+idempotent and auditable; a retry must not silently create duplicate approval events.
 
 Reuse the working production purchasing board, PO resolver, pool netting, supplier aliases, document extraction, consensus pricing, upcoming releases, receiving, and AfterShip integration. Follow `PURCHASING-STREAMLINE.md` for the audited production map, schema extensions, defects, sequencing, and decisions. Keep `Purchase Orders & Invoices` as the operational PO list/detail/history surface while Purchasing owns the buying lifecycle. Preserve existing Purchasing deep links by redirecting them into the Inventory Purchasing state where practical.
 

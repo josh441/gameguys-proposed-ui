@@ -11,7 +11,10 @@
 > supports manual quantity overrides and manual product additions, and uses the same override for new
 > releases. Supplier availability is an optional ad-hoc check only. Do not implement supplier terms,
 > “Offers on file,” `supplier_offers`, `supplier_offer_lines`, or the dedicated release-call screen unless
-> product explicitly re-approves them. Incoming stock must remain in its own permanent tab.
+> product explicitly re-approves them. Incoming stock must remain in its own permanent tab and own
+> shipping/tax entry. Buy stock shows cost price and separates catalogue creation from adding an existing
+> product to a round. Draft creation opens Linda’s cost approval and queues an auditable Slack notification;
+> Receive keeps Online/Vending allocation editable per item.
 
 ---
 

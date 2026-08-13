@@ -101,10 +101,13 @@ Curated business view. **Surface Xero data, don't rebuild the P&L.**
   quantity, area, location, reason, and an immutable adjustment reference. PO deliveries still use Receive.
 - **Purchasing:** one integrated workspace with three tabs: **Buy stock**, **Incoming**, and **Receive**.
   Buy stock groups products by their main set, shows simple suggested quantities, allows a manual quantity
-  override, and supports manually adding a set/product to the round. Supplier checks are optional and
+  override, shows editable unit cost plus calculated line cost, and supports manually adding an existing
+  product to the round. A separate New product window creates catalogue items with set, SKU, language,
+  type, pack size, default cost, supplier, and notes. Supplier checks are optional and
   ad hoc; do not assume standing terms or maintain an “Offers on file” ledger. Incoming is its own always-
-  visible tab for POs on the way. Receive contains delivery counts, damage, Online/Vending allocation,
-  landed cost, and PO history. Keep it inside Inventory and connect it to Purchase Orders & Invoices.
+  visible tab for POs on the way and owns shipping/tax entry. Receive contains delivery counts, damage,
+  editable Online/Vending quantities under each item, a read-only landed-cost summary, and PO history.
+  Creating a draft opens Linda’s cost approval and queues an auditable Slack notification.
   The static proposal embeds its modular purchasing mockup inside `inventory.html#purchasing`; production
   must render this as native application components within the Inventory route, not as an iframe or
   separate application shell. Redirect older purchasing deep links into this Inventory state.

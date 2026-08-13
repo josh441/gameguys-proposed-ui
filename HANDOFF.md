@@ -1,6 +1,6 @@
 # Game Guys Operations Proposal — Product & Development Handoff
 
-**Prepared:** 31 July 2026 · **Revised:** 12 August 2026
+**Prepared:** 31 July 2026 · **Revised:** 13 August 2026
 
 **Status:** Ready for product review; interactive front-end proposal, not production-connected
 
@@ -53,12 +53,12 @@ The prototype uses Pokémon products throughout so damage examples—dented pack
 **App path:** `Inventory → Purchase Orders & Invoices`
 
 1. Find the PO and select **View / edit** or **Receive**.
-2. In the edit view, review or change the supplier, status, ordered date, ETA, supplier reference, notes, and line-level item, SKU, ordered quantity, pack size, and unit cost.
+2. In the edit view, review or change the supplier, status, order language, ordered date, ETA, supplier reference, notes, and line-level item, SKU, language, ordered quantity, pack size, and unit cost.
 3. Save the PO. Saving PO details or a receiving draft does not move stock.
 4. When the delivery arrives, open **Receive delivery** and mark `Arrived now` and `Damaged` for each line. `Arrived now` includes damaged units.
    The optimized row groups the product and PO balance, this-delivery counts/damage, and allocation into three work areas instead of eight narrow columns.
 5. The app calculates `good quantity = arrived now − damaged` and shows anything still due.
-6. Allocate every good unit to **Online store**, **Vending machines**, or **Split online + vending**. A split must balance exactly.
+6. Under each received item, edit the exact quantities for **Online store** and **Vending machines**. The two fields must total the calculated good quantity.
 7. Enter a damage reason when the damaged count is greater than zero. Damaged units go to Damage quarantine and are excluded from both sellable allocations.
 8. Confirm once. The receipt writes separate Online-store, Vending, and Damage-quarantine movements.
 9. The PO becomes **Partial** when units are still due, or **Received** when the order is complete.
@@ -71,10 +71,12 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 
 **App path:** `Inventory → Purchasing`
 
-1. In **Buy stock**, review products grouped by main set, adjust any suggested quantity, or add a set/product manually. New releases use the same manual quantity override—there is no separate release-call process.
-2. Use an optional supplier stock check when helpful. The proposal does not assume standing supplier terms and does not include “Offers on file.” Create a draft PO, then use **Purchase Orders & Invoices** for formal editing and sending.
-3. In **Incoming**, keep every PO on the way visible with its grouped products, supplier, ETA, and status.
-4. In **Receive**, record arrived, good, damaged, and still-due quantities; allocate good stock to Online or Vending, quarantine damage, and post landed costs.
+1. In **Buy stock**, review products grouped by main set, adjust any suggested quantity, and enter the cost price. Each row calculates its line cost.
+2. **New product** creates an item in the catalogue with set, name, SKU, language, type, pack size, default cost, supplier, and notes. **Add to buying round** selects an existing item; the two actions are intentionally separate.
+3. Use an optional supplier stock check when helpful. The proposal does not assume standing supplier terms and does not include “Offers on file.”
+4. Creating a draft opens Linda’s cost-focused approval window and automatically demonstrates a Slack notification to the purchase-approval channel. **Notify via Slack** supports a manual send/retry.
+5. In **Incoming**, keep every PO on the way visible and enter its shipping, duty, GST/tax, and other landed costs beside Track.
+6. In **Receive**, record arrived, good, damaged, and still-due quantities; edit the Online/Vending split under each item, quarantine damage, and read the landed costs already saved from Incoming.
 
 **Prototype:** [Open Inventory → Purchasing](inventory.html#purchasing) · [Production audit and build sequence](PURCHASING-STREAMLINE.md)
 
@@ -121,8 +123,13 @@ For faster clean deliveries, **Receive all outstanding** fills the remaining qua
 | Integrate purchasing end to end | Inventory → Purchasing | Buy stock, Incoming, and Receive keep the buying lifecycle in three simple tabs | Included |
 | Group products by main set | Inventory + Purchasing | Main set expands to Booster Pack, Booster Box, Elite Trainer Box, and other child formats | Included |
 | Add stock manually | Inventory → Purchasing → Buy stock | Buyer can add an unsuggested set/product and quantity to the round | Included |
+| Add a new catalogue product | Inventory → Purchasing → New product | Captures set, SKU, language, type, pack size, default cost, supplier, and notes | Included |
+| Show purchasing cost price | Inventory → Purchasing → Buy stock | Editable unit cost and calculated line cost appear beside quantity | Included |
+| Send Linda an approval alert | Draft PO approval window | Cost summary, Slack message preview, automatic notification state, and Notify via Slack action | Included |
 | Record a manual stock adjustment | Inventory header → Add stock manually | Requires product, quantity, stock area, location, and reason/reference | Included |
 | Keep incoming stock visible | Inventory → Purchasing → Incoming | Incoming POs have a dedicated tab and cannot be buried below product rows | Included |
+| Enter shipping and tax before receipt | Inventory → Purchasing → Incoming | Shipping & tax action records freight, duty, GST/tax, other cost, currency, and reference | Included |
+| Show order language | Purchase Orders & Invoices → View / edit | Header and every PO line have an editable language | Included |
 | Mark off what arrived | PO → Receive delivery | Arrived, damaged, good, and still-due quantities are shown per line | Included |
 | Mark stock for store or vending | Receiving allocation | Online store, Vending machines, or balanced split is required | Included |
 | Distinguish store and vending inventory | Inventory → Stock Overview | Separate KPIs, allocation labels, locations, and balances | Included |
