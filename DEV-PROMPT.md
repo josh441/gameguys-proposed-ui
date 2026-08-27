@@ -160,7 +160,8 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
   actions, validation, calculations, and records must be available at every supported width.
 - On desktop, retain the persistent left navigation, multi-column summaries, full operational tables, and
   centered dialogs shown in the proposal.
-- On phone widths, use a compact sticky navigation row, horizontally scrollable work tabs, stacked filters,
+- On phone widths, use a compact branded header with a persistent five-item bottom navigation,
+  horizontally scrollable segmented work tabs, stacked filters,
   card-form table rows, full-width primary actions, and bottom-sheet dialogs. Do not remove PO costs,
   allocation controls, damage fields, last-sold prices, or return provenance merely to make a screen fit.
 - Make operational screens usable on warehouse tablets and filler phones. Target a practical baseline of

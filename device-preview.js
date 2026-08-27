@@ -57,7 +57,7 @@
     if (event.key === 'Escape' && stage) closeMobile();
   });
   function prepareMobileTables(){
-    var tables = document.querySelectorAll('table.stock-table, table.history-table, .tw > table, table.dtable.work');
+    var tables = document.querySelectorAll('table:not(.ptable):not(.rtable)');
     tables.forEach(function(table){
       var headings = Array.from(table.querySelectorAll(':scope > thead > tr:first-child > th')).map(function(th){
         return th.textContent.replace(/\s+/g,' ').trim();

@@ -315,7 +315,7 @@ The SQL in `BUILD-PLAN.md` is a schema sketch, not an approved migration. Produc
 
 - navigation and role-oriented information architecture;
 - responsive static UI behavior with an on-page Desktop/Mobile review switcher;
-- a 390 px phone preview that uses compact navigation, stacked controls, card-form operational tables,
+- a 390 px phone preview that uses a compact header, persistent five-item bottom navigation, stacked controls, card-form operational tables,
   touch-friendly actions, and bottom-sheet dialogs while preserving the same workflow content;
 - representative pick-list controls plus interactive return, receiving, filter, scanner-overlay, and print-preview examples;
 - realistic Pokémon sample data;
