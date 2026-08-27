@@ -314,7 +314,9 @@ The SQL in `BUILD-PLAN.md` is a schema sketch, not an approved migration. Produc
 ### Demonstrated by this repository
 
 - navigation and role-oriented information architecture;
-- responsive static UI behavior;
+- responsive static UI behavior with an on-page Desktop/Mobile review switcher;
+- a 390 px phone preview that uses compact navigation, stacked controls, card-form operational tables,
+  touch-friendly actions, and bottom-sheet dialogs while preserving the same workflow content;
 - representative pick-list controls plus interactive return, receiving, filter, scanner-overlay, and print-preview examples;
 - realistic Pokémon sample data;
 - acceptance criteria and proposed business rules.
@@ -395,6 +397,8 @@ The proposal has been checked for:
 - local HTTP 200 responses for affected pages;
 - live GitHub Pages HTTP 200 responses and required content;
 - clean Git whitespace checks before publication.
+- shared responsive-preview assets are referenced by every operational proposal screen;
+- device table labels are derived from their visible column headers so desktop and mobile stay aligned.
 
 This is static-prototype validation. It is not a substitute for production integration, permission, transaction, or browser/device testing.
 
@@ -427,6 +431,8 @@ Local preview used during proposal work:
 | `miscellaneous.html` | Release calendar |
 | `crm.html` | Supplier contacts and task management |
 | `all-in-one.html` | Condensed proposal walkthrough |
+| `device-preview.css` | Shared desktop/mobile preview and narrow-screen interaction styles |
+| `device-preview.js` | Desktop/Mobile review switcher and mobile table labelling |
 | `board.html` | Flow and architecture diagrams |
 | `handoff.html` | Shareable visual product/development handoff |
 | `HANDOFF.md` | Acceptance criteria, edge cases, and open decisions |

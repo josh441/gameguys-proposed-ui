@@ -1,0 +1,214 @@
+:root{
+  --device-preview-purple:#6d28d9;
+  --device-preview-ink:#1a1f39;
+  --device-preview-line:#ddd8eb;
+}
+
+.device-preview-switch{
+  position:fixed;
+  top:12px;
+  right:14px;
+  z-index:95;
+  display:flex;
+  align-items:center;
+  gap:3px;
+  padding:4px;
+  border:1px solid rgba(76,29,149,.16);
+  border-radius:12px;
+  background:rgba(255,255,255,.94);
+  box-shadow:0 8px 24px rgba(26,31,57,.16);
+  backdrop-filter:blur(10px);
+  font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.device-preview-switch::before{
+  content:"Preview";
+  padding:0 6px;
+  color:#777d91;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+.device-preview-switch button{
+  display:inline-flex;
+  min-height:32px;
+  align-items:center;
+  gap:6px;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:#5d6379;
+  padding:7px 9px;
+  font:800 10.5px "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  cursor:pointer;
+}
+.device-preview-switch button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2}
+.device-preview-switch button:hover{background:#f3efff;color:var(--device-preview-purple)}
+.device-preview-switch button[aria-pressed="true"]{background:var(--device-preview-purple);color:#fff}
+
+.device-preview-stage{
+  position:fixed;
+  inset:0;
+  z-index:90;
+  display:grid;
+  place-items:center;
+  padding:64px 20px 22px;
+  background:
+    radial-gradient(900px 460px at 20% -10%,rgba(109,40,217,.18),transparent 60%),
+    #e9eaf0;
+}
+.device-preview-frame{
+  width:390px;
+  max-width:100%;
+  height:calc(100vh - 92px);
+  min-height:560px;
+  max-height:844px;
+  overflow:hidden;
+  border:8px solid #1e2030;
+  border-radius:30px;
+  background:#fff;
+  box-shadow:0 26px 70px rgba(24,20,45,.35);
+}
+.device-preview-frame iframe{display:block;width:100%;height:100%;border:0;background:#eef0f5}
+.device-preview-caption{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  max-width:250px;
+  color:#666b7e;
+  font:600 10.5px/1.45 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.device-preview-caption b{display:block;color:var(--device-preview-ink);font-size:11.5px;margin-bottom:2px}
+body.device-preview-active{overflow:hidden!important}
+html.device-embed .device-preview-switch{display:none!important}
+
+@media print{
+  .device-preview-switch,.device-preview-stage{display:none!important}
+}
+
+@media (max-width:860px){
+  .device-preview-switch{display:none}
+  .side{
+    width:100%;
+    max-width:100vw;
+    overflow:hidden!important;
+  }
+  .side .nav{
+    min-width:0;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .side .nav::-webkit-scrollbar,.subtabs::-webkit-scrollbar,.machine-tabs::-webkit-scrollbar{display:none}
+  .subtabs,.machine-tabs{
+    max-width:100%;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    scroll-snap-type:x proximity;
+  }
+  .subtabs button,.subtabs a,.machine-tabs button{scroll-snap-align:start}
+  .head-actions{max-width:100%}
+  button,a,select,input{touch-action:manipulation}
+  .tw,.stock-table-wrap,.history-table-wrap,.edit-table,.receipt-table{
+    max-width:100%;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  .tw::after,.stock-table-wrap::after,.history-table-wrap::after{
+    content:"Swipe table to see more →";
+    display:block;
+    position:sticky;
+    left:0;
+    width:max-content;
+    padding:7px 11px 9px;
+    color:#8a8fa1;
+    font-size:9px;
+    font-weight:700;
+  }
+  .modal-overlay,.scan-overlay{overscroll-behavior:contain}
+}
+
+@media (max-width:520px){
+  .content{padding:12px!important}
+  .head{gap:10px!important}
+  .head-actions{width:100%;display:grid!important;grid-template-columns:1fr 1fr!important;gap:7px!important}
+  .head-actions>*{min-width:0;justify-content:center}
+  .head-actions .syncchip{grid-column:1/-1}
+  .card{padding:14px;border-radius:13px}
+  .subtabs{margin-bottom:14px!important}
+  .subtabs button,.subtabs a,.machine-tabs button{min-height:42px;padding:10px 12px!important}
+  .modal-overlay,.scan-overlay{
+    align-items:flex-end!important;
+    padding:0!important;
+  }
+  .modal-card,.scan-dialog{
+    width:100%!important;
+    max-height:92dvh!important;
+    border-radius:18px 18px 0 0!important;
+  }
+  .modal-head,.scan-dialog-head{padding:15px!important}
+  .modal-body,.scan-dialog-body{padding:15px!important}
+  .modal-actions,.scan-dialog-actions{display:grid!important;grid-template-columns:1fr 1fr!important}
+  .modal-actions button,.scan-dialog-actions button{min-height:42px}
+  .po-workspace{border-radius:13px}
+  .po-tabs{overflow-x:auto;padding:0 10px!important;scrollbar-width:none}
+  .po-tabs button{white-space:nowrap;min-height:42px}
+  .panel-actions{align-items:stretch!important}
+  .panel-actions button{min-height:42px}
+  .allocation-edit{min-width:160px}
+  .device-preview-caption{display:none}
+  .device-card-wrap{overflow:visible!important}
+  .device-card-wrap::after{display:none!important}
+  .device-card-table,
+  .device-card-table>tbody{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+    overflow:visible!important;
+    white-space:normal!important;
+  }
+  .device-card-table>thead{display:none!important}
+  .device-card-table>tbody>tr{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(112px,.65fr);
+    gap:0 12px;
+    margin:0;
+    padding:12px 13px;
+    border-top:1px solid #eef0f4;
+    background:#fff;
+  }
+  .device-card-table>tbody>tr[hidden],
+  .device-card-table>tbody>tr.hide{display:none!important}
+  .device-card-table>tbody>tr>td{
+    display:flex!important;
+    min-width:0;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    border:0!important;
+    padding:7px 0!important;
+    text-align:right!important;
+    white-space:normal!important;
+  }
+  .device-card-table>tbody>tr>td::before{
+    content:attr(data-device-label);
+    flex:0 0 auto;
+    color:#9a9fb2;
+    font:800 8.5px/1.35 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    letter-spacing:.04em;
+    text-align:left;
+    text-transform:uppercase;
+  }
+  .device-card-table>tbody>tr>td:first-child,
+  .device-card-table>tbody>tr>td.device-card-wide{
+    grid-column:1/-1;
+    text-align:left!important;
+  }
+  .device-card-table>tbody>tr>td:first-child::before,
+  .device-card-table>tbody>tr>td.device-card-wide::before{display:none}
+  .device-card-table .stock-group-row{display:block!important;background:#f5f1ff}
+  .device-card-table .stock-group-row td{display:block!important;text-align:left!important}
+  .device-card-table .btn-row,.device-card-table .po-actions{justify-content:flex-end;flex-wrap:wrap}
+}

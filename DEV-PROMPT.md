@@ -156,7 +156,19 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
 - Preserve existing production architecture and naming conventions.
 - Use migrations only for additions not already represented in the current schema.
 - Keep authorization and validation server-side even when the UI prevents invalid input.
-- Make operational screens usable on warehouse tablets and filler phones.
+- Build one responsive application, not separate desktop and mobile feature sets. The same permissions,
+  actions, validation, calculations, and records must be available at every supported width.
+- On desktop, retain the persistent left navigation, multi-column summaries, full operational tables, and
+  centered dialogs shown in the proposal.
+- On phone widths, use a compact sticky navigation row, horizontally scrollable work tabs, stacked filters,
+  card-form table rows, full-width primary actions, and bottom-sheet dialogs. Do not remove PO costs,
+  allocation controls, damage fields, last-sold prices, or return provenance merely to make a screen fit.
+- Make operational screens usable on warehouse tablets and filler phones. Target a practical baseline of
+  390 px for phones and verify intermediate tablet widths as well as desktop.
+- Keep touch targets at least 40â€“44 px where practical, preserve visible labels, and avoid controls that
+  require hover. Long product names, badges, and validation messages must wrap without covering actions.
+- The proposal's **Desktop / Mobile** switcher is a review aid only. Production should use the application's
+  responsive layout system and real viewport breakpoints rather than embedding its own pages in preview frames.
 - Provide accessible labels, keyboard behavior, focus management, loading states, empty states, and actionable validation messages.
 - Add focused tests for full/partial receipts, damage, mixed allocations, route eligibility, excessive quantities, duplicate retries, concurrent changes, and compensating corrections.
 - Update existing tests when extending reused logic; do not weaken unrelated coverage.
@@ -182,3 +194,5 @@ return unused or swapped Pokémon stock from the correct route/machine into quar
 be reassigned to Online store or Vending machines without bypassing the audit trail; damaged stock cannot
 enter a sellable balance; the filler printout has the six approved columns including blank Notes; every
 confirmation is authorized, auditable, atomic, and idempotent; and Inventory shows the resulting movements.
+The complete flow must remain usable on desktop, tablet, and a 390 px phone without losing required fields
+or relying on horizontal page scrolling.

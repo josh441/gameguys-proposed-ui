@@ -193,7 +193,8 @@ The proposed tables, constraints, and movement records are specified in [BUILD-P
 - [ ] Add audit metadata: user, timestamp, route, machine, location, PO/receipt/return reference, and reason.
 - [ ] Keep the print preview closed by default and print only the six approved columns, including Last sold (Nayax) and a blank Notes field.
 - [ ] Test full, partial, damaged, mixed-allocation, retry, and concurrent-update cases.
-- [ ] Verify mobile/tablet layouts for warehouse and route use.
+- [ ] Verify desktop, tablet, and 390 px phone layouts for warehouse and route use. Required fields and
+  actions must remain available; tables may become labelled cards and dialogs may become bottom sheets.
 - [ ] Obtain product sign-off on the four unresolved decisions above before backend implementation is considered complete.
 
 ## 12. Proposal file map
