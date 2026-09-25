@@ -406,11 +406,10 @@ This is static-prototype validation. It is not a substitute for production integ
 
 Current release flow:
 
-1. Work is committed on `mobile-responsive`.
-2. The branch is pushed to `origin`.
-3. A pull request targets `main`.
-4. Merging to `main` triggers the legacy GitHub Pages build from the repository root.
-5. The live site is verified after Pages reports `built`.
+1. Review and commit the proposal changes, including the developer handover.
+2. Publish the approved commit to `origin/main` (directly or through a reviewed pull request).
+3. Updates to `main` trigger the legacy GitHub Pages build from the repository root.
+4. Verify that Pages reports `built` for the published commit, then check the live assets.
 
 The live proposal URL is:
 
@@ -431,8 +430,8 @@ Local preview used during proposal work:
 | `miscellaneous.html` | Release calendar |
 | `crm.html` | Supplier contacts and task management |
 | `all-in-one.html` | Condensed proposal walkthrough |
-| `device-preview.css` | Shared desktop/mobile preview and narrow-screen interaction styles |
-| `device-preview.js` | Desktop/Mobile review switcher and mobile table labelling |
+| `device-preview.css` | Responsive layouts, compact mobile Purchasing, and Desktop/Tablet/Mobile preview styles |
+| `device-preview.js` | Review switcher, responsive table labels, filter/set disclosures, and embedded-dialog positioning |
 | `board.html` | Flow and architecture diagrams |
 | `handoff.html` | Shareable visual product/development handoff |
 | `HANDOFF.md` | Acceptance criteria, edge cases, and open decisions |
@@ -530,3 +529,27 @@ call economics are outside the current UI scope.
 - Developer: clear the stale rows in `docs/SOP-Readiness-Audit.md`. Zod on PO create and update, server-side idempotency on PO create, and the client-side submit disable are all already shipped, and the audit still lists them as open.
 - QA/Product: validate the final production build on filler phones, warehouse tablets, and printable A4 output.
 - Documentation: reconcile `docs/SOP-Purchasing.html` and `docs/Bottlenecks-Proposal.html` after the build. Both currently describe capabilities that do not exist as written (a Supplier PDF header button, an automatic Xero push, a supplier scorecard).
+
+## 19. Responsive UI revision — 24 September 2026
+
+The shared responsive layer now uses a compact header and five-item bottom navigation at widths up to
+860 px. Tables reflow into labelled cards without duplicating their controls. Machines has non-overlapping
+summary cards and a compact pick-list layout. Stock search stays visible; filters and sorting expand on request.
+The review switcher supports 390 px Mobile and 768 px Tablet previews as well as Desktop.
+
+Mobile Purchasing removes the duplicate embedded page header and repeated header actions. Buy stock has
+two compact summary cards, expandable product sets, paired quantity/cost inputs, line totals, and full-width
+supplier selection. Incoming uses order cards with product, supplier, status, ETA, and actions. Receive keeps
+Ordered/Arrived/Damaged/Good together above Online/Vending allocation. Optional supplier checks, tracking
+details, cost breakdowns, and order history are collapsed on mobile and expanded on desktop.
+
+Embedded Purchasing dialogs are positioned inside the currently visible frame area, excluding sticky work
+tabs and bottom navigation. Resizing preserves form controls and values. Responsive styles are screen-only;
+the existing Machines print table, last-sold prices, and notes column are not rewritten.
+
+Validation performed locally: visual checks of Machines at 390/768 px, Inventory at 320/390 px, and integrated
+Purchasing at 320/390/768/1440 px; Buy/Incoming/Receive tab switching; new-product dialog positioning;
+stock language filtering; and allocation validation (an incorrect Online/Vending total disables confirmation,
+restoring the valid split enables it). Shared JavaScript syntax was checked. These are browser viewport tests,
+not physical iOS/Android, production integration, or print/PDF certification. This revision does not add backend
+operations or real Slack delivery; existing prototype-only actions remain prototype-only.

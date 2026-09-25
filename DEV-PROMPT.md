@@ -168,7 +168,14 @@ Build one newest-first, read-only movement ledger instead of a return-specific I
   390 px for phones and verify intermediate tablet widths as well as desktop.
 - Keep touch targets at least 40â€“44 px where practical, preserve visible labels, and avoid controls that
   require hover. Long product names, badges, and validation messages must wrap without covering actions.
-- The proposal's **Desktop / Mobile** switcher is a review aid only. Production should use the application's
+- On mobile Purchasing, use one workspace header and a compact Buy stock / Incoming / Receive control.
+  Keep product sets expandable, quantity and unit cost side by side, supplier below, and each line total visible.
+  Incoming orders must show full-width product/supplier details with status, ETA, and clear actions.
+  Receiving must keep the four quantity figures together and Online/Vending allocation fields directly below.
+  Collapse optional supplier checks, tracking details, cost breakdowns, and history on small screens;
+  do not hide these behind a different workflow or discard draft edits when expanding/collapsing.
+- Keep inventory search visible; place secondary filters and sort controls in a labelled mobile disclosure.
+- The proposal's **Desktop / Tablet / Mobile** switcher is a review aid only. Production should use the application's
   responsive layout system and real viewport breakpoints rather than embedding its own pages in preview frames.
 - Provide accessible labels, keyboard behavior, focus management, loading states, empty states, and actionable validation messages.
 - Add focused tests for full/partial receipts, damage, mixed allocations, route eligibility, excessive quantities, duplicate retries, concurrent changes, and compensating corrections.
